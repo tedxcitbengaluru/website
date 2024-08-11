@@ -1,0 +1,19 @@
+Primary Black:
+HEX: #121212
+Usage: Background color for most of the website.
+
+TEDx Red:
+HEX: #E62B1E
+Usage: Accent color for buttons, links, and highlights.
+
+Dark Gray (for secondary elements):
+HEX: #1F1F1F
+Usage: Background for cards, sections, or overlays.
+
+Light Gray (for text and borders):
+HEX: #E0E0E0
+Usage: Primary text color for good contrast against the dark background.
+
+Off-White (for additional contrast):
+HEX: #F5F5F5
+Usage: For text or elements that need to stand out more, like headings or important info.
