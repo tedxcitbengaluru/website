@@ -22,9 +22,9 @@ const TicketPage: React.FC = () => {
   const [showWorkStudyCustomField, setShowWorkStudyCustomField] = useState(false);
   const [showFindUsCustomField, setShowFindUsCustomField] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+  
     if (name === 'workStudy') {
       setFormData(prevState => ({
         ...prevState,
@@ -46,7 +46,7 @@ const TicketPage: React.FC = () => {
       }));
     }
   };
-
+  
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -56,7 +56,7 @@ const TicketPage: React.FC = () => {
         setFormData(prevState => ({
           ...prevState,
           paymentScreenshot: reader.result as string,
-          paymentScreenshotName: file.name, // Set file name
+          paymentScreenshotName: file.name, 
         }));
       };
     }
@@ -94,15 +94,13 @@ const TicketPage: React.FC = () => {
       }
     }
   
-    // Prepare form data
     const preparedFormData = {
       ...formData,
       workStudy: formData.workStudy === 'other' ? formData.workStudyCustom : formData.workStudy,
       findUs: formData.findUs === 'other' ? formData.findUsCustom : formData.findUs,
-      paymentScreenshot: paymentScreenshotLink, // Update with new link if changed
+      paymentScreenshot: paymentScreenshotLink,
     };
   
-    // Submit form data to Google Sheets
     try {
       const sheetResponse = await fetch('/api/submitToGoogleSheet', {
         method: 'POST',
