@@ -1,0 +1,62 @@
+body {
+  background-color: #262627; 
+  color: #E0E0E0; 
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #121212; 
+}
+
+.btn-close {
+  background-color: #fff;
+}
+
+
+.navbar-brand {
+  color: #E62B1E; 
+  font-weight: bold;
+}
+
+.navbar-toggler {
+  border-color: #E0E0E0; 
+}
+
+.navbar-toggler-icon {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg fill="%23E62B1E" viewBox="0 0 16 16" width="24" height="24"><path d="M0 3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3zm0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1v-1zm1 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1v-1z"/></svg>');
+}
+
+.offcanvas {
+  background-color: #121212; 
+  color: #E0E0E0; 
+}
+
+.offcanvas-title {
+  color: #E62B1E; 
+}
+
+.nav-link {
+  color: #E0E0E0;
+}
+
+.nav-link:hover {
+  color: #E62B1E;
+}
+
+.card {
+  background-color: #1F1F1F; 
+  color: #E0E0E0; 
+}
+
+.card-header, .card-body, .card-footer {
+  background-color: #1F1F1F;
+}
+
+.text-offwhite {
+  color: #F5F5F5; 
+}
+
+
+
+
