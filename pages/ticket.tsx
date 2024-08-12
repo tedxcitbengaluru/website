@@ -68,7 +68,7 @@ const TicketPage: React.FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const form = e.currentTarget;
+    const form = e.currentTarget as HTMLFormElement; 
     if (form.checkValidity() === false) {
       e.stopPropagation();
     }
