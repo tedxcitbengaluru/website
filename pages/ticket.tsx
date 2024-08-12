@@ -251,7 +251,7 @@ const TicketPage: React.FC = () => {
                   isInvalid={validated && formData.workStudy === 'other' && !formData.workStudyCustom}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please specify if you selected "Other".
+                  Please specify if you selected &quot;Other&quot;.
                 </Form.Control.Feedback>
               </Form.Group>
             )}
@@ -294,7 +294,7 @@ const TicketPage: React.FC = () => {
                   isInvalid={validated && formData.findUs === 'other' && !formData.findUsCustom}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please specify if you selected "Other".
+                  Please specify if you selected &quot;Other&quot;.
                 </Form.Control.Feedback>
               </Form.Group>
             )}
@@ -401,7 +401,7 @@ const TicketPage: React.FC = () => {
                   isInvalid={validated && !formData.teamMemberName}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please provide the team member's name.
+                  Please provide the team member&apos;s name.
                 </Form.Control.Feedback>
               </Form.Group>
             </Col>
