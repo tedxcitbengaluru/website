@@ -64,7 +64,7 @@ const AdminDashboard: React.FC = () => {
   return (
     <Container className="admin-dashboard">
       <h1 className="title">Admin Dashboard</h1>
-      <p className="description">Manage ticket types for the event.</p>
+      <p className="description">Manage ticketing for the event.</p>
 
       {error && <Alert variant="danger" className="error-message">{error}</Alert>}
 
