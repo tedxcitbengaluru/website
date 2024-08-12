@@ -13,6 +13,14 @@ body {
   color: #E0E0E0; 
   margin: 0;
   font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1; 
+  padding-bottom: 50px; 
 }
 
 /* navbar */
@@ -70,20 +78,31 @@ body {
 }
 
 .footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
   background-color: #ba1206;
-  color: #E0E0E0; 
-  padding: 16px 32px; 
+  color: #E0E0E0;
+  padding: 16px 32px;
   text-align: center;
-  font-size: 12px; 
+  font-size: 12px;
 }
 
 @media (min-width: 768px) {
   .footer {
-    font-size: 14px; 
+    font-size: 14px;
   }
 }
 
+.not-available-page,
+.sold-out-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
 /*admin page*/
 .vip-page-container {
   display: flex;

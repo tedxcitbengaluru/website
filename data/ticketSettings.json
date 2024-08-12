@@ -1,3 +1,5 @@
 {
-  "showEarlyBird": true
+  "showEarlyBird": true,
+  "toggleTicketing": false,
+  "toggleTicketingComplete": false
 }

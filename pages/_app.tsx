@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>TEDxCITBengaluru</title>
       </Head>
       <TedNavbar />
-      <Component {...pageProps} />
+      <Component {...pageProps} className="main-content"/>
       <footer className="footer">
         Copyright 2023 © TEDxCITBengaluru This independent TEDx event is
         operated under license from TED

@@ -26,8 +26,10 @@ const TicketPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [ticketing, setTicketing] = useState(false);
+  const [ticketingComplete, setTicketingComplete] = useState(false);
   const [isEarlyBird, setIsEarlyBird] = useState(false);
-
+  
   useEffect(() => {
     const fetchTicketSettings = async () => {
       try {
@@ -35,9 +37,11 @@ const TicketPage: React.FC = () => {
         const data = await response.json();
         if (response.ok) {
           setIsEarlyBird(data.showEarlyBird); 
+          setTicketing(data.toggleTicketing);
+          setTicketingComplete(data.toggleTicketingComplete);
           setFormData(prevState => ({
             ...prevState,
-            ticketType: data.showEarlyBird ? 'Early Bird' : 'Normal',  // Set ticketType based on Early Bird availability
+            ticketType: data.showEarlyBird ? 'Early Bird' : 'Normal',
           }));
         } else {
           console.error('Error fetching ticket settings');
@@ -177,6 +181,24 @@ const TicketPage: React.FC = () => {
   };
 
   const title = isEarlyBird ? 'Early Bird Ticket Registration Form' : 'Ticket Registration Form';
+
+  if (!ticketing) {
+    return (
+      <Container className="not-available-page">
+        <h1>Not Available</h1>
+        <p>Ticketing for this event is not available at the moment.</p>
+      </Container>
+    );
+  }
+
+  if (ticketingComplete) {
+    return (
+      <Container className="sold-out-page">
+        <h1>Sold Out</h1>
+        <p>All tickets for this event have been sold out.</p>
+      </Container>
+    );
+  }
 
   return (
     <Container className="mt-5 p-4  rounded shadow-sm">

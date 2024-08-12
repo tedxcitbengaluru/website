@@ -20,7 +20,7 @@ const VIPPage: React.FC = () => {
         <div className="vip-page-container">
             <div className="login-box">
                 {!authorized && (
-                    <div><h1 className="title">VIP Access</h1>
+                    <div><h1 className="title">Admin Access</h1>
                     <div className="login-form">
                         <input
                             className="input-field"

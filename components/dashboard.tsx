@@ -5,6 +5,8 @@ import { Toaster, toast } from 'sonner';
 const AdminDashboard: React.FC = () => {
   const [ticketSettings, setTicketSettings] = useState({
     showEarlyBird: false,
+    toggleTicketing:false,
+    toggleTicketingComplete:false
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -75,6 +77,32 @@ const AdminDashboard: React.FC = () => {
               name="showEarlyBird"
               label="Show Early Bird Ticket"
               checked={ticketSettings.showEarlyBird}
+              onChange={handleChange}
+              className="form-check"
+            />
+          </Col>
+        </Row>
+        <Row className="form-row">
+          <Col md={12}>
+            <Form.Check
+              type="checkbox"
+              id="toggleTicketing"
+              name="toggleTicketing"
+              label="Ticketing"
+              checked={ticketSettings.toggleTicketing}
+              onChange={handleChange}
+              className="form-check"
+            />
+          </Col>
+        </Row>
+        <Row className="form-row">
+          <Col md={12}>
+            <Form.Check
+              type="checkbox"
+              id="toggleTicketingComplete"
+              name="toggleTicketingComplete"
+              label="Ticketing Complete"
+              checked={ticketSettings.toggleTicketingComplete}
               onChange={handleChange}
               className="form-check"
             />
