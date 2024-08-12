@@ -60,14 +60,14 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <Container className="mt-5 p-4 ">
-      <h1>Admin Dashboard</h1>
-      <p>Manage ticket types for the event.</p>
+    <Container className="admin-dashboard">
+      <h1 className="title">Admin Dashboard</h1>
+      <p className="description">Manage ticket types for the event.</p>
 
-      {error && <Alert variant="danger">{error}</Alert>}
+      {error && <Alert variant="danger" className="error-message">{error}</Alert>}
 
-      <Form onSubmit={handleSubmit}>
-        <Row className="mb-3">
+      <Form onSubmit={handleSubmit} className="settings-form">
+        <Row className="form-row">
           <Col md={12}>
             <Form.Check
               type="checkbox"
@@ -76,15 +76,15 @@ const AdminDashboard: React.FC = () => {
               label="Show Early Bird Ticket"
               checked={ticketSettings.showEarlyBird}
               onChange={handleChange}
+              className="form-check"
             />
           </Col>
         </Row>
 
         <Button
           type="submit"
-          variant="primary"
+          className="submit-button"
           disabled={isSubmitting}
-          style={{ backgroundColor: '#EA0021', borderColor: '#EA0021' }}
         >
           {isSubmitting ? 'Saving...' : 'Save Settings'}
         </Button>

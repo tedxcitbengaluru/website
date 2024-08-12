@@ -445,7 +445,7 @@ const TicketPage: React.FC = () => {
                     type="text"
                     value="tedxcit@ybl"
                     readOnly
-                    className="form-input bg-light"
+                    className="form-input"
                   />
                   <div className="text-center mt-3">
                     <Image
@@ -511,7 +511,7 @@ const TicketPage: React.FC = () => {
                     Please upload a screenshot of the payment.
                   </Form.Control.Feedback>
                   {formData.paymentScreenshot && (
-                    <Image src={formData.paymentScreenshot} alt="Payment Screenshot" fluid className="mt-2" />
+                    <Image src={formData.paymentScreenshot} alt="Payment Screenshot" fluid className="mt-2 payment-screenshot" />
                   )}
                 </Form.Group>
               </Col>
@@ -519,17 +519,17 @@ const TicketPage: React.FC = () => {
           </>
         )}
 
-        <Button type="submit" variant="primary" className="mt-4" style={{ backgroundColor: '#EA0021', borderColor: '#EA0021', opacity: isSubmitting ? 0.7 : 1 }} disabled={isSubmitting}>
+        <Button type="submit" variant="danger" className="mt-4 submit-button" disabled={isSubmitting}>
           {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </Form>
       <Toaster position="bottom-right" richColors />
       <Modal show={showConfirmModal} onHide={handleCancel} centered>
-        <Modal.Header closeButton>
+        <Modal.Header className='modal-header' closeButton>
           <Modal.Title>Confirm Submission</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to submit the form?</Modal.Body>
-        <Modal.Footer>
+        <Modal.Body className='modal-body'>Are you sure you want to submit the form?</Modal.Body>
+        <Modal.Footer className='modal-footer'>
           <Button variant="secondary" onClick={handleCancel}>
             Cancel
           </Button>

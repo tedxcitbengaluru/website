@@ -12,12 +12,16 @@ interface MyAppProps {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-        <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title>TEDxCITBengaluru</title>
-        </Head>
-        <TedNavbar />
-        <Component {...pageProps} />
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>TEDxCITBengaluru</title>
+      </Head>
+      <TedNavbar />
+      <Component {...pageProps} />
+      <footer className="footer">
+        Copyright 2023 © TEDxCITBengaluru This independent TEDx event is
+        operated under license from TED
+      </footer>
     </>
   );
 }
