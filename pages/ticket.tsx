@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState,useEffect, ChangeEvent, FormEvent } from 'react';
 import { Form, Button, Container, Image, Row, Col, Modal } from 'react-bootstrap';
 import { Toaster, toast } from 'sonner';
 
@@ -13,6 +13,7 @@ const TicketPage: React.FC = () => {
     findUsCustom: '',
     department: '',
     semester: '',
+    ticketType: '',
     paymentType: '',
     teamMemberName: '',
     upiTransactionId: '',
@@ -25,6 +26,30 @@ const TicketPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [isEarlyBird, setIsEarlyBird] = useState(false);
+
+  useEffect(() => {
+    const fetchTicketSettings = async () => {
+      try {
+        const response = await fetch('/api/getTicketSettings');
+        const data = await response.json();
+        if (response.ok) {
+          setIsEarlyBird(data.showEarlyBird); 
+          setFormData(prevState => ({
+            ...prevState,
+            ticketType: data.showEarlyBird ? 'Early Bird' : 'Normal',  // Set ticketType based on Early Bird availability
+          }));
+        } else {
+          console.error('Error fetching ticket settings');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+  
+    fetchTicketSettings();
+  }, []);
+  
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -50,7 +75,7 @@ const TicketPage: React.FC = () => {
       }));
     }
   };
-  
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -151,9 +176,11 @@ const TicketPage: React.FC = () => {
     setShowConfirmModal(false);
   };
 
+  const title = isEarlyBird ? 'Early Bird Ticket Registration Form' : 'Ticket Registration Form';
+
   return (
-    <Container className="mt-5 p-4 border rounded shadow-sm bg-white">
-      <h1 className="mb-4">Ticket Registration Form</h1>
+    <Container className="mt-5 p-4  rounded shadow-sm">
+      <h1 className="mb-4">{title}</h1>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Row className="mb-3">
           <Col md={12}>

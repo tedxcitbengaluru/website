@@ -26,7 +26,7 @@ export default async function submitToGoogleSheet(req, res) {
 
   const {
     email, fullname, phoneno, workStudy, findUs, workStudyCustom, findUsCustom,
-    department, semester, paymentType, teamMemberName, upiTransactionId, paymentScreenshot,
+    department, semester, ticketType, paymentType, teamMemberName, upiTransactionId, paymentScreenshot,
   } = req.body;
 
   const finalWorkStudy = workStudy === 'other' ? workStudyCustom : workStudy;
@@ -40,7 +40,7 @@ export default async function submitToGoogleSheet(req, res) {
     resource: {
       values: [
         [
-          email, fullname, phoneno, finalWorkStudy, finalFindUs, department, semester,
+          email, fullname, phoneno, finalWorkStudy, finalFindUs, department, semester,ticketType,
           paymentType, teamMemberName, upiTransactionId, paymentScreenshot,
         ],
       ],
