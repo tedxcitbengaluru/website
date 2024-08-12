@@ -11,23 +11,21 @@ const AdminPage = () => {
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Check if login ID and password match the environment variables
     if (
-      loginId === process.env.NEXT_PUBLIC_ADMIN_ID &&
-      password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD
+      loginId === process.env.NEXT_PUBLIC_VIP_ID &&
+      password === process.env.NEXT_PUBLIC_VIP_PASS
     ) {
-      // Redirect to the protected admin area or any other page
-      router.push('/admin/dashboard'); // Change this to your actual admin page
+      router.push('/admin/dashboard');
     } else {
       setError('Invalid login ID or password');
     }
   };
 
   return (
-    <Container>
+    <Container className='mt-5 p-4'>
       <h1>Admin Login</h1>
       <Form onSubmit={handleLogin}>
-        <Form.Group controlId="formLoginId">
+        <Form.Group controlId="formLoginId" className='mt-3' >
           <Form.Label>Login ID</Form.Label>
           <Form.Control
             type="text"
@@ -37,7 +35,7 @@ const AdminPage = () => {
             required
           />
         </Form.Group>
-        <Form.Group controlId="formPassword">
+        <Form.Group controlId="formPassword" className='mt-3'>
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -48,7 +46,7 @@ const AdminPage = () => {
           />
         </Form.Group>
         {error && <div className="alert alert-danger">{error}</div>}
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className='mt-3'>
           Login
         </Button>
       </Form>
