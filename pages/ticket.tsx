@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { Form, Button, Container, Image, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Image, Row, Col, Modal } from 'react-bootstrap';
+import { Toaster, toast } from 'sonner';
 
 const TicketPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -7,9 +8,9 @@ const TicketPage: React.FC = () => {
     fullname: '',
     phoneno: '',
     workStudy: '',
-    workStudyCustom: '', 
+    workStudyCustom: '',
     findUs: '',
-    findUsCustom: '', 
+    findUsCustom: '',
     department: '',
     semester: '',
     paymentType: '',
@@ -21,9 +22,11 @@ const TicketPage: React.FC = () => {
 
   const [showWorkStudyCustomField, setShowWorkStudyCustomField] = useState(false);
   const [showFindUsCustomField, setShowFindUsCustomField] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    const { name, value } = e.target;
   
     if (name === 'workStudy') {
       setFormData(prevState => ({
@@ -56,17 +59,24 @@ const TicketPage: React.FC = () => {
         setFormData(prevState => ({
           ...prevState,
           paymentScreenshot: reader.result as string,
-          paymentScreenshotName: file.name, 
+          paymentScreenshotName: file.name,
         }));
       };
     }
   };
   
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-  
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirm = async () => {
+    setShowConfirmModal(false);
+    setIsSubmitting(true);
+    toast('Submitting the form...');
+
     let paymentScreenshotLink = formData.paymentScreenshot;
-    let upiTransactionId = formData.upiTransactionId;
+    let email = formData.email;
     if (paymentScreenshotLink) {
       try {
         const response = await fetch('/api/uploadToGoogleDrive', {
@@ -76,31 +86,35 @@ const TicketPage: React.FC = () => {
           },
           body: JSON.stringify({
             file: paymentScreenshotLink.split(',')[1],
-            fileName: upiTransactionId, 
-            mimeType: 'image/jpeg', 
+            fileName:  email,
+            mimeType: 'image/jpeg',
           }),
         });
-  
+
         if (response.ok) {
           const { link } = await response.json();
           paymentScreenshotLink = link;
         } else {
           console.error('Error uploading file to Google Drive');
+          toast.error('Error uploading file to Google Drive');
+          setIsSubmitting(false);
           return;
         }
       } catch (error) {
         console.error('Error:', error);
+        toast.error('An error occurred while uploading the file');
+        setIsSubmitting(false);
         return;
       }
     }
-  
+
     const preparedFormData = {
       ...formData,
       workStudy: formData.workStudy === 'other' ? formData.workStudyCustom : formData.workStudy,
       findUs: formData.findUs === 'other' ? formData.findUsCustom : formData.findUs,
       paymentScreenshot: paymentScreenshotLink,
     };
-  
+
     try {
       const sheetResponse = await fetch('/api/submitToGoogleSheet', {
         method: 'POST',
@@ -109,17 +123,26 @@ const TicketPage: React.FC = () => {
         },
         body: JSON.stringify(preparedFormData),
       });
-  
+
       if (sheetResponse.ok) {
+        toast.success('Form successfully submitted!');
         console.log('Form data successfully submitted to Google Sheets!');
       } else {
         console.error('Error submitting form data');
+        toast.error('Error submitting form data');
       }
     } catch (error) {
       console.error('Error:', error);
+      toast.error('An error occurred while submitting the form');
+    } finally {
+      setIsSubmitting(false);
     }
   };
-  
+
+  const handleCancel = () => {
+    setShowConfirmModal(false);
+  };
+
   return (
     <Container className="mt-5 p-4 border rounded shadow-sm bg-white">
       <h1 className="mb-4">Ticket Registration Form</h1>
@@ -165,6 +188,8 @@ const TicketPage: React.FC = () => {
                 name="phoneno"
                 value={formData.phoneno}
                 onChange={handleChange}
+                pattern="^\d{10}$"
+                title="Phone number must be exactly 10 digits."
                 required
                 className="form-input"
               />
@@ -346,7 +371,7 @@ const TicketPage: React.FC = () => {
                   src="/upi id.jpeg"
                   alt="UPI QR Code"
                   className="img-fluid"
-                  style={{ maxWidth: '50%' }} // Adjust as needed
+                  style={{ maxWidth: '50%' }} 
                 />
               </div>
             </Form.Group>
@@ -369,7 +394,8 @@ const TicketPage: React.FC = () => {
           </Col>
         </Row>
 
-        <Row className="mb-3">
+        {formData.paymentType === 'upi' && (
+          <Row className="mb-3">
           <Col md={12}>
             <Form.Group controlId="formUpiTransactionId">
               <Form.Label>UPI Transaction ID</Form.Label>
@@ -384,6 +410,7 @@ const TicketPage: React.FC = () => {
             </Form.Group>
           </Col>
         </Row>
+        )}
 
         <Row className="mb-3">
           <Col md={12}>
@@ -403,10 +430,25 @@ const TicketPage: React.FC = () => {
           </Col>
         </Row>
 
-        <Button type="submit" variant="primary" className="mt-4" style={{ backgroundColor: '#EA0021', borderColor: '#EA0021' }}>
-          Submit
+        <Button type="submit" variant="primary" className="mt-4" style={{ backgroundColor: '#EA0021', borderColor: '#EA0021', opacity: isSubmitting ? 0.7 : 1 }} disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </Form>
+      <Toaster position="bottom-right" richColors />
+      <Modal show={showConfirmModal} onHide={handleCancel} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Submission</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to submit the form?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleConfirm}>
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

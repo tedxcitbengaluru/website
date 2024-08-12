@@ -57,6 +57,44 @@ body {
   color: #F5F5F5; 
 }
 
+.container-background {
+  background-color: #121212;
+  color: #E0E0E0; /* Light Gray for text */
+}
+.submit-button {
+  background-color: #E62B1E;
+  border-color: #E62B1E;
+  color: #F5F5F5; /* Off-White for text */
+}
+
+.submit-button:disabled {
+  opacity: 0.7;
+}
+.card-background {
+  background-color: #1F1F1F;
+  color: #E0E0E0; /* Light Gray for text */
+}
+.form-input {
+  background-color: #F5F5F5;
+  color: #121212; /* Primary Black for text */
+}
+
+.form-select {
+  background-color: #F5F5F5;
+  color: #121212; /* Primary Black for text */
+}
+
+.form-file-input {
+  background-color: #F5F5F5;
+  color: #121212; /* Primary Black for text */
+}
+.modal-header,
+.modal-footer {
+  background-color: #1F1F1F; /* Dark Gray for modal */
+  color: #E0E0E0; /* Light Gray for text */
+}
+
+
 
 
 
