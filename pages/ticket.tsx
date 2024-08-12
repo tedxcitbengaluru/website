@@ -24,6 +24,7 @@ const TicketPage: React.FC = () => {
   const [showFindUsCustomField, setShowFindUsCustomField] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [validated, setValidated] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -64,10 +65,17 @@ const TicketPage: React.FC = () => {
       };
     }
   };
-  
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setShowConfirmModal(true);
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+    }
+    setValidated(true);
+    if (form.checkValidity()) {
+      setShowConfirmModal(true);
+    }
   };
 
   const handleConfirm = async () => {
@@ -146,7 +154,7 @@ const TicketPage: React.FC = () => {
   return (
     <Container className="mt-5 p-4 border rounded shadow-sm bg-white">
       <h1 className="mb-4">Ticket Registration Form</h1>
-      <Form onSubmit={handleSubmit}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Row className="mb-3">
           <Col md={12}>
             <Form.Group controlId="formEmail">
@@ -158,7 +166,11 @@ const TicketPage: React.FC = () => {
                 onChange={handleChange}
                 required
                 className="form-input"
+                isInvalid={validated && !formData.email}
               />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid email address.
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -174,7 +186,11 @@ const TicketPage: React.FC = () => {
                 onChange={handleChange}
                 required
                 className="form-input"
+                isInvalid={validated && !formData.fullname}
               />
+              <Form.Control.Feedback type="invalid">
+                Please provide your full name.
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -192,7 +208,11 @@ const TicketPage: React.FC = () => {
                 title="Phone number must be exactly 10 digits."
                 required
                 className="form-input"
+                isInvalid={validated && !formData.phoneno.match(/^\d{10}$/)}
               />
+              <Form.Control.Feedback type="invalid">
+                Phone number must be exactly 10 digits.
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -208,11 +228,15 @@ const TicketPage: React.FC = () => {
                 onChange={handleChange}
                 required
                 className="form-select"
+                isInvalid={validated && !formData.workStudy}
               >
                 <option value="">Select</option>
                 <option value="College">CIT</option>
                 <option value="other">Other</option>
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please select where you work or study.
+              </Form.Control.Feedback>
             </Form.Group>
             {showWorkStudyCustomField && (
               <Form.Group controlId="formWorkStudyCustom" className="mt-3">
@@ -224,7 +248,11 @@ const TicketPage: React.FC = () => {
                   onChange={handleChange}
                   required
                   className="form-input"
+                  isInvalid={validated && formData.workStudy === 'other' && !formData.workStudyCustom}
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please specify if you selected "Other".
+                </Form.Control.Feedback>
               </Form.Group>
             )}
           </Col>
@@ -241,6 +269,7 @@ const TicketPage: React.FC = () => {
                 onChange={handleChange}
                 required
                 className="form-select"
+                isInvalid={validated && !formData.findUs}
               >
                 <option value="">Select</option>
                 <option value="College">College</option>
@@ -248,6 +277,9 @@ const TicketPage: React.FC = () => {
                 <option value="Friends">Friends</option>
                 <option value="other">Other</option>
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please select how you found us.
+              </Form.Control.Feedback>
             </Form.Group>
             {showFindUsCustomField && (
               <Form.Group controlId="formFindUsCustom" className="mt-3">
@@ -259,7 +291,11 @@ const TicketPage: React.FC = () => {
                   onChange={handleChange}
                   required
                   className="form-input"
+                  isInvalid={validated && formData.findUs === 'other' && !formData.findUsCustom}
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please specify if you selected "Other".
+                </Form.Control.Feedback>
               </Form.Group>
             )}
           </Col>
@@ -276,6 +312,7 @@ const TicketPage: React.FC = () => {
                 onChange={handleChange}
                 required
                 className="form-select"
+                isInvalid={validated && !formData.department}
               >
                 <option value="">Select Department</option>
                 <option value="CSE">CSE</option>
@@ -287,6 +324,9 @@ const TicketPage: React.FC = () => {
                 <option value="Faculty">Faculty</option>
                 <option value="MBA/Commerce/Degree">MBA/Commerce/Degree</option>
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please select your department.
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -302,6 +342,7 @@ const TicketPage: React.FC = () => {
                 onChange={handleChange}
                 required
                 className="form-select"
+                isInvalid={validated && !formData.semester}
               >
                 <option value="">Select Semester</option>
                 <option value="1">1</option>
@@ -314,6 +355,9 @@ const TicketPage: React.FC = () => {
                 <option value="8">8</option>
                 <option value="Alumni">Alumni</option>
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please select your semester.
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -329,11 +373,15 @@ const TicketPage: React.FC = () => {
                 onChange={handleChange}
                 required
                 className="form-select"
+                isInvalid={validated && !formData.paymentType}
               >
                 <option value="">Select Payment Mode</option>
                 <option value="cash">Cash</option>
                 <option value="upi">UPI</option>
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please select a payment mode.
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -350,85 +398,99 @@ const TicketPage: React.FC = () => {
                   onChange={handleChange}
                   required
                   className="form-input"
+                  isInvalid={validated && !formData.teamMemberName}
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please provide the team member's name.
+                </Form.Control.Feedback>
               </Form.Group>
             </Col>
           </Row>
         )}
 
-        <Row className="mb-3">
-          <Col md={12}>
-            <Form.Group controlId="formUpiId">
-              <Form.Label>UPI ID</Form.Label>
-              <Form.Control
-                type="text"
-                value="tedxcit@ybl"
-                readOnly
-                className="form-input bg-light"
-              />
-              <div className="text-center mt-3">
-                <Image
-                  src="/upi id.jpeg"
-                  alt="UPI QR Code"
-                  className="img-fluid"
-                  style={{ maxWidth: '50%' }} 
-                />
-              </div>
-            </Form.Group>
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col md={12}>
-            <Form.Group controlId="formExampleTransactions">
-              <Form.Label>Example Transactions</Form.Label>
-              <div className="text-center mt-3">
-                <Image
-                  src="/example transaction.jpeg"
-                  alt="Example Transactions"
-                  className="img-fluid"
-                  style={{ maxWidth: '50%' }} 
-                />
-              </div>
-            </Form.Group>
-          </Col>
-        </Row>
-
         {formData.paymentType === 'upi' && (
-          <Row className="mb-3">
-          <Col md={12}>
-            <Form.Group controlId="formUpiTransactionId">
-              <Form.Label>UPI Transaction ID</Form.Label>
-              <Form.Control
-                type="text"
-                name="upiTransactionId"
-                value={formData.upiTransactionId}
-                onChange={handleChange}
-                required
-                className="form-input"
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        )}
+          <>
+            <Row className="mb-3">
+              <Col md={12}>
+                <Form.Group controlId="formUpiId">
+                  <Form.Label>UPI ID</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value="tedxcit@ybl"
+                    readOnly
+                    className="form-input bg-light"
+                  />
+                  <div className="text-center mt-3">
+                    <Image
+                      src="/upi id.jpeg"
+                      alt="UPI QR Code"
+                      className="img-fluid"
+                      style={{ maxWidth: '50%' }} 
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
 
-        <Row className="mb-3">
-          <Col md={12}>
-            <Form.Group controlId="formPaymentScreenshot">
-              <Form.Label>Screenshot of Payment</Form.Label>
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                required
-                className="form-file-input"
-              />
-              {formData.paymentScreenshot && (
-                <Image src={formData.paymentScreenshot} alt="Payment Screenshot" fluid className="mt-2" />
-              )}
-            </Form.Group>
-          </Col>
-        </Row>
+            <Row className="mb-3">
+              <Col md={12}>
+                <Form.Group controlId="formExampleTransactions">
+                  <Form.Label>Example Transactions</Form.Label>
+                  <div className="text-center mt-3">
+                    <Image
+                      src="/example transaction.jpeg"
+                      alt="Example Transactions"
+                      className="img-fluid"
+                      style={{ maxWidth: '50%' }} 
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={12}>
+                <Form.Group controlId="formUpiTransactionId">
+                  <Form.Label>UPI Transaction ID</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="upiTransactionId"
+                    value={formData.upiTransactionId}
+                    onChange={handleChange}
+                    required
+                    className="form-input"
+                    isInvalid={validated && !formData.upiTransactionId}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please provide the UPI transaction ID.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={12}>
+                <Form.Group controlId="formPaymentScreenshot">
+                  <Form.Label>Screenshot of Payment</Form.Label>
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    required
+                    className="form-file-input"
+                    isInvalid={validated && !formData.paymentScreenshot}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please upload a screenshot of the payment.
+                  </Form.Control.Feedback>
+                  {formData.paymentScreenshot && (
+                    <Image src={formData.paymentScreenshot} alt="Payment Screenshot" fluid className="mt-2" />
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+          </>
+        )}
 
         <Button type="submit" variant="primary" className="mt-4" style={{ backgroundColor: '#EA0021', borderColor: '#EA0021', opacity: isSubmitting ? 0.7 : 1 }} disabled={isSubmitting}>
           {isSubmitting ? 'Submitting...' : 'Submit'}
