@@ -22,7 +22,7 @@ export default async function submitToGoogleSheet(req, res) {
   const sheets = google.sheets({ version: 'v4', auth: authClient });
 
   const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
-  const range = 'Sheet1!A1';
+  const range = 'Ticket Sheet!A1';
 
   const formDataArray = req.body; 
 
