@@ -11,7 +11,7 @@ const TedNavbar: React.FC = () => {
       <Container>
         <Navbar.Brand href="/">
           <img
-            src="/slideshow/tedx/logo-white.png"  
+            src="/tedx/logo-white.png"  
             alt="TEDxCITBengaluru"
             style={{ height: '40px' }}  
           />
@@ -29,7 +29,7 @@ const TedNavbar: React.FC = () => {
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id="offcanvasNavbarLabel">
               <img
-                src="/slideshow/tedx/logo-white.png" 
+                src="/tedx/logo-white.png" 
                 alt="TEDxCITBengaluru"
                 style={{ height: '40px' }} 
               />

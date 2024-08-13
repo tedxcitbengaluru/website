@@ -322,7 +322,7 @@ const TeamTicketPage: React.FC = () => {
 
   return (
     <Container className="mt-5 p-4 rounded shadow-sm">
-      <h1 className="mb-4">{title}</h1>
+      <h1 className="my-5">{title}</h1>
       {!title.includes('Early Bird') && (
         <Col>
         <Form.Group controlId="formTicketType">
