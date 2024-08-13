@@ -1,26 +1,33 @@
-import React, { useState,useEffect, ChangeEvent, FormEvent } from 'react';
-import { Form, Button, Container, Image, Row, Col, Modal } from 'react-bootstrap';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { Form, Button, Container, Row, Col, Modal, Image,Spinner } from 'react-bootstrap';
 import { Toaster, toast } from 'sonner';
 
-const TicketPage: React.FC = () => {
+interface TeamMember {
+  email: string;
+  phoneNo: string;
+  name: string;
+  workStudy: string;
+  workStudyCustom: string;
+  findUs: string;
+  findUsCustom: string;
+  department: string;
+  semester: string;
+  showWorkStudyCustom?: boolean;
+  showFindUsCustom?: boolean;
+}
+
+const TeamTicketPage: React.FC = () => {
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [formData, setFormData] = useState({
-    email: '',
-    fullname: '',
-    phoneno: '',
-    workStudy: '',
-    workStudyCustom: '',
-    findUs: '',
-    findUsCustom: '',
-    department: '',
-    semester: '',
-    ticketType: '',
     paymentType: '',
     teamMemberName: '',
     upiTransactionId: '',
     paymentScreenshot: '',
     paymentScreenshotName: '',
+    ticketType: '',
   });
 
+  const [ticketType, setTicketType] = useState('');
   const [showWorkStudyCustomField, setShowWorkStudyCustomField] = useState(false);
   const [showFindUsCustomField, setShowFindUsCustomField] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,55 +36,101 @@ const TicketPage: React.FC = () => {
   const [ticketing, setTicketing] = useState(false);
   const [ticketingComplete, setTicketingComplete] = useState(false);
   const [isEarlyBird, setIsEarlyBird] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [loading, setLoading] = useState(true);
   
+
   useEffect(() => {
     const fetchTicketSettings = async () => {
       try {
-        const response = await fetch('/api/getTicketSettings');
+        const response = await fetch('/api/ticket-settings');
         const data = await response.json();
         if (response.ok) {
-          setIsEarlyBird(data.showEarlyBird); 
+          const initialTicketType = data.showEarlyBird ? 'earlyBird' : '';
+          const initialMemberCount = data.showEarlyBird ? 1 : 0;
+
+          setIsEarlyBird(data.showEarlyBird);
           setTicketing(data.toggleTicketing);
           setTicketingComplete(data.toggleTicketingComplete);
-          setFormData(prevState => ({
-            ...prevState,
-            ticketType: data.showEarlyBird ? 'Early Bird' : 'Normal',
-          }));
+          setTicketType(initialTicketType);
+          setCounter(data.counter);
+
+          setTeamMembers(Array(initialMemberCount).fill(null).map(() => ({
+            email: '',
+            phoneNo: '',
+            name: '',
+            workStudy: '',
+            workStudyCustom: '',
+            findUs: '',
+            findUsCustom: '',
+            department: '',
+            semester: '',
+          })));
         } else {
           console.error('Error fetching ticket settings');
         }
       } catch (error) {
         console.error('Error:', error);
+      } finally {
+        setLoading(false);
       }
     };
-  
+
     fetchTicketSettings();
   }, []);
+
+  const handleTicketTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selectedType = e.target.value;
+    setTicketType(selectedType);
+    let memberCount = 1;
+    if (selectedType === 'groupOf3') {
+      memberCount = 3;
+    } else if (selectedType === 'groupOf5') {
+      memberCount = 5;
+    }
+
+    if (isEarlyBird) {
+      setTicketType('earlyBird');
+      memberCount = 1;
+    }
+
+    setTeamMembers(Array(memberCount).fill(null).map(() => ({
+      email: '',
+      phoneNo: '',
+      name: '',
+      workStudy: '',
+      workStudyCustom: '',
+      findUs: '',
+      findUsCustom: '',
+      department: '',
+      semester: '',
+    })));
+  };
+
+  const handleTeamMemberChange = (index: number, e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    const newTeamMembers = [...teamMembers];
+    const updatedMember = { ...newTeamMembers[index], [name]: value };
+  
+    if (name === 'workStudy') {
+      updatedMember.workStudyCustom = value === 'other' ? updatedMember.workStudyCustom : '';
+      setShowWorkStudyCustomField(value === 'other');
+    } else if (name === 'findUs') {
+      updatedMember.findUsCustom = value === 'other' ? updatedMember.findUsCustom : '';
+      setShowFindUsCustomField(value === 'other');
+    }
+  
+    newTeamMembers[index] = updatedMember;
+    setTeamMembers(newTeamMembers);
+  };
   
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-  
-    if (name === 'workStudy') {
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: value,
-        workStudyCustom: value === 'other' ? prevState.workStudyCustom : '',
-      }));
-      setShowWorkStudyCustomField(value === 'other');
-    } else if (name === 'findUs') {
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: value,
-        findUsCustom: value === 'other' ? prevState.findUsCustom : '',
-      }));
-      setShowFindUsCustomField(value === 'other');
-    } else {
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +150,7 @@ const TicketPage: React.FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement; 
+    const form = e.currentTarget as HTMLFormElement;
     if (form.checkValidity() === false) {
       e.stopPropagation();
     }
@@ -111,9 +164,9 @@ const TicketPage: React.FC = () => {
     setShowConfirmModal(false);
     setIsSubmitting(true);
     toast('Submitting the form...');
-
+  
     let paymentScreenshotLink = formData.paymentScreenshot;
-    let email = formData.email;
+    let upitransactionid = formData.upiTransactionId;
     if (paymentScreenshotLink) {
       try {
         const response = await fetch('/api/uploadToGoogleDrive', {
@@ -123,11 +176,11 @@ const TicketPage: React.FC = () => {
           },
           body: JSON.stringify({
             file: paymentScreenshotLink.split(',')[1],
-            fileName:  email,
+            fileName: upitransactionid,
             mimeType: 'image/jpeg',
           }),
         });
-
+  
         if (response.ok) {
           const { link } = await response.json();
           paymentScreenshotLink = link;
@@ -144,13 +197,17 @@ const TicketPage: React.FC = () => {
         return;
       }
     }
-
-    const preparedFormData = {
+  
+    const preparedFormData = teamMembers.map(member => ({
+      ...member,
       ...formData,
-      workStudy: formData.workStudy === 'other' ? formData.workStudyCustom : formData.workStudy,
-      findUs: formData.findUs === 'other' ? formData.findUsCustom : formData.findUs,
       paymentScreenshot: paymentScreenshotLink,
-    };
+      ticketType: ticketType,
+    }));
+
+    console.log(preparedFormData);
+  
+    const newCounter = counter + teamMembers.length; 
 
     try {
       const sheetResponse = await fetch('/api/submitToGoogleSheet', {
@@ -160,10 +217,29 @@ const TicketPage: React.FC = () => {
         },
         body: JSON.stringify(preparedFormData),
       });
-
+  
       if (sheetResponse.ok) {
-        toast.success('Form successfully submitted!');
-        console.log('Form data successfully submitted to Google Sheets!');
+        const counterUpdateResponse = await fetch('/api/ticket-settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            showEarlyBird: isEarlyBird,
+            toggleTicketing: ticketing,
+            toggleTicketingComplete: ticketingComplete,
+            counter: newCounter,
+          }),
+        });
+  
+        if (counterUpdateResponse.ok) {
+          setCounter(newCounter);
+          toast.success('Form successfully submitted!');
+          console.log('Form data successfully submitted to Google Sheets!');
+        } else {
+          console.error('Error updating counter');
+          toast.error('Error updating counter');
+        }
       } else {
         console.error('Error submitting form data');
         toast.error('Error submitting form data');
@@ -180,7 +256,13 @@ const TicketPage: React.FC = () => {
     setShowConfirmModal(false);
   };
 
-  const title = isEarlyBird ? 'Early Bird Ticket Registration Form' : 'Ticket Registration Form';
+  if (loading) {
+    return (
+      <Container className="loading-page">
+        <Spinner animation="grow" />
+      </Container>
+    );
+  }
 
   if (!ticketing) {
     return (
@@ -200,168 +282,184 @@ const TicketPage: React.FC = () => {
     );
   }
 
+  const title = isEarlyBird ? 'Early Bird Ticket Registration Form' : `${ticketType === '' ? '' : ticketType === 'solo' ? 'Solo' : ticketType === 'groupOf3' ? 'Group of 3' : 'Group of 5'} Ticket Registration Form`;
+
   return (
-    <Container className="mt-5 p-4  rounded shadow-sm">
+    <Container className="mt-5 p-4 rounded shadow-sm">
       <h1 className="mb-4">{title}</h1>
+      {!title.includes('Early Bird') && (
+        <Form.Group controlId="formTicketType">
+          <Form.Label>Ticket Type</Form.Label>
+          <Form.Select as="select" value={ticketType} onChange={handleTicketTypeChange} required>
+            <option value="">Select Ticket Type...</option>
+            <option value="solo">Solo</option>
+            <option value="groupOf3">Group of 3</option>
+            <option value="groupOf5">Group of 5</option>
+          </Form.Select>
+          <Form.Control.Feedback type="invalid">
+            Please select a ticket type.
+          </Form.Control.Feedback>
+        </Form.Group>
+      )}
+      { ticketType && (
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Row className="mb-3">
-          <Col md={12}>
-            <Form.Group controlId="formEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="form-input"
-                isInvalid={validated && !formData.email}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid email address.
-              </Form.Control.Feedback>
-            </Form.Group>
+        {teamMembers.map((member, index) => (
+          <React.Fragment key={index}>
+            <Row className="mb-3">
+              <Col md={12}>
+                <Form.Group controlId={`formEmail${index}`}>
+                  <Form.Label>Email for Member {index + 1}</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={member.email}
+                    onChange={(e) => handleTeamMemberChange(index, e)}
+                    required
+                    isInvalid={validated && !member.email}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please provide a valid email address for member {index + 1}.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={12}>
+                <Form.Group controlId={`formPhoneNo${index}`}>
+                  <Form.Label>Phone Number for Member {index + 1}</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    name="phoneNo"
+                    value={member.phoneNo}
+                    onChange={(e) => handleTeamMemberChange(index, e)}
+                    pattern="^\d{10}$"
+                    title="Phone number must be exactly 10 digits."
+                    required
+                    isInvalid={validated && !member.phoneNo.match(/^\d{10}$/)}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Phone number for member {index + 1} must be exactly 10 digits.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={12}>
+                <Form.Group controlId={`formName${index}`}>
+                  <Form.Label>Name of Member {index + 1}</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={member.name}
+                    onChange={(e) => handleTeamMemberChange(index, e)}
+                    required
+                    isInvalid={validated && !member.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please provide the name of member {index + 1}.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={12}>
+                <Form.Group controlId={`formWorkStudy${index}`}>
+                  <Form.Label>Where do you work/study?</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="workStudy"
+                    value={member.workStudy}
+                    onChange={(e) => handleTeamMemberChange(index, e)}
+                    required
+                    className="form-select"
+                    isInvalid={validated && !member.workStudy}
+                  >
+                    <option value="">Select</option>
+                    <option value="College">CIT</option>
+                    <option value="other">Other</option>
+                  </Form.Control>
+                  <Form.Control.Feedback type="invalid">
+                    Please select where you work or study.
+                  </Form.Control.Feedback>
+                </Form.Group>
+                {member.workStudy === 'other' && (
+                  <Form.Group controlId={`formWorkStudyCustom${index}`} className="mt-3">
+                    <Form.Label>If other, please specify</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="workStudyCustom"
+                      value={member.workStudyCustom}
+                      onChange={(e) => handleTeamMemberChange(index, e)}
+                      required
+                      className="form-input"
+                      isInvalid={validated && member.workStudy === 'other' && !member.workStudyCustom}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please specify if you selected "Other".
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                )}
+              </Col>
+            </Row>
+
+            <Row className="mb-3">
+              <Col md={12}>
+                <Form.Group controlId={`formFindUs${index}`}>
+                  <Form.Label>How did you find us?</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="findUs"
+                    value={member.findUs}
+                    onChange={(e) => handleTeamMemberChange(index, e)}
+                    required
+                    className="form-select"
+                    isInvalid={validated && !member.findUs}
+                  >
+                    <option value="">Select</option>
+                    <option value="College">College</option>
+                    <option value="Social Media">Social Media</option>
+                    <option value="Friends">Friends</option>
+                    <option value="other">Other</option>
+                  </Form.Control>
+                  <Form.Control.Feedback type="invalid">
+                    Please select how you found us.
+                  </Form.Control.Feedback>
+                </Form.Group>
+                {member.findUs === 'other' && (
+                  <Form.Group controlId={`formFindUsCustom${index}`} className="mt-3">
+                    <Form.Label>If other, please specify</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="findUsCustom"
+                      value={member.findUsCustom}
+                      onChange={(e) => handleTeamMemberChange(index, e)}
+                      required
+                      className="form-input"
+                      isInvalid={validated && member.findUs === 'other' && !member.findUsCustom}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please specify if you selected "Other".
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                )}
           </Col>
         </Row>
 
         <Row className="mb-3">
           <Col md={12}>
-            <Form.Group controlId="formFullName">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="fullname"
-                value={formData.fullname}
-                onChange={handleChange}
-                required
-                className="form-input"
-                isInvalid={validated && !formData.fullname}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide your full name.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col md={12}>
-            <Form.Group controlId="formPhoneNo">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                type="tel"
-                name="phoneno"
-                value={formData.phoneno}
-                onChange={handleChange}
-                pattern="^\d{10}$"
-                title="Phone number must be exactly 10 digits."
-                required
-                className="form-input"
-                isInvalid={validated && !formData.phoneno.match(/^\d{10}$/)}
-              />
-              <Form.Control.Feedback type="invalid">
-                Phone number must be exactly 10 digits.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col md={12}>
-            <Form.Group controlId="formWorkStudy">
-              <Form.Label>Where do you work/study?</Form.Label>
-              <Form.Control
-                as="select"
-                name="workStudy"
-                value={formData.workStudy}
-                onChange={handleChange}
-                required
-                className="form-select"
-                isInvalid={validated && !formData.workStudy}
-              >
-                <option value="">Select</option>
-                <option value="College">CIT</option>
-                <option value="other">Other</option>
-              </Form.Control>
-              <Form.Control.Feedback type="invalid">
-                Please select where you work or study.
-              </Form.Control.Feedback>
-            </Form.Group>
-            {showWorkStudyCustomField && (
-              <Form.Group controlId="formWorkStudyCustom" className="mt-3">
-                <Form.Label>If other, please specify</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="workStudyCustom"
-                  value={formData.workStudyCustom}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                  isInvalid={validated && formData.workStudy === 'other' && !formData.workStudyCustom}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please specify if you selected &quot;Other&quot;.
-                </Form.Control.Feedback>
-              </Form.Group>
-            )}
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col md={12}>
-            <Form.Group controlId="formFindUs">
-              <Form.Label>How did you find us?</Form.Label>
-              <Form.Control
-                as="select"
-                name="findUs"
-                value={formData.findUs}
-                onChange={handleChange}
-                required
-                className="form-select"
-                isInvalid={validated && !formData.findUs}
-              >
-                <option value="">Select</option>
-                <option value="College">College</option>
-                <option value="Social Media">Social Media</option>
-                <option value="Friends">Friends</option>
-                <option value="other">Other</option>
-              </Form.Control>
-              <Form.Control.Feedback type="invalid">
-                Please select how you found us.
-              </Form.Control.Feedback>
-            </Form.Group>
-            {showFindUsCustomField && (
-              <Form.Group controlId="formFindUsCustom" className="mt-3">
-                <Form.Label>If other, please specify</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="findUsCustom"
-                  value={formData.findUsCustom}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                  isInvalid={validated && formData.findUs === 'other' && !formData.findUsCustom}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please specify if you selected &quot;Other&quot;.
-                </Form.Control.Feedback>
-              </Form.Group>
-            )}
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          <Col md={12}>
-            <Form.Group controlId="formDepartment">
+            <Form.Group controlId={`formDepartment${index}`}>
               <Form.Label>Department</Form.Label>
               <Form.Control
                 as="select"
                 name="department"
-                value={formData.department}
-                onChange={handleChange}
+                value={member.department}
+                onChange={(e) => handleTeamMemberChange(index, e)}
                 required
                 className="form-select"
-                isInvalid={validated && !formData.department}
+                isInvalid={validated && !member.department}
               >
                 <option value="">Select Department</option>
                 <option value="CSE">CSE</option>
@@ -382,16 +480,16 @@ const TicketPage: React.FC = () => {
 
         <Row className="mb-3">
           <Col md={12}>
-            <Form.Group controlId="formSemester">
+            <Form.Group controlId={`formSemester${index}`}>
               <Form.Label>Semester</Form.Label>
               <Form.Control
                 as="select"
                 name="semester"
-                value={formData.semester}
-                onChange={handleChange}
+                value={member.semester}
+                onChange={(e) => handleTeamMemberChange(index, e)}
                 required
                 className="form-select"
-                isInvalid={validated && !formData.semester}
+                isInvalid={validated && !member.semester}
               >
                 <option value="">Select Semester</option>
                 <option value="1">1</option>
@@ -410,26 +508,26 @@ const TicketPage: React.FC = () => {
             </Form.Group>
           </Col>
         </Row>
+        </React.Fragment>
+        ))}
 
         <Row className="mb-3">
           <Col md={12}>
             <Form.Group controlId="formPaymentType">
-              <Form.Label>Payment Type (Mode)</Form.Label>
+              <Form.Label>Payment Type</Form.Label>
               <Form.Control
                 as="select"
                 name="paymentType"
                 value={formData.paymentType}
                 onChange={handleChange}
                 required
-                className="form-select"
-                isInvalid={validated && !formData.paymentType}
               >
-                <option value="">Select Payment Mode</option>
+                <option value="">Select...</option>
                 <option value="cash">Cash</option>
                 <option value="upi">UPI</option>
               </Form.Control>
               <Form.Control.Feedback type="invalid">
-                Please select a payment mode.
+                Please select a payment type.
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
@@ -439,18 +537,16 @@ const TicketPage: React.FC = () => {
           <Row className="mb-3">
             <Col md={12}>
               <Form.Group controlId="formTeamMemberName">
-                <Form.Label>Team Member Name (Cash received by whom)</Form.Label>
+                <Form.Label>Team Member Name for Cash Payment</Form.Label>
                 <Form.Control
                   type="text"
                   name="teamMemberName"
                   value={formData.teamMemberName}
                   onChange={handleChange}
                   required
-                  className="form-input"
-                  isInvalid={validated && !formData.teamMemberName}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please provide the team member&apos;s name.
+                  Please provide the name of the team member for cash payment.
                 </Form.Control.Feedback>
               </Form.Group>
             </Col>
@@ -507,11 +603,9 @@ const TicketPage: React.FC = () => {
                     value={formData.upiTransactionId}
                     onChange={handleChange}
                     required
-                    className="form-input"
-                    isInvalid={validated && !formData.upiTransactionId}
                   />
                   <Form.Control.Feedback type="invalid">
-                    Please provide the UPI transaction ID.
+                    Please provide your UPI transaction ID.
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
@@ -520,16 +614,15 @@ const TicketPage: React.FC = () => {
             <Row className="mb-3">
               <Col md={12}>
                 <Form.Group controlId="formPaymentScreenshot">
-                  <Form.Label>Screenshot of Payment</Form.Label>
+                  <Form.Label>Payment Screenshot</Form.Label>
                   <Form.Control
                     type="file"
+                    name="paymentScreenshot"
                     accept="image/*"
                     onChange={handleFileChange}
                     required
-                    className="form-file-input"
-                    isInvalid={validated && !formData.paymentScreenshot}
                   />
-                  <Form.Control.Feedback type="invalid">
+                   <Form.Control.Feedback type="invalid">
                     Please upload a screenshot of the payment.
                   </Form.Control.Feedback>
                   {formData.paymentScreenshot && (
@@ -545,6 +638,7 @@ const TicketPage: React.FC = () => {
           {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </Form>
+       )}
       <Toaster position="bottom-right" richColors />
       <Modal show={showConfirmModal} onHide={handleCancel} centered>
         <Modal.Header className='modal-header' closeButton>
@@ -561,7 +655,7 @@ const TicketPage: React.FC = () => {
         </Modal.Footer>
       </Modal>
     </Container>
-  );
+    );
 };
 
-export default TicketPage;
+export default TeamTicketPage;

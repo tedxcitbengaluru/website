@@ -21,16 +21,25 @@ export default async function submitToGoogleSheet(req, res) {
   const authClient = await auth.getClient();
   const sheets = google.sheets({ version: 'v4', auth: authClient });
 
-  const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID; 
+  const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
   const range = 'Sheet1!A1';
 
-  const {
-    email, fullname, phoneno, workStudy, findUs, workStudyCustom, findUsCustom,
-    department, semester, ticketType, paymentType, teamMemberName, upiTransactionId, paymentScreenshot,
-  } = req.body;
+  const formDataArray = req.body; 
 
-  const finalWorkStudy = workStudy === 'other' ? workStudyCustom : workStudy;
-  const finalFindUs = findUs === 'other' ? findUsCustom : findUs;
+  const values = formDataArray.map(data => {
+    const {
+      email, name, phoneNo, workStudy, findUs, workStudyCustom, findUsCustom,
+      department, semester, ticketType, paymentType, teamMemberName, upiTransactionId, paymentScreenshot,
+    } = data;
+
+    const finalWorkStudy = workStudy === 'other' ? workStudyCustom : workStudy;
+    const finalFindUs = findUs === 'other' ? findUsCustom : findUs;
+
+    return [
+      email, name, phoneNo, finalWorkStudy, finalFindUs, department, semester, ticketType,
+      paymentType, teamMemberName, upiTransactionId, paymentScreenshot,
+    ];
+  });
 
   const request = {
     spreadsheetId,
@@ -38,12 +47,7 @@ export default async function submitToGoogleSheet(req, res) {
     valueInputOption: 'RAW',
     insertDataOption: 'INSERT_ROWS',
     resource: {
-      values: [
-        [
-          email, fullname, phoneno, finalWorkStudy, finalFindUs, department, semester,ticketType,
-          paymentType, teamMemberName, upiTransactionId, paymentScreenshot,
-        ],
-      ],
+      values,
     },
   };
 

@@ -220,6 +220,7 @@ body {
   border-radius: 4px;
   padding: 12px 20px;
   font-size: 16px;
+  margin-bottom: 20%;
 }
 
 .submit-button:disabled {
