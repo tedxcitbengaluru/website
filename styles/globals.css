@@ -207,31 +207,6 @@ body {
   padding: 8px;
 }
 
-.submit-button {
-  background-color: #E62B1E;
-  color: #F5F5F5; 
-  border: none;
-  border-radius: 4px;
-  padding: 12px 20px;
-  font-size: 16px;
-  margin-bottom: 20%;
-}
-
-.submit-button:disabled {
-  background-color: #C4C4C4; 
-  cursor: not-allowed;
-}
-
-.modal-header {
-  background-color: #E62B1E; 
-  color: #F5F5F5; 
-}
-
-.modal-body {
-  background-color: #F5F5F5; 
-  color: #121212; 
-}
-
 .modal-footer {
   background-color: #E0E0E0; 
 }
@@ -240,4 +215,70 @@ body {
   max-width: 100%;
   height: auto;
   margin-top: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.submit-button,
+.export-button {
+  flex-grow: 1;
+}
+
+.export-button {
+  background-color: #1F1F1F; 
+  color: #F5F5F5; 
+  border: 1px solid #E62B1E; 
+  margin-bottom: 30%;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.export-button:hover {
+  background-color: #121212; 
+  transform: translateY(-2px);
+}
+
+.export-button:active {
+  background-color: #0D0D0D;
+  transform: translateY(0);
+}
+
+.export-button:disabled {
+  background-color: #aaa; 
+  cursor: not-allowed;
+}
+
+.submit-button {
+  background-color: #E62B1E; 
+  color: #F5F5F5; 
+  border: none;
+  margin-bottom: 30%;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #C9231A;
+  transform: translateY(-2px);
+}
+
+.submit-button:active {
+  background-color: #B51E16;
+  transform: translateY(0);
+}
+
+.submit-button:disabled {
+  background-color: #aaa; 
+  cursor: not-allowed;
 }

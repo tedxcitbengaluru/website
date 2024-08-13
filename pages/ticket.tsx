@@ -256,6 +256,42 @@ const TeamTicketPage: React.FC = () => {
     setShowConfirmModal(false);
   };
 
+  const handleExport = () => {
+    const dataToExport = {
+      teamMembers,
+      formData,
+      ticketType,
+      counter,
+    };
+
+    const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(dataToExport))}`;
+    const link = document.createElement('a');
+    link.href = jsonString;
+    link.download = 'formData.json';
+    link.click();
+  };
+
+  const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const importedData = JSON.parse(event.target?.result as string);
+          setTeamMembers(importedData.teamMembers);
+          setFormData(importedData.formData);
+          setTicketType(importedData.ticketType);
+          setCounter(importedData.counter);
+          toast.success('Form data imported successfully!');
+        } catch (error) {
+          toast.error('Failed to import form data');
+          console.error('Error parsing imported file:', error);
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
+
   if (loading) {
     return (
       <Container className="loading-page">
@@ -288,6 +324,7 @@ const TeamTicketPage: React.FC = () => {
     <Container className="mt-5 p-4 rounded shadow-sm">
       <h1 className="mb-4">{title}</h1>
       {!title.includes('Early Bird') && (
+        <Col>
         <Form.Group controlId="formTicketType">
           <Form.Label>Ticket Type</Form.Label>
           <Form.Select as="select" value={ticketType} onChange={handleTicketTypeChange} required>
@@ -300,6 +337,17 @@ const TeamTicketPage: React.FC = () => {
             Please select a ticket type.
           </Form.Control.Feedback>
         </Form.Group>
+        {ticketType !== "solo" && (
+    <Form.Group className="p-5">
+      <Form.Label>Import Form</Form.Label>
+      <Form.Control
+        type="file"
+        onChange={handleImport}
+        required
+      />
+    </Form.Group>
+  )}
+      </Col>
       )}
       { ticketType && (
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -633,10 +681,19 @@ const TeamTicketPage: React.FC = () => {
             </Row>
           </>
         )}
-
-        <Button type="submit" variant="danger" className="mt-4 submit-button" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Submit'}
-        </Button>
+        <div className="button-container">
+          <Button
+            type="submit"
+            variant="danger"
+            className="submit-button"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit'}
+          </Button>
+          <Button onClick={handleExport} className="export-button">
+            Export Form Data
+          </Button>
+        </div>
       </Form>
        )}
       <Toaster position="bottom-right" richColors />
