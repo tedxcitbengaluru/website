@@ -15,7 +15,7 @@ const AdminDashboard: React.FC = () => {
   useEffect(() => {
     const fetchTicketSettings = async () => {
       try {
-        const response = await fetch('/api/getTicketSettings');
+        const response = await fetch('/api/ticket-settings');
         if (!response.ok) throw new Error('Failed to fetch ticket settings');
         const data = await response.json();
         setTicketSettings(data);
@@ -42,7 +42,7 @@ const AdminDashboard: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch('/api/saveTicketSettings', {
+      const response = await fetch('/api/ticket-settings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

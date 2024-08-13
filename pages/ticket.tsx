@@ -305,7 +305,7 @@ const TeamTicketPage: React.FC = () => {
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         {teamMembers.map((member, index) => (
           <React.Fragment key={index}>
-            <Row className="mb-3">
+            <Row className="mb-3 mt-4">
               <Col md={12}>
                 <Form.Group controlId={`formEmail${index}`}>
                   <Form.Label>Email for Member {index + 1}</Form.Label>

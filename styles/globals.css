@@ -9,7 +9,7 @@ html, body {
 }
 
 body {
-  background-color: #262627; 
+  background-color: #121212; 
   color: #E0E0E0; 
   margin: 0;
   font-family: Arial, sans-serif;
@@ -23,7 +23,6 @@ body {
   padding-bottom: 50px; 
 }
 
-/* navbar */
 .navbar {
   background-color: #121212; 
 }
@@ -31,7 +30,6 @@ body {
 .btn-close {
   background-color: #fff;
 }
-
 
 .navbar-brand {
   color: #E62B1E; 
@@ -63,7 +61,6 @@ body {
   color: #E62B1E;
 }
 
-/* home page */
 .card {
   background-color: #1F1F1F; 
   color: #E0E0E0; 
@@ -82,7 +79,7 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #ba1206;
+  background-color: #E62B1E;
   color: #E0E0E0;
   padding: 16px 32px;
   text-align: center;
@@ -103,7 +100,7 @@ body {
   flex-direction: column;
   height: 100vh;
 }
-/*admin page*/
+
 .vip-page-container {
   display: flex;
   align-items: center;
@@ -127,7 +124,7 @@ body {
 .input-field {
   margin-bottom: 16px;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #E0E0E0;
   border-radius: 4px;
   width: 100%;
 }
@@ -147,7 +144,6 @@ body {
   margin-top: 16px;
 }
 
-/*admin dashboard page*/
 .admin-dashboard {
   padding: 16px;
 }
@@ -177,15 +173,13 @@ body {
   margin-bottom: 16px;
 }
 
-/*ticket form page*/
-
 .submit-button {
-  background-color: #EA0021;
-  border-color: #EA0021;
+  background-color: #E62B1E;
+  border-color: #E62B1E;
   color: white;
 }
 
-.submit-button:hover{
+.submit-button:hover {
   background-color: #a20116;
 }
 
@@ -214,7 +208,7 @@ body {
 }
 
 .submit-button {
-  background-color: #EA0021;
+  background-color: #E62B1E;
   color: #F5F5F5; 
   border: none;
   border-radius: 4px;
