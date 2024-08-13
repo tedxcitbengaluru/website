@@ -398,7 +398,7 @@ const TeamTicketPage: React.FC = () => {
                       isInvalid={validated && member.workStudy === 'other' && !member.workStudyCustom}
                     />
                     <Form.Control.Feedback type="invalid">
-                      Please specify if you selected "Other".
+                      Please specify if you selected &quot;Other&quot;.
                     </Form.Control.Feedback>
                   </Form.Group>
                 )}
@@ -441,7 +441,7 @@ const TeamTicketPage: React.FC = () => {
                       isInvalid={validated && member.findUs === 'other' && !member.findUsCustom}
                     />
                     <Form.Control.Feedback type="invalid">
-                      Please specify if you selected "Other".
+                      Please specify if you selected &quot;Other&quot;.
                     </Form.Control.Feedback>
                   </Form.Group>
                 )}
