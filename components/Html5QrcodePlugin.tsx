@@ -31,9 +31,8 @@ const createConfig = (props: Html5QrcodePluginProps) => {
 };
 
 const Html5QrcodePlugin: React.FC<Html5QrcodePluginProps> = (props) => {
-
     useEffect(() => {
-        // when component mounts
+        // When component mounts
         const config = createConfig(props);
         const verbose = props.verbose === true;
         
@@ -42,9 +41,21 @@ const Html5QrcodePlugin: React.FC<Html5QrcodePluginProps> = (props) => {
         }
         
         const html5QrcodeScanner = new Html5QrcodeScanner(qrcodeRegionId, config, verbose);
-        html5QrcodeScanner.render(props.qrCodeSuccessCallback, props.qrCodeErrorCallback);
+        html5QrcodeScanner.render(
+            (decodedText, decodedResult) => {
+                props.qrCodeSuccessCallback(decodedText, decodedResult);
+                // Optionally stop scanning after successful scan
+                // html5QrcodeScanner.clear().catch(console.error);
+            },
+            (errorMessage) => {
+                // Keep scanning even if there's an error
+                console.warn(`QR Code scanning error: ${errorMessage}`);
+                if (props.qrCodeErrorCallback) {
+                    props.qrCodeErrorCallback(errorMessage);
+                }
+            }
+        );
 
-        // cleanup function when component will unmount
         return () => {
             html5QrcodeScanner.clear().catch(error => {
                 console.error("Failed to clear html5QrcodeScanner. ", error);

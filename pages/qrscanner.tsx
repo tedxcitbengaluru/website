@@ -9,6 +9,8 @@ const QRScannerPage: React.FC = () => {
         console.log("Scanned result:", decodedResult);
         setDecodedResults((prev) => [...prev, decodedResult]);
         setErrorMessage(null);
+        // Optionally stop scanning on success
+        // html5QrcodeScanner.clear().catch(console.error);
     };
 
     const handleScanFailure = (errorMessage: string) => {
