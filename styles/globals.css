@@ -290,25 +290,35 @@ body {
 }
 
 
-#qr-scanner-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 90%; 
-  max-width: 400px;
-  padding: 20px;
-  background-color: #1F1F1F; 
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+.qrscanner-page {
   text-align: center;
+  padding: 20px;
 }
 
-#qr-scanner-container h1 {
-  margin-bottom: 20px;
-  color: #E62B1E; 
+#html5qr-code-full-region {
+  margin: 0 auto;
 }
 
-#qr-scanner-container p {
-  margin-top: 10px;
+.scanned-results {
+  margin-top: 20px;
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.error-message {
+  color: red;
+  margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+  #html5qr-code-full-region {
+      width: 300px;
+  }
+}
+
+@media (min-width: 640px) {
+  #html5qr-code-full-region {
+      width: 600px;
+  }
 }
