@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_PROVIDER_CERT_URL,
       client_x509_cert_url: process.env.GOOGLE_CLIENT_CERT_URL,
     },
-    scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
 
   const authClient = await auth.getClient();
@@ -38,8 +38,42 @@ export default async function handler(req, res) {
       console.error('Error fetching hashes:', error);
       res.status(500).json({ message: 'Error fetching hashes.' });
     }
+  } else if (req.method === 'POST') {
+    const { qrCodeData } = req.body;
+
+    try {
+      const response = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range,
+      });
+
+      const values = response.data.values || [];
+      const hashes = values.flat().filter(cell => cell.trim() !== '');
+
+      const index = hashes.indexOf(qrCodeData);
+      if (index !== -1) {
+        const rowIndex = index + 2; // +2 because the range starts from P2
+        const updateRange = `Ticket Sheet!Q${rowIndex}`;
+
+        await sheets.spreadsheets.values.update({
+          spreadsheetId,
+          range: updateRange,
+          valueInputOption: 'RAW',
+          requestBody: {
+            values: [['scanned']],
+          },
+        });
+
+        res.status(200).json({ message: 'QR code found and updated.' });
+      } else {
+        res.status(404).json({ message: 'QR code not found.' });
+      }
+    } catch (error) {
+      console.error('Error updating the sheet:', error);
+      res.status(500).json({ message: 'Error updating the sheet.' });
+    }
   } else {
-    res.setHeader('Allow', ['GET']);
+    res.setHeader('Allow', ['GET', 'POST']);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

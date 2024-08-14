@@ -7,7 +7,6 @@ const QRScannerPage: React.FC = () => {
     const [validHashes, setValidHashes] = useState<string[]>([]);
 
     useEffect(() => {
-        // Fetch valid hashes from your API
         const fetchHashes = async () => {
             try {
                 const response = await fetch('/api/checkQrCode'); 
@@ -27,6 +26,24 @@ const QRScannerPage: React.FC = () => {
 
         if (validHashes.includes(decodedText)) {
             setScanResult('valid');
+            try {
+                const response = await fetch('/api/checkQrCode', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ qrCodeData: decodedText }),
+                });
+                const result = await response.json();
+                if (result.message === 'QR code found and updated.') {
+                    setScanResult('valid');
+                } else {
+                    setScanResult('invalid');
+                }
+            } catch (error) {
+                console.error('Error sending QR code data to API:', error);
+                setScanResult('invalid');
+            }
         } else {
             setScanResult('invalid');
         }
