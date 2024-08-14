@@ -27,6 +27,21 @@ export default async function submitToGoogleSheet(req, res) {
 
   const formDataArray = req.body; 
 
+  const generateTicketNumber = (ticketType) => {
+    if (ticketType === "Early Bird") {
+      return `EBT-${Math.floor(Math.random() * 9000) + 1000}`;
+    } else if (ticketType === "Group of 3") {
+      return `G3T-${Math.floor(Math.random() * 9000) + 1000}`;
+    } else if (ticketType === "Group of 5") {
+      return `G5T-${Math.floor(Math.random() * 9000) + 1000}`;
+    } else {
+      return `ST-${Math.floor(Math.random() * 9000) + 1000}`;
+    }
+  };
+
+  const ticketType = formDataArray[0]?.ticketType || 'Standard';
+  const ticketNumber = generateTicketNumber(ticketType);
+
   const values = formDataArray.map(data => {
     const {
       email, name, phoneNo, workStudy, findUs, workStudyCustom, findUsCustom,
@@ -37,17 +52,6 @@ export default async function submitToGoogleSheet(req, res) {
     const verification = "Pending";
     const input = name.toUpperCase() + email.toUpperCase();
     const ticketId = crypto.createHash('sha256').update(input).digest('hex');
-
-    let ticketNumber;
-    if (ticketType === "Early Bird") {
-      ticketNumber = `EBT-${Math.floor(Math.random() * 9000) + 1000}`;
-    } else if (ticketType === "Group of 3") {
-      ticketNumber = `G3T-${Math.floor(Math.random() * 9000) + 1000}`;
-    } else if (ticketType === "Group of 5") {
-      ticketNumber = `G5T-${Math.floor(Math.random() * 9000) + 1000}`;
-    }else {
-      ticketNumber = `ST-${Math.floor(Math.random() * 9000) + 1000}`;
-    }
 
     const finalWorkStudy = workStudy === 'other' ? workStudyCustom : workStudy;
     const finalFindUs = findUs === 'other' ? findUsCustom : findUs;
