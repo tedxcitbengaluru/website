@@ -27,20 +27,19 @@ export default async function submitToGoogleSheet(req, res) {
   const formDataArray = req.body; 
 
   const formatTimestamp = (date) => {
-    const options = {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true,
-    };
+    const istDate = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
 
-    const formatter = new Intl.DateTimeFormat('en-GB', options);
-    return formatter.format(date).replace(',', '');
+    const day = ('0' + istDate.getDate()).slice(-2);
+    const month = ('0' + (istDate.getMonth() + 1)).slice(-2);
+    const year = istDate.getFullYear();
+    const hours = ('0' + istDate.getHours()).slice(-2);
+    const minutes = ('0' + istDate.getMinutes()).slice(-2);
+    const seconds = ('0' + istDate.getSeconds()).slice(-2);
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+
+    return `${day}-${month}-${year} ${formattedHours}:${minutes}:${seconds} ${ampm}`;
   };
-
   const values = formDataArray.map(data => {
     const {
       email, name, phoneNo, workStudy, findUs, workStudyCustom, findUsCustom,
@@ -50,10 +49,13 @@ export default async function submitToGoogleSheet(req, res) {
     const finalWorkStudy = workStudy === 'other' ? workStudyCustom : workStudy;
     const finalFindUs = findUs === 'other' ? findUsCustom : findUs;
     const timestamp = formatTimestamp(new Date());
+    const verification = "pending";
+    const status = "pending";
+
 
     return [
       timestamp ,email, name, phoneNo, finalWorkStudy, finalFindUs, department, semester, ticketType,
-      paymentType, teamMemberName, upiTransactionId, paymentScreenshot,
+      paymentType, teamMemberName, upiTransactionId, paymentScreenshot, verification, status,
     ];
   });
 
