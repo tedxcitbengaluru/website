@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   const authClient = await auth.getClient();
   const sheets = google.sheets({ version: 'v4', auth: authClient });
   const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
-  const range = 'Ticket Settings!A2:D2';
+  const range = 'Ticket Settings!A2:D2'; 
 
   if (req.method === 'GET') {
     try {
@@ -29,8 +29,7 @@ export default async function handler(req, res) {
       const values = response.data.values;
 
       if (values.length) {
-        const [row] = values;
-        const [showEarlyBird, toggleTicketing, toggleTicketingComplete, counter] = row;
+        const [showEarlyBird, toggleTicketing, toggleTicketingComplete, counter] = values[0];
         res.status(200).json({
           showEarlyBird: showEarlyBird === 'TRUE',
           toggleTicketing: toggleTicketing === 'TRUE',
@@ -46,23 +45,16 @@ export default async function handler(req, res) {
     }
   } else if (req.method === 'POST') {
     try {
-      const { showEarlyBird, toggleTicketing, toggleTicketingComplete, counter } = req.body;
+      const { counter } = req.body;
 
-      const values = [
-        [
-          showEarlyBird ? 'TRUE' : 'FALSE',
-          toggleTicketing ? 'TRUE' : 'FALSE',
-          toggleTicketingComplete ? 'TRUE' : 'FALSE',
-          counter,
-        ],
-      ];
+      const counterRange = 'Ticket Settings!D2:D2'; 
 
       await sheets.spreadsheets.values.update({
         spreadsheetId,
-        range,
+        range: counterRange,
         valueInputOption: 'RAW',
         requestBody: {
-          values,
+          values: [[counter]],
         },
       });
 

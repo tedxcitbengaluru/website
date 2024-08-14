@@ -46,7 +46,7 @@ const TeamTicketPage: React.FC = () => {
         const response = await fetch('/api/ticket-settings');
         const data = await response.json();
         if (response.ok) {
-          const initialTicketType = data.showEarlyBird ? 'earlyBird' : '';
+          const initialTicketType = data.showEarlyBird ? 'Early Bird' : '';
           const initialMemberCount = data.showEarlyBird ? 1 : 0;
 
           setIsEarlyBird(data.showEarlyBird);
@@ -83,14 +83,14 @@ const TeamTicketPage: React.FC = () => {
     const selectedType = e.target.value;
     setTicketType(selectedType);
     let memberCount = 1;
-    if (selectedType === 'groupOf3') {
+    if (selectedType === 'Group of 3') {
       memberCount = 3;
-    } else if (selectedType === 'groupOf5') {
+    } else if (selectedType === 'Group of 5') {
       memberCount = 5;
     }
 
     if (isEarlyBird) {
-      setTicketType('earlyBird');
+      setTicketType('Early Bird');
       memberCount = 1;
     }
 
@@ -339,7 +339,7 @@ const TeamTicketPage: React.FC = () => {
     );
   }
 
-  const title = isEarlyBird ? 'Early Bird Ticket Registration Form' : `${ticketType === '' ? '' : ticketType === 'solo' ? 'Solo' : ticketType === 'groupOf3' ? 'Group of 3' : 'Group of 5'} Ticket Registration Form`;
+  const title = isEarlyBird ? 'Early Bird Ticket Registration Form' : `${ticketType === '' ? '' : ticketType === 'Solo' ? 'Solo' : ticketType === 'Group of 3' ? 'Group of 3' : 'Group of 5'} Ticket Registration Form`;
 
   return (
     <Container className="mt-5 p-4 rounded shadow-sm">
@@ -350,9 +350,9 @@ const TeamTicketPage: React.FC = () => {
           <Form.Label>Ticket Type</Form.Label>
           <Form.Select as="select" value={ticketType} onChange={handleTicketTypeChange} required>
             <option value="">Select Ticket Type...</option>
-            <option value="solo">Solo</option>
-            <option value="groupOf3">Group of 3</option>
-            <option value="groupOf5">Group of 5</option>
+            <option value="Solo">Solo</option>
+            <option value="Group of 3">Group of 3</option>
+            <option value="Group of 5">Group of 5</option>
           </Form.Select>
           <Form.Control.Feedback type="invalid">
             Please select a ticket type.
