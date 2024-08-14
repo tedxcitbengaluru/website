@@ -23,34 +23,9 @@ export default async function submitToGoogleSheet(req, res) {
   const sheets = google.sheets({ version: 'v4', auth: authClient });
 
   const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+  const range = 'Ticket Sheet!A1';
 
-  const getCounterValue = async () => {
-    const range = 'Ticket Settings!D2';
-    const response = await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range,
-    });
-    return parseInt(response.data.values[0][0], 10);
-  };
-
-  const updateCounterValue = async (newCounter) => {
-    const range = 'Ticket Settings!D2';
-    await sheets.spreadsheets.values.update({
-      spreadsheetId,
-      range,
-      valueInputOption: 'RAW',
-      requestBody: {
-        values: [[newCounter]],
-      },
-    });
-  };
-  const formatTicketNumber = (counter) => {
-    return `TF-${counter.toString().padStart(3, '0')}`;
-  };
-
-  const formDataArray = req.body;
-  
-  let counter = await getCounterValue();
+  const formDataArray = req.body; 
 
   const values = formDataArray.map(data => {
     const {
@@ -58,15 +33,24 @@ export default async function submitToGoogleSheet(req, res) {
       department, semester, ticketType, paymentType, teamMemberName, upiTransactionId, paymentScreenshot,
     } = data;
 
-    const finalWorkStudy = workStudy === 'other' ? workStudyCustom : workStudy;
-    const finalFindUs = findUs === 'other' ? findUsCustom : findUs;
     const timestamp = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
-    const verification = "pending";
+    const verification = "Pending";
     const input = name.toUpperCase() + email.toUpperCase();
     const ticketId = crypto.createHash('sha256').update(input).digest('hex');
-    const ticketNumber = formatTicketNumber(counter+1);
-    
-    counter += 1;
+
+    let ticketNumber;
+    if (ticketType === "Early Bird") {
+      ticketNumber = `EBT-${Math.floor(Math.random() * 9000) + 1000}`;
+    } else if (ticketType === "Group of 3") {
+      ticketNumber = `G3T-${Math.floor(Math.random() * 9000) + 1000}`;
+    } else if (ticketType === "Group of 5") {
+      ticketNumber = `G5T-${Math.floor(Math.random() * 9000) + 1000}`;
+    }else {
+      ticketNumber = `ST-${Math.floor(Math.random() * 9000) + 1000}`;
+    }
+
+    const finalWorkStudy = workStudy === 'other' ? workStudyCustom : workStudy;
+    const finalFindUs = findUs === 'other' ? findUsCustom : findUs;
 
     return [
       timestamp, email, name, phoneNo, finalWorkStudy, finalFindUs, department, semester, ticketType,
@@ -74,11 +58,9 @@ export default async function submitToGoogleSheet(req, res) {
     ];
   });
 
-  await updateCounterValue(counter);
-
   const request = {
     spreadsheetId,
-    range: 'Ticket Sheet!A1',
+    range,
     valueInputOption: 'RAW',
     insertDataOption: 'INSERT_ROWS',
     resource: {
