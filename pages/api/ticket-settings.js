@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
   const authClient = await auth.getClient();
   const sheets = google.sheets({ version: 'v4', auth: authClient });
-  const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+  const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID_1;
   const range = 'Ticket Settings!A2:D2'; 
 
   if (req.method === 'GET') {

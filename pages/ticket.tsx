@@ -205,8 +205,6 @@ const TeamTicketPage: React.FC = () => {
       ticketType: ticketType,
     }));
 
-    console.log(preparedFormData);
-  
     const newCounter = counter + teamMembers.length; 
 
     try {
@@ -256,7 +254,6 @@ const TeamTicketPage: React.FC = () => {
           })));
           setValidated(false);
           toast.success('Form successfully submitted!');
-          console.log('Form data successfully submitted to Google Sheets!');
         } else {
           console.error('Error updating counter');
           toast.error('Error updating counter');

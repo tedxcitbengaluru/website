@@ -22,10 +22,14 @@ export default async function submitToGoogleSheet(req, res) {
   const authClient = await auth.getClient();
   const sheets = google.sheets({ version: 'v4', auth: authClient });
 
-  const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+  const spreadsheetIds = [
+    process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID_1, 
+    process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID_2,
+  ];
+
   const range = 'Ticket Sheet!A1';
 
-  const formDataArray = req.body; 
+  const formDataArray = req.body;
 
   const generateTicketNumber = (ticketType) => {
     if (ticketType === "Early Bird") {
@@ -39,9 +43,7 @@ export default async function submitToGoogleSheet(req, res) {
     }
   };
 
-  const ticketType = formDataArray[0]?.ticketType || 'Standard';
-  const ticketNumber = generateTicketNumber(ticketType);
-
+  // Generate ticket number for each entry
   const values = formDataArray.map(data => {
     const {
       email, name, phoneNo, workStudy, findUs, workStudyCustom, findUsCustom,
@@ -52,6 +54,7 @@ export default async function submitToGoogleSheet(req, res) {
     const verification = "Pending";
     const input = name.toUpperCase() + email.toUpperCase();
     const ticketId = crypto.createHash('sha256').update(input).digest('hex');
+    const ticketNumber = generateTicketNumber(ticketType);
 
     const finalWorkStudy = workStudy === 'other' ? workStudyCustom : workStudy;
     const finalFindUs = findUs === 'other' ? findUsCustom : findUs;
@@ -62,7 +65,7 @@ export default async function submitToGoogleSheet(req, res) {
     ];
   });
 
-  const request = {
+  const requests = spreadsheetIds.map(spreadsheetId => ({
     spreadsheetId,
     range,
     valueInputOption: 'RAW',
@@ -70,13 +73,16 @@ export default async function submitToGoogleSheet(req, res) {
     resource: {
       values,
     },
-  };
+  }));
 
   try {
-    await sheets.spreadsheets.values.append(request);
+    // Execute both requests in parallel
+    await Promise.all(requests.map(request => {
+      return sheets.spreadsheets.values.append(request);
+    }));
     res.status(200).send('Success');
   } catch (err) {
-    console.error(err);
+    console.error('Error:', err); 
     res.status(500).send('Error submitting form data to Google Sheets');
   }
 }
