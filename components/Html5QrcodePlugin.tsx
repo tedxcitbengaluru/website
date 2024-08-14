@@ -10,6 +10,7 @@ interface Html5QrcodePluginProps {
     disableFlip?: boolean;
     verbose?: boolean;
     qrCodeSuccessCallback: (decodedText: string, decodedResult: any) => void;
+    qrCodeErrorCallback?: (errorMessage: string) => void;
 }
 
 const createConfig = (props: Html5QrcodePluginProps) => {
@@ -26,18 +27,38 @@ const Html5QrcodePlugin: React.FC<Html5QrcodePluginProps> = (props) => {
         const config = createConfig(props);
         const verbose = props.verbose === true;
 
-        const dummyErrorCallback = (errorMessage: string) => {
-            console.warn(`QR Code scanning error: ${errorMessage}`);
-        };
+        if (!props.qrCodeSuccessCallback) {
+            throw new Error("qrCodeSuccessCallback is a required callback.");
+        }
 
         const html5QrcodeScanner = new Html5QrcodeScanner(qrcodeRegionId, config, verbose);
 
         html5QrcodeScanner.render(
-            (decodedText, decodedResult) => {
+            async (decodedText, decodedResult) => {
                 props.qrCodeSuccessCallback(decodedText, decodedResult);
+                
+                try {
+                    const response = await fetch('/api/checkQrCode', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ qrCodeData: decodedText }),
+                    });
+                    const result = await response.json();
+                    console.log(result.message); 
+                } catch (error) {
+                    console.error('Error sending QR code data to API:', error);
+                }
+                
                 html5QrcodeScanner.clear().catch(console.error);
             },
-            dummyErrorCallback
+            (errorMessage) => {
+                console.warn(`QR Code scanning error: ${errorMessage}`);
+                if (props.qrCodeErrorCallback) {
+                    props.qrCodeErrorCallback(errorMessage);
+                }
+            }
         );
 
         return () => {

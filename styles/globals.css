@@ -322,3 +322,30 @@ body {
       width: 600px;
   }
 }
+
+.feedbackContainer {
+  margin-top: 20px;
+  font-size: 2rem;
+}
+
+.tick {
+  color: green;
+  animation: tickAnimation 1s ease;
+}
+
+.error {
+  color: red;
+  animation: errorAnimation 1s ease;
+}
+
+@keyframes tickAnimation {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes errorAnimation {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
