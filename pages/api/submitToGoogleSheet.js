@@ -26,6 +26,21 @@ export default async function submitToGoogleSheet(req, res) {
 
   const formDataArray = req.body; 
 
+  const formatTimestamp = (date) => {
+    const options = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    };
+
+    const formatter = new Intl.DateTimeFormat('en-GB', options);
+    return formatter.format(date).replace(',', '');
+  };
+
   const values = formDataArray.map(data => {
     const {
       email, name, phoneNo, workStudy, findUs, workStudyCustom, findUsCustom,
@@ -34,9 +49,10 @@ export default async function submitToGoogleSheet(req, res) {
 
     const finalWorkStudy = workStudy === 'other' ? workStudyCustom : workStudy;
     const finalFindUs = findUs === 'other' ? findUsCustom : findUs;
+    const timestamp = formatTimestamp(new Date());
 
     return [
-      email, name, phoneNo, finalWorkStudy, finalFindUs, department, semester, ticketType,
+      timestamp ,email, name, phoneNo, finalWorkStudy, finalFindUs, department, semester, ticketType,
       paymentType, teamMemberName, upiTransactionId, paymentScreenshot,
     ];
   });
