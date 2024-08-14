@@ -15,40 +15,30 @@ interface Html5QrcodePluginProps {
 
 const createConfig = (props: Html5QrcodePluginProps) => {
     let config: any = {};
-    if (props.fps) {
-        config.fps = props.fps;
-    }
-    if (props.qrbox) {
-        config.qrbox = props.qrbox;
-    }
-    if (props.aspectRatio) {
-        config.aspectRatio = props.aspectRatio;
-    }
-    if (props.disableFlip !== undefined) {
-        config.disableFlip = props.disableFlip;
-    }
+    if (props.fps) config.fps = props.fps;
+    if (props.qrbox) config.qrbox = props.qrbox;
+    if (props.aspectRatio) config.aspectRatio = props.aspectRatio;
+    if (props.disableFlip !== undefined) config.disableFlip = props.disableFlip;
     return config;
 };
 
 const Html5QrcodePlugin: React.FC<Html5QrcodePluginProps> = (props) => {
     useEffect(() => {
-        // When component mounts
         const config = createConfig(props);
         const verbose = props.verbose === true;
-        
+
         if (!props.qrCodeSuccessCallback) {
             throw new Error("qrCodeSuccessCallback is a required callback.");
         }
-        
+
         const html5QrcodeScanner = new Html5QrcodeScanner(qrcodeRegionId, config, verbose);
+
         html5QrcodeScanner.render(
             (decodedText, decodedResult) => {
                 props.qrCodeSuccessCallback(decodedText, decodedResult);
-                // Optionally stop scanning after successful scan
-                // html5QrcodeScanner.clear().catch(console.error);
+                html5QrcodeScanner.clear().catch(console.error);
             },
             (errorMessage) => {
-                // Keep scanning even if there's an error
                 console.warn(`QR Code scanning error: ${errorMessage}`);
                 if (props.qrCodeErrorCallback) {
                     props.qrCodeErrorCallback(errorMessage);
