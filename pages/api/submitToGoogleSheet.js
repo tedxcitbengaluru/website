@@ -66,12 +66,13 @@ export default async function submitToGoogleSheet(req, res) {
     const input = name.toUpperCase() + email.toUpperCase();
     const ticketId = crypto.createHash('sha256').update(input).digest('hex');
     const ticketNumber = formatTicketNumber(counter+1);
+    const cashStatus = "pending";
     
     counter += 1;
 
     return [
       timestamp, email, name, phoneNo, finalWorkStudy, finalFindUs, department, semester, ticketType,
-      paymentType, teamMemberName, upiTransactionId, paymentScreenshot, verification, status, ticketNumber, ticketId,
+      paymentType, teamMemberName, upiTransactionId, paymentScreenshot, verification, status, ticketNumber, ticketId,cashStatus
     ];
   });
 
