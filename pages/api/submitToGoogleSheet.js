@@ -1,5 +1,6 @@
 const { google } = require('googleapis');
 const { GoogleAuth } = require('google-auth-library');
+const crypto = require('crypto');
 
 export default async function submitToGoogleSheet(req, res) {
   const auth = new GoogleAuth({
@@ -22,24 +23,35 @@ export default async function submitToGoogleSheet(req, res) {
   const sheets = google.sheets({ version: 'v4', auth: authClient });
 
   const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
-  const range = 'Ticket Sheet!A1';
 
-  const formDataArray = req.body; 
-
-  const formatTimestamp = (date) => {
-    const istDate = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-
-    const day = ('0' + istDate.getDate()).slice(-2);
-    const month = ('0' + (istDate.getMonth() + 1)).slice(-2);
-    const year = istDate.getFullYear();
-    const hours = ('0' + istDate.getHours()).slice(-2);
-    const minutes = ('0' + istDate.getMinutes()).slice(-2);
-    const seconds = ('0' + istDate.getSeconds()).slice(-2);
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const formattedHours = hours % 12 || 12;
-
-    return `${day}-${month}-${year} ${formattedHours}:${minutes}:${seconds} ${ampm}`;
+  const getCounterValue = async () => {
+    const range = 'Ticket Settings!D2';
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range,
+    });
+    return parseInt(response.data.values[0][0], 10);
   };
+
+  const updateCounterValue = async (newCounter) => {
+    const range = 'Ticket Settings!D2';
+    await sheets.spreadsheets.values.update({
+      spreadsheetId,
+      range,
+      valueInputOption: 'RAW',
+      requestBody: {
+        values: [[newCounter]],
+      },
+    });
+  };
+  const formatTicketNumber = (counter) => {
+    return `TF-${counter.toString().padStart(3, '0')}`;
+  };
+
+  const formDataArray = req.body;
+  
+  let counter = await getCounterValue();
+
   const values = formDataArray.map(data => {
     const {
       email, name, phoneNo, workStudy, findUs, workStudyCustom, findUsCustom,
@@ -48,20 +60,26 @@ export default async function submitToGoogleSheet(req, res) {
 
     const finalWorkStudy = workStudy === 'other' ? workStudyCustom : workStudy;
     const finalFindUs = findUs === 'other' ? findUsCustom : findUs;
-    const timestamp = formatTimestamp(new Date());
+    const timestamp = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
     const verification = "pending";
     const status = "pending";
-
+    const ticketId = crypto.randomBytes(16).toString('hex');
+    
+    const ticketNumber = formatTicketNumber(counter+1);
+    
+    counter += 1;
 
     return [
-      timestamp ,email, name, phoneNo, finalWorkStudy, finalFindUs, department, semester, ticketType,
-      paymentType, teamMemberName, upiTransactionId, paymentScreenshot, verification, status,
+      timestamp, email, name, phoneNo, finalWorkStudy, finalFindUs, department, semester, ticketType,
+      paymentType, teamMemberName, upiTransactionId, paymentScreenshot, verification, status, ticketNumber, ticketId,
     ];
   });
 
+  await updateCounterValue(counter);
+
   const request = {
     spreadsheetId,
-    range,
+    range: 'Ticket Sheet!A1',
     valueInputOption: 'RAW',
     insertDataOption: 'INSERT_ROWS',
     resource: {

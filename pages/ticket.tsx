@@ -203,11 +203,10 @@ const TeamTicketPage: React.FC = () => {
       ...formData,
       paymentScreenshot: paymentScreenshotLink,
       ticketType: ticketType,
+      counter: counter
     }));
 
     console.log(preparedFormData);
-  
-    const newCounter = counter + teamMembers.length; 
 
     try {
       const sheetResponse = await fetch('/api/submitToGoogleSheet', {
@@ -219,22 +218,6 @@ const TeamTicketPage: React.FC = () => {
       });
   
       if (sheetResponse.ok) {
-        const counterUpdateResponse = await fetch('/api/ticket-settings', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            showEarlyBird: isEarlyBird,
-            toggleTicketing: ticketing,
-            toggleTicketingComplete: ticketingComplete,
-            counter: newCounter,
-          }),
-        });
-  
-        if (counterUpdateResponse.ok) {
-          setCounter(newCounter);
-
           setFormData({
             paymentType: '',
             teamMemberName: '',
@@ -258,10 +241,6 @@ const TeamTicketPage: React.FC = () => {
           toast.success('Form successfully submitted!');
           console.log('Form data successfully submitted to Google Sheets!');
         } else {
-          console.error('Error updating counter');
-          toast.error('Error updating counter');
-        }
-      } else {
         console.error('Error submitting form data');
         toast.error('Error submitting form data');
       }
