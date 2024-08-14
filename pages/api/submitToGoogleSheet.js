@@ -63,8 +63,8 @@ export default async function submitToGoogleSheet(req, res) {
     const timestamp = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
     const verification = "pending";
     const status = "pending";
-    const ticketId = crypto.randomBytes(16).toString('hex');
-    
+    const input = name.toUpperCase() + email.toUpperCase();
+    const ticketId = crypto.createHash('sha256').update(input).digest('hex');
     const ticketNumber = formatTicketNumber(counter+1);
     
     counter += 1;
