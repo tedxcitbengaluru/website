@@ -1,34 +1,17 @@
 import { useState } from 'react';
 import Html5QrcodePlugin from '../components/Html5QrcodePlugin';
 
-
 const QRScannerPage: React.FC = () => {
     const [scannedContent, setScannedContent] = useState<string | null>(null);
-    const [feedback, setFeedback] = useState<'success' | 'error' | null>(null);
+    const [scanResult, setScanResult] = useState<'valid' | 'invalid' | null>(null); 
 
-    const handleScanSuccess = async (decodedText: string, decodedResult: any) => {
+    const handleScanSuccess = (decodedText: string, decodedResult: any) => {
         console.log("Scanned result:", decodedResult);
         setScannedContent(decodedText);
+    };
 
-        try {
-            const response = await fetch('/api/checkQrCode', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ qrCodeData: decodedText }),
-            });
-            const result = await response.json();
-
-            if (response.ok) {
-                setFeedback('success'); 
-            } else {
-                setFeedback('error'); 
-            }
-        } catch (error) {
-            console.error('Error sending QR code data to API:', error);
-            setFeedback('error'); 
-        }
+    const handleScanResult = (result: 'valid' | 'invalid') => {
+        setScanResult(result);
     };
 
     return (
@@ -39,15 +22,22 @@ const QRScannerPage: React.FC = () => {
                 qrbox={250}
                 disableFlip={false}
                 qrCodeSuccessCallback={handleScanSuccess}
+                setScanResult={handleScanResult} 
             />
             {scannedContent && (
                 <div className="scanned-results">
                     <h2>Scanned Content:</h2>
                     <p>{scannedContent}</p>
-                    <div className="feedbackContainer">
-                        {feedback === 'success' && <div className="tick">✓</div>}
-                        {feedback === 'error' && <div className="error">✗</div>}
-                    </div>
+                </div>
+            )}
+            {scanResult === 'valid' && (
+                <div className="result-icon">
+                    <span role="img" aria-label="tick">✔️</span>
+                </div>
+            )}
+            {scanResult === 'invalid' && (
+                <div className="result-icon">
+                    <span role="img" aria-label="cross">❌</span>
                 </div>
             )}
         </div>
