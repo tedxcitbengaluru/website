@@ -2,19 +2,11 @@ import { useState } from 'react';
 import Html5QrcodePlugin from '../components/Html5QrcodePlugin';
 
 const QRScannerPage: React.FC = () => {
-    const [decodedResults, setDecodedResults] = useState<any[]>([]);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [scannedContent, setScannedContent] = useState<string | null>(null);
 
     const handleScanSuccess = (decodedText: string, decodedResult: any) => {
         console.log("Scanned result:", decodedResult);
-        setDecodedResults((prev) => [...prev, decodedResult]);
-        setErrorMessage(null);
-    };
-
-    const handleScanFailure = (errorMessage: string) => {
-        console.warn(`QR Code Scan Failed: ${errorMessage}`);
-        setErrorMessage('Failed to scan. Please try again.');
-        // Keep scanning despite the error
+        setScannedContent(decodedText);
     };
 
     return (
@@ -25,19 +17,13 @@ const QRScannerPage: React.FC = () => {
                 qrbox={250}
                 disableFlip={false}
                 qrCodeSuccessCallback={handleScanSuccess}
-                qrCodeErrorCallback={handleScanFailure}
             />
-            {decodedResults.length > 0 && (
+            {scannedContent && (
                 <div className="scanned-results">
                     <h2>Scanned Content:</h2>
-                    <ul>
-                        {decodedResults.map((result, index) => (
-                            <li key={index}>{result.decodedText}</li>
-                        ))}
-                    </ul>
+                    <p>{scannedContent}</p>
                 </div>
             )}
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
     );
 };

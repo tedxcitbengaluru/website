@@ -10,7 +10,6 @@ interface Html5QrcodePluginProps {
     disableFlip?: boolean;
     verbose?: boolean;
     qrCodeSuccessCallback: (decodedText: string, decodedResult: any) => void;
-    qrCodeErrorCallback?: (errorMessage: string) => void;
 }
 
 const createConfig = (props: Html5QrcodePluginProps) => {
@@ -27,9 +26,9 @@ const Html5QrcodePlugin: React.FC<Html5QrcodePluginProps> = (props) => {
         const config = createConfig(props);
         const verbose = props.verbose === true;
 
-        if (!props.qrCodeSuccessCallback) {
-            throw new Error("qrCodeSuccessCallback is a required callback.");
-        }
+        const dummyErrorCallback = (errorMessage: string) => {
+            console.warn(`QR Code scanning error: ${errorMessage}`);
+        };
 
         const html5QrcodeScanner = new Html5QrcodeScanner(qrcodeRegionId, config, verbose);
 
@@ -38,12 +37,7 @@ const Html5QrcodePlugin: React.FC<Html5QrcodePluginProps> = (props) => {
                 props.qrCodeSuccessCallback(decodedText, decodedResult);
                 html5QrcodeScanner.clear().catch(console.error);
             },
-            (errorMessage) => {
-                console.warn(`QR Code scanning error: ${errorMessage}`);
-                if (props.qrCodeErrorCallback) {
-                    props.qrCodeErrorCallback(errorMessage);
-                }
-            }
+            dummyErrorCallback
         );
 
         return () => {
