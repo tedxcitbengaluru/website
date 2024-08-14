@@ -1,31 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Html5QrcodePlugin from '../components/Html5QrcodePlugin';
 
 const QRScannerPage: React.FC = () => {
     const [scannedContent, setScannedContent] = useState<string | null>(null);
     const [scanResult, setScanResult] = useState<'valid' | 'invalid' | null>(null);
+    const [validHashes, setValidHashes] = useState<string[]>([]);
+
+    useEffect(() => {
+        // Fetch valid hashes from your API
+        const fetchHashes = async () => {
+            try {
+                const response = await fetch('/api/checkQrCode'); 
+                const result = await response.json();
+                setValidHashes(result.hashes);
+            } catch (error) {
+                console.error('Error fetching hashes:', error);
+            }
+        };
+
+        fetchHashes();
+    }, []);
 
     const handleScanSuccess = async (decodedText: string, decodedResult: any) => {
         console.log("Scanned result:", decodedResult);
         setScannedContent(decodedText);
 
-        try {
-            const response = await fetch('/api/checkQrCode', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ qrCodeData: decodedText }),
-            });
-            const result = await response.json();
-            
-            if (result.message === 'QR code found and updated.') {
-                setScanResult('valid');
-            } else {
-                setScanResult('invalid');
-            }
-        } catch (error) {
-            console.error('Error sending QR code data to API:', error);
+        if (validHashes.includes(decodedText)) {
+            setScanResult('valid');
+        } else {
             setScanResult('invalid');
         }
     };
