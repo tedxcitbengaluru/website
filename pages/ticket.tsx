@@ -234,6 +234,27 @@ const TeamTicketPage: React.FC = () => {
   
         if (counterUpdateResponse.ok) {
           setCounter(newCounter);
+
+          setFormData({
+            paymentType: '',
+            teamMemberName: '',
+            upiTransactionId: '',
+            paymentScreenshot: '',
+            paymentScreenshotName: '',
+            ticketType: '',
+          });
+          setTeamMembers(Array(isEarlyBird ? 1 : 0).fill(null).map(() => ({
+            email: '',
+            phoneNo: '',
+            name: '',
+            workStudy: '',
+            workStudyCustom: '',
+            findUs: '',
+            findUsCustom: '',
+            department: '',
+            semester: '',
+          })));
+          setValidated(false);
           toast.success('Form successfully submitted!');
           console.log('Form data successfully submitted to Google Sheets!');
         } else {
@@ -496,7 +517,9 @@ const TeamTicketPage: React.FC = () => {
           </Col>
         </Row>
 
-        <Row className="mb-3">
+        {member.workStudy !== 'other' && (
+          <>
+          <Row className="mb-3">
           <Col md={12}>
             <Form.Group controlId={`formDepartment${index}`}>
               <Form.Label>Department</Form.Label>
@@ -556,6 +579,8 @@ const TeamTicketPage: React.FC = () => {
             </Form.Group>
           </Col>
         </Row>
+        </>
+        )}
         </React.Fragment>
         ))}
 
@@ -690,9 +715,11 @@ const TeamTicketPage: React.FC = () => {
           >
             {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
+          {!title.includes('Early Bird') &&  ticketType !== "solo" && (
           <Button onClick={handleExport} className="export-button">
             Export Form Data
           </Button>
+          )}
         </div>
       </Form>
        )}
