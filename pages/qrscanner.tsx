@@ -16,7 +16,7 @@ const QRScannerPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div id="qr-scanner-container">
       <h1>QR Code Scanner</h1>
       <QRCodeScanner onScanSuccess={handleScanSuccess} onScanFailure={handleScanFailure} />
       {scannedContent && <p>Scanned content: {scannedContent}</p>}

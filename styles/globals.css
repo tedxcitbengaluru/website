@@ -4,8 +4,14 @@
   box-sizing: border-box;
 }
 
-html, body {
-  font-family: Arial, sans-serif;
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #121212;
+  color: #F5F5F5;
 }
 
 body {
@@ -281,4 +287,28 @@ body {
 .submit-button:disabled {
   background-color: #aaa; 
   cursor: not-allowed;
+}
+
+
+#qr-scanner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%; 
+  max-width: 400px;
+  padding: 20px;
+  background-color: #1F1F1F; 
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+#qr-scanner-container h1 {
+  margin-bottom: 20px;
+  color: #E62B1E; 
+}
+
+#qr-scanner-container p {
+  margin-top: 10px;
 }
