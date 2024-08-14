@@ -10,7 +10,6 @@ interface Html5QrcodePluginProps {
     disableFlip?: boolean;
     verbose?: boolean;
     qrCodeSuccessCallback: (decodedText: string, decodedResult: any) => void;
-    setScanResult?: (result: 'valid' | 'invalid') => void; 
 }
 
 const createConfig = (props: Html5QrcodePluginProps) => {
@@ -34,28 +33,8 @@ const Html5QrcodePlugin: React.FC<Html5QrcodePluginProps> = (props) => {
         const html5QrcodeScanner = new Html5QrcodeScanner(qrcodeRegionId, config, verbose);
 
         html5QrcodeScanner.render(
-            async (decodedText, decodedResult) => {
+            (decodedText, decodedResult) => {
                 props.qrCodeSuccessCallback(decodedText, decodedResult);
-                
-                try {
-                    const response = await fetch('/api/checkQrCode', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ qrCodeData: decodedText }),
-                    });
-                    const result = await response.json();
-                    if (result.found) {
-                        props.setScanResult?.('valid'); // Set scan result to valid
-                    } else {
-                        props.setScanResult?.('invalid'); // Set scan result to invalid
-                    }
-                } catch (error) {
-                    console.error('Error sending QR code data to API:', error);
-                    props.setScanResult?.('invalid'); // Treat as invalid in case of error
-                }
-                
                 html5QrcodeScanner.clear().catch(console.error);
             },
             dummyErrorCallback
