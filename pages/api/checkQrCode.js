@@ -7,7 +7,7 @@ export default async function handler(req, res) {
       type: 'service_account',
       project_id: process.env.GOOGLE_PROJECT_ID,
       private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
-      private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Ensure new lines are correctly handled
+      private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
       client_email: process.env.GOOGLE_CLIENT_EMAIL,
       client_id: process.env.GOOGLE_CLIENT_ID,
       auth_uri: process.env.GOOGLE_AUTH_URI,
@@ -55,16 +55,28 @@ export default async function handler(req, res) {
         const rowIndex = index + 2; // +2 because the range starts from P2
         const updateRange = `Ticket Sheet!Q${rowIndex}`;
 
-        await sheets.spreadsheets.values.update({
+        // Check if the QR code has already been scanned
+        const scannedResponse = await sheets.spreadsheets.values.get({
           spreadsheetId,
           range: updateRange,
-          valueInputOption: 'RAW',
-          requestBody: {
-            values: [['scanned']],
-          },
         });
 
-        res.status(200).json({ message: 'QR code found and updated.' });
+        const scannedValue = (scannedResponse.data.values || [])[0]?.[0];
+
+        if (scannedValue === 'scanned') {
+          res.status(200).json({ message: 'QR code already scanned.', alreadyScanned: true });
+        } else {
+          await sheets.spreadsheets.values.update({
+            spreadsheetId,
+            range: updateRange,
+            valueInputOption: 'RAW',
+            requestBody: {
+              values: [['scanned']],
+            },
+          });
+
+          res.status(200).json({ message: 'QR code found and updated.' });
+        }
       } else {
         res.status(404).json({ message: 'QR code not found.' });
       }

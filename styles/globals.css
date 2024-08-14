@@ -289,7 +289,6 @@ body {
   cursor: not-allowed;
 }
 
-
 .qrscanner-page {
   text-align: center;
   padding: 20px;
@@ -299,53 +298,95 @@ body {
   margin: 0 auto;
 }
 
-.scanned-results {
-  margin-top: 20px;
-  text-align: left;
-  max-width: 600px;
-  margin: 0 auto;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.error-message {
-  color: red;
-  margin-top: 20px;
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
-@media (max-width: 640px) {
-  #html5qr-code-full-region {
-      width: 300px;
-  }
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-@media (min-width: 640px) {
-  #html5qr-code-full-region {
-      width: 600px;
-  }
+@keyframes slideOut {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-20px); opacity: 0; }
 }
 
-.feedbackContainer {
-  margin-top: 20px;
+.qrscanner-page {
+  position: relative;
+}
+
+.result-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
   font-size: 2rem;
+  text-align: center;
+  z-index: 10;
+  animation: fadeIn 1s;
 }
 
-.tick {
-  color: green;
-  animation: tickAnimation 1s ease;
+.success {
+  color: rgb(37, 180, 37);
+  animation: slideIn 0.2s, fadeOut 0.2s 0.5s;
 }
 
-.error {
+.failure {
   color: red;
-  animation: errorAnimation 1s ease;
+  animation: slideIn 0.2s, fadeOut 0.2s 0.5s;
 }
 
-@keyframes tickAnimation {
-  0% { transform: scale(0); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+.warning{
+  color: rgb(136, 136, 52);
+  animation: slideIn 0.2s, fadeOut 0.2s 0.5s;
 }
 
-@keyframes errorAnimation {
-  0% { transform: scale(0); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+#html5qr-code-full-region {
+  position: relative;
+  width: 100%;
+  max-width: 500px; 
+  margin: 0 auto; 
+  border: 2px solid #E62B1E; 
+  border-radius: 10px; 
+  overflow: hidden; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  background-color: #121212; 
+}
+
+#html5qr-code-full-region video {
+  width: 100%;
+  height: auto;
+}
+
+#html5qr-code-full-region::before {
+  content: 'Initializing...';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #E0E0E0;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5); 
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#html5qr-code-full-region.ready::before {
+  display: none;
 }
