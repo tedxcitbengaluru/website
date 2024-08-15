@@ -339,10 +339,10 @@ const TeamTicketPage: React.FC = () => {
   const title = isEarlyBird ? 'Early Bird Ticket Registration Form' : `${ticketType === '' ? '' : ticketType === 'Solo' ? 'Solo' : ticketType === 'Group of 3' ? 'Group of 3' : 'Group of 5'} Ticket Registration Form`;
 
   return (
-    <Container className="mt-5 p-4 rounded shadow-sm">
-    <h1 className='mb-5'>{title}</h1>
-    {!isEarlyBird && ticketType === '' && (
-      <Col>
+    <Container className="mt-5 p-4 rounded shadow-sm ">
+      <h1 className="mb-5">{title}</h1>
+      {!title.includes('Early Bird') && (
+        <Col>
         <Form.Group controlId="formTicketType">
           <Form.Label>Ticket Type</Form.Label>
           <Form.Select as="select" value={ticketType} onChange={handleTicketTypeChange} required>
@@ -355,19 +355,18 @@ const TeamTicketPage: React.FC = () => {
             Please select a ticket type.
           </Form.Control.Feedback>
         </Form.Group>
-
-        {ticketType == "" && (
-          <Form.Group className="p-5">
-            <Form.Label>Import Form</Form.Label>
-            <Form.Control
-              type="file"
-              onChange={handleImport}
-              required
-            />
-          </Form.Group>
-        )}
+        {ticketType !== "Solo" && (
+    <Form.Group className="p-5">
+      <Form.Label>Import Form</Form.Label>
+      <Form.Control
+        type="file"
+        onChange={handleImport}
+        required
+      />
+    </Form.Group>
+  )}
       </Col>
-    )}
+      )}
       { ticketType && (
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         {teamMembers.map((member, index) => (

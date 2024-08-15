@@ -7,45 +7,13 @@
 }
 
 body, html {
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #121212;
   color: #F5F5F5;
   flex-direction: column;
-  margin: 0; 
-  padding-top: 5%; 
-}
-
-@media (max-width: 1200px) {
-  body, html {
-    padding-top: 7%; 
-  }
-}
-
-@media (max-width: 992px) {
-  body, html {
-    padding-top: 9%; 
-  }
-}
-
-@media (max-width: 768px) {
-  body, html {
-    padding-top: 11%; 
-  }
-}
-
-@media (max-width: 576px) {
-  body, html {
-    padding-top: 13%; 
-  }
-}
-
-@media (max-width: 400px) {
-  body, html {
-    padding-top: 15%; 
-  }
+  margin: 2%; 
 }
 
 .main-content {
