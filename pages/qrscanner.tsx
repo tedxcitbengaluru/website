@@ -102,7 +102,7 @@ const QRScannerPage: React.FC = () => {
                 <>
                     {showScanner && (
                         <>
-                            <h1>Ticket Scanner</h1>
+                            <h1 className='ticket-scan-title'>Ticket Scanner</h1>
                             <Html5QrcodePlugin
                                 fps={10}
                                 qrbox={250}

@@ -221,7 +221,6 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   padding: 16px;
 }
 
@@ -279,10 +278,14 @@ body, html {
 
 
 .qrscanner-page {
-  text-align: center;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+  background-color: #121212;
+  color: #F5F5F5;
 }
-
 #html5qr-code-full-region {
   margin: 0 auto;
 }
@@ -307,6 +310,9 @@ body, html {
   to { transform: translateY(-20px); opacity: 0; }
 }
 
+.ticket-scan-title{
+  color:#E62B1E;
+}
 .qrscanner-page {
   position: relative;
 }
