@@ -313,7 +313,7 @@ const TeamTicketPage: React.FC = () => {
   if (loading) {
     return (
       <Container className="loading-page">
-        <Spinner animation="grow" />
+        <Spinner animation="border" />
       </Container>
     );
   }
@@ -340,9 +340,9 @@ const TeamTicketPage: React.FC = () => {
 
   return (
     <Container className="mt-5 p-4 rounded shadow-sm">
-      <h1 className="my-5">{title}</h1>
-      {!title.includes('Early Bird') && (
-        <Col>
+    <h1 className='mb-5'>{title}</h1>
+    {!isEarlyBird && ticketType === '' && (
+      <Col>
         <Form.Group controlId="formTicketType">
           <Form.Label>Ticket Type</Form.Label>
           <Form.Select as="select" value={ticketType} onChange={handleTicketTypeChange} required>
@@ -355,18 +355,19 @@ const TeamTicketPage: React.FC = () => {
             Please select a ticket type.
           </Form.Control.Feedback>
         </Form.Group>
-        {ticketType !== "solo" && (
-    <Form.Group className="p-5">
-      <Form.Label>Import Form</Form.Label>
-      <Form.Control
-        type="file"
-        onChange={handleImport}
-        required
-      />
-    </Form.Group>
-  )}
+
+        {ticketType == "" && (
+          <Form.Group className="p-5">
+            <Form.Label>Import Form</Form.Label>
+            <Form.Control
+              type="file"
+              onChange={handleImport}
+              required
+            />
+          </Form.Group>
+        )}
       </Col>
-      )}
+    )}
       { ticketType && (
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         {teamMembers.map((member, index) => (

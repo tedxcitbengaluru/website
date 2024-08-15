@@ -2,6 +2,12 @@ import { google } from 'googleapis';
 import { GoogleAuth } from 'google-auth-library';
 
 export default async function handler(req, res) {
+
+  const referer = req.headers.referer;
+
+    if (!referer || !referer.endsWith('/ticket')) {
+        return res.status(403).json({ message: 'Forbidden: Access Denied' });
+    }
   const auth = new GoogleAuth({
     credentials: {
       type: 'service_account',

@@ -1,3 +1,5 @@
+/* root */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,22 +8,44 @@
 
 body, html {
   height: 100%;
-  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #121212;
   color: #F5F5F5;
+  flex-direction: column;
+  margin: 0; 
+  padding-top: 5%; 
 }
 
-body {
-  background-color: #121212; 
-  color: #E0E0E0; 
-  margin: 0;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+@media (max-width: 1200px) {
+  body, html {
+    padding-top: 7%; 
+  }
+}
+
+@media (max-width: 992px) {
+  body, html {
+    padding-top: 9%; 
+  }
+}
+
+@media (max-width: 768px) {
+  body, html {
+    padding-top: 11%; 
+  }
+}
+
+@media (max-width: 576px) {
+  body, html {
+    padding-top: 13%; 
+  }
+}
+
+@media (max-width: 400px) {
+  body, html {
+    padding-top: 15%; 
+  }
 }
 
 .main-content {
@@ -29,6 +53,7 @@ body {
   padding-bottom: 50px; 
 }
 
+/* navbar */
 .navbar {
   background-color: #121212; 
 }
@@ -67,6 +92,7 @@ body {
   color: #E62B1E;
 }
 
+/* home page */
 .card {
   background-color: #1F1F1F; 
   color: #E0E0E0; 
@@ -80,6 +106,7 @@ body {
   color: #F5F5F5; 
 }
 
+/* footer */
 .footer {
   position: fixed;
   bottom: 0;
@@ -98,6 +125,7 @@ body {
   }
 }
 
+/* ticket */
 .not-available-page,
 .sold-out-page {
   display: flex;
@@ -107,65 +135,6 @@ body {
   height: 100vh;
 }
 
-.vip-page-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding: 16px;
-}
-
-.title {
-  font-size: 24px; 
-  margin-bottom: 24px; 
-  text-align: center;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.input-field {
-  margin-bottom: 16px;
-  padding: 8px;
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  width: 100%;
-}
-
-.login-button {
-  background-color: #E62B1E; 
-  color: #fff;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.error-message {
-  color: #E62B1E;
-  text-align: center;
-  margin-top: 16px;
-}
-
-.admin-dashboard {
-  padding: 16px;
-}
-
-.title {
-  font-size: 32px;
-  margin-bottom: 16px;
-}
-
-.description {
-  margin-bottom: 24px;
-}
-
-.error-message {
-  margin-bottom: 16px;
-}
 
 .settings-form {
   margin-bottom: 16px;
@@ -177,16 +146,6 @@ body {
 
 .form-check {
   margin-bottom: 16px;
-}
-
-.submit-button {
-  background-color: #E62B1E;
-  border-color: #E62B1E;
-  color: white;
-}
-
-.submit-button:hover {
-  background-color: #a20116;
 }
 
 .form-input {
@@ -288,6 +247,68 @@ body {
   background-color: #aaa; 
   cursor: not-allowed;
 }
+
+/* admin page */
+.admin-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 16px;
+}
+
+.title {
+  font-size: 24px; 
+  margin-bottom: 24px; 
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-field {
+  margin-bottom: 16px;
+  padding: 8px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.login-button {
+  background-color: #E62B1E; 
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.error-message {
+  color: #E62B1E;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.admin-dashboard {
+  padding: 16px;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.description {
+  margin-bottom: 24px;
+}
+
+.error-message {
+  margin-bottom: 16px;
+}
+
 
 .qrscanner-page {
   text-align: center;

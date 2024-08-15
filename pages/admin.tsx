@@ -17,7 +17,7 @@ const VIPPage: React.FC = () => {
     };
 
     return (
-        <div className="vip-page-container">
+        <div className="admin-page-container">
             <div className="login-box">
                 {!authorized && (
                     <div><h1 className="title">Admin Access</h1>
