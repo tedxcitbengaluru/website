@@ -30,7 +30,7 @@ export default async function submitToGoogleSheet(req, res) {
   } = req.body;
 
   let values = [
-    fullname, email, phoneno, dob, course, branch, semester, aboutYourself, ahaMoment, collabQuestion, whyVolunteer, experience, teamSelection,
+    fullname, email, phoneno, dob, course, branch, semester, aboutYourself, ahaMoment, collabQuestion, whyVolunteer, experience
   ];
 
   if (teamSelection === 'Curation Team') {

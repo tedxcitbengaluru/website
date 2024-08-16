@@ -4,16 +4,18 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FaBars } from 'react-icons/fa';
+import Image from 'next/image';
 
 const TedNavbar: React.FC = () => {
   return (
     <Navbar className="fixed-top" expand="lg" variant="dark" bg="dark">
       <Container>
         <Navbar.Brand href="/">
-          <img
-            src="/tedx/logo-white.png"  
+          <Image
+            src="/tedx/logo-white.png"
             alt="TEDxCITBengaluru"
-            style={{ height: '40px' }}  
+            width={233} 
+            height={40}  
           />
         </Navbar.Brand>
 
@@ -28,9 +30,11 @@ const TedNavbar: React.FC = () => {
         >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id="offcanvasNavbarLabel">
-              <img
-                src="/tedx/logo-white.png" 
+              <Image
+                src="/tedx/logo-white.png"
                 alt="TEDxCITBengaluru"
+                width={233} 
+                height={40}  
                 style={{ height: '40px' }} 
               />
             </Offcanvas.Title>

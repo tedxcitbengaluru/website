@@ -107,9 +107,9 @@ const RecruitmentPage: React.FC = () => {
       ableton: [],
       flstudio: [],
     },
-    strategies:'',
-    latestTrends:'',
-    inspiration:'',
+    strategies: '',
+    latestTrends: '',
+    inspiration: '',
     exampleMarketing: '',
     pitchSponsor: '',
     keyElements: '',
@@ -153,12 +153,12 @@ const RecruitmentPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
-  
+
     setFormData(prevState => {
       if (name in prevState.proficiencySkills) {
         const updatedSkills = { ...prevState.proficiencySkills };
         updatedSkills[name] = checked ? [value] : [];
-  
+
         return {
           ...prevState,
           proficiencySkills: updatedSkills,
@@ -166,7 +166,7 @@ const RecruitmentPage: React.FC = () => {
       } else if (name in prevState.proficiencySoundTools) {
         const updatedSoundTools = { ...prevState.proficiencySoundTools };
         updatedSoundTools[name] = checked ? [value] : [];
-  
+
         return {
           ...prevState,
           proficiencySoundTools: updatedSoundTools,
@@ -1026,7 +1026,7 @@ const RecruitmentPage: React.FC = () => {
                         isInvalid={validated && !formData.problemCommunication}
                       />
                       <Form.Control.Feedback type="invalid">
-                      Please provide your answer.
+                        Please provide your answer.
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
@@ -1050,7 +1050,7 @@ const RecruitmentPage: React.FC = () => {
                         isInvalid={validated && !formData.innovativeIdea}
                       />
                       <Form.Control.Feedback type="invalid">
-                      Please provide your answer.
+                        Please provide your answer.
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
@@ -1146,7 +1146,7 @@ const RecruitmentPage: React.FC = () => {
                         isInvalid={validated && !formData.strategies}
                       />
                       <Form.Control.Feedback type="invalid">
-                      Please provide your answer.
+                        Please provide your answer.
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
@@ -1170,7 +1170,7 @@ const RecruitmentPage: React.FC = () => {
                         isInvalid={validated && !formData.latestTrends}
                       />
                       <Form.Control.Feedback type="invalid">
-                      Please provide your answer.
+                        Please provide your answer.
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
@@ -1194,7 +1194,7 @@ const RecruitmentPage: React.FC = () => {
                         isInvalid={validated && !formData.inspiration}
                       />
                       <Form.Control.Feedback type="invalid">
-                      Please provide your answer.
+                        Please provide your answer.
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
@@ -1218,7 +1218,7 @@ const RecruitmentPage: React.FC = () => {
                         isInvalid={validated && !formData.workLinks}
                       />
                       <Form.Control.Feedback type="invalid">
-                      Please provide your answer.
+                        Please provide your answer.
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
@@ -1325,7 +1325,7 @@ const RecruitmentPage: React.FC = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-                
+
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="socialLinks">
