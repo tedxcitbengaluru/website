@@ -1,9 +1,68 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { Form, Button, Container, Image, Row, Col, Modal, Spinner } from 'react-bootstrap';
+import { Form, Button, Container, Image, Row, Col, Modal, Spinner, FormGroup } from 'react-bootstrap';
 import { Toaster, toast } from 'sonner';
 
+interface ProficiencySkills {
+  [key: string]: string[]; // Key can be any string, and values are arrays of strings
+}
+
+interface ProficiencySoundTools {
+  [key: string]: string[]; // Key can be any string, and values are arrays of strings
+}
+
+interface FormData {
+  fullname: string;
+  email: string;
+  phoneno: string;
+  dob: string;
+  course: string;
+  branch: string;
+  semester: string;
+  aboutYourself: string;
+  ahaMoment: string;
+  collabQuestion: string;
+  whyVolunteer: string;
+  experience: string;
+  teamSelection: string;
+  proficiencyCreativeWriting: string;
+  creativeWritingCaptions: string;
+  tedxThemeSuggestions: string;
+  movieImpact: string;
+  contentFormats: string;
+  philosophicalThought: string;
+  workLinks: string;
+  proficiencyWebsiteDesign: string;
+  extremePressureExperience: string;
+  workflow: string;
+  platformsUsed: string;
+  avSetupExperience: string;
+  proficiencyGoogleApps: string;
+  portfolioLinks: string;
+  problemCommunication: string;
+  problemSolving: string;
+  innovativeIdea: string;
+  proficiencySkills: ProficiencySkills;
+  proficiencySoundTools: ProficiencySoundTools;
+  strategies: string;
+  latestTrends: string;
+  inspiration: string;
+  exampleMarketing: string;
+  pitchSponsor: string;
+  keyElements: string;
+  briefSpeech: string;
+  socialLinks: string;
+  technologyImplementation: string;
+  supportStageFright: string;
+  handleDisagreement: string;
+  successfulEvent: string;
+  eventVolunteerDuties: string;
+  standOutFromOthers: string;
+  excitementAboutRole: string;
+}
+
+
 const RecruitmentPage: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     fullname: '',
     email: '',
     phoneno: '',
@@ -17,7 +76,54 @@ const RecruitmentPage: React.FC = () => {
     whyVolunteer: '',
     experience: '',
     teamSelection: '',
+    proficiencyCreativeWriting: '',
+    creativeWritingCaptions: '',
+    tedxThemeSuggestions: '',
+    movieImpact: '',
+    contentFormats: '',
+    philosophicalThought: '',
+    workLinks: '',
+    proficiencyWebsiteDesign: '',
+    extremePressureExperience: '',
+    workflow: '',
+    platformsUsed: '',
+    avSetupExperience: '',
+    proficiencyGoogleApps: '',
+    portfolioLinks: '',
+    problemCommunication: '',
+    problemSolving: '',
+    innovativeIdea: '',
+    proficiencySkills: {
+      figma: [],
+      blender: [],
+      illustrator: [],
+      photoshop: [],
+      canva: [],
+      premiere: [],
+      afterEffects: [],
+      davinci: [],
+    },
+    proficiencySoundTools: {
+      ableton: [],
+      flstudio: [],
+    },
+    strategies:'',
+    latestTrends:'',
+    inspiration:'',
+    exampleMarketing: '',
+    pitchSponsor: '',
+    keyElements: '',
+    briefSpeech: '',
+    socialLinks: '',
+    technologyImplementation: '',
+    supportStageFright: '',
+    handleDisagreement: '',
+    successfulEvent: '',
+    eventVolunteerDuties: '',
+    standOutFromOthers: '',
+    excitementAboutRole: '',
   });
+
 
   useEffect(() => {
     const fetchTicketSettings = async () => {
@@ -25,7 +131,6 @@ const RecruitmentPage: React.FC = () => {
         const response = await fetch('/api/recruitment-settings');
         const data = await response.json();
         if (response.ok) {
-          const initialRecruitmentStatus = data.isRecruitmentEnabled;
           setIsRecruitmentEnabled(data.isRecruitmentEnabled);
         } else {
           console.error('Error fetching ticket settings');
@@ -46,30 +151,33 @@ const RecruitmentPage: React.FC = () => {
   const [validated, setValidated] = useState(false);
   const [isRecruitmentEnabled, setIsRecruitmentEnabled] = useState(false);
   const [loading, setLoading] = useState(true);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    {
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
-  };
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setFormData(prevState => ({
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, checked } = e.target;
+  
+    setFormData(prevState => {
+      if (name in prevState.proficiencySkills) {
+        const updatedSkills = { ...prevState.proficiencySkills };
+        updatedSkills[name] = checked ? [value] : [];
+  
+        return {
           ...prevState,
-          paymentScreenshot: reader.result as string,
-          paymentScreenshotName: file.name,
-        }));
-      };
-    }
+          proficiencySkills: updatedSkills,
+        };
+      } else if (name in prevState.proficiencySoundTools) {
+        const updatedSoundTools = { ...prevState.proficiencySoundTools };
+        updatedSoundTools[name] = checked ? [value] : [];
+  
+        return {
+          ...prevState,
+          proficiencySoundTools: updatedSoundTools,
+        };
+      } else {
+        return {
+          ...prevState,
+          [name]: value,
+        };
+      }
+    });
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -92,6 +200,7 @@ const RecruitmentPage: React.FC = () => {
     const preparedFormData = {
       ...formData,
     };
+    console.log(preparedFormData);
 
     try {
       const sheetResponse = await fetch('/api/submitRecruitmentForm', {
@@ -496,7 +605,7 @@ const RecruitmentPage: React.FC = () => {
                     <option value="">Select your Team</option>
                     <option value="Curation Team">Curation Team</option>
                     <option value="Technical Team">Technical Team</option>
-                    <option value="Creative Team">Creative Team:</option>
+                    <option value="Creative Team">Creative Team</option>
                     <option value="Sponsorship Team">Sponsorship Team</option>
                     <option value="Event Management Team">Event Management Team</option>
                   </Form.Control>
@@ -527,27 +636,902 @@ const RecruitmentPage: React.FC = () => {
 
         {currentSection === 4 && (
           <>
-            {formData.teamSelection && (
-              <Row className="mb-4">
-                <Col md={12}>
-                  <h3>{formData.teamSelection}</h3>
-                  {formData.teamSelection === 'Curation Team' && (
-                    <p>You have selected the Curation Team. Here are the details...</p>
-                  )}
-                  {formData.teamSelection === 'Technical Team' && (
-                    <p>You have selected the Technical Team. Here are the details...</p>
-                  )}
-                  {formData.teamSelection === 'Creative Team' && (
-                    <p>You have selected the Technical Team. Here are the details...</p>
-                  )}
-                  {formData.teamSelection === 'Sponsorship Team' && (
-                    <p>You have selected the Technical Team. Here are the details...</p>
-                  )}
-                  {formData.teamSelection === 'Event Management Team' && (
-                    <p>You have selected the Technical Team. Here are the details...</p>
-                  )}
-                </Col>
-              </Row>
+            <h2 className="mb-5">Section 4: {formData.teamSelection} </h2>
+            {formData.teamSelection === "Curation Team" && (
+              <div>
+                <Form.Group>
+                  <Row className="mb-3">
+                    <Col md={12}>
+                      <Form.Group controlId="proficiencyCreativeWriting">
+                        <Form.Label>1. On a scale of 1-10, how proficient are you with creative writing skills?</Form.Label>
+                        <Form.Control
+                          type="range"
+                          min="1"
+                          max="10"
+                          name="proficiencyCreativeWriting"
+                          className="form-control"
+                          value={formData.proficiencyCreativeWriting}
+                          onChange={handleChange}
+                          required
+                        />
+                        <Form.Text className="rangecss">
+                          Are your sure its {formData.proficiencyCreativeWriting} ?
+                        </Form.Text>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row className="mb-5">
+                    <Col md={12}>
+                      <Form.Group controlId="recruitmentroleinfo">
+                        <div className="text-center mt-3">
+                          <Image
+                            src=""
+                            alt="recruitment roles"
+                            className="img-fluid"
+                            style={{ maxWidth: '50%' }}
+                          />
+                        </div>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  <Row className="mb-3">
+                    <Col md={12}>
+                      <Form.Group controlId="creativeWritingCaptions">
+                        <Form.Label>2. Write 4 eye-catching captions related to the image.</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows={1}
+                          name="creativeWritingCaptions"
+                          value={formData.creativeWritingCaptions}
+                          onInput={(e) => {
+                            const target = e.target as HTMLTextAreaElement;
+                            target.style.height = 'auto';
+                            target.style.height = `${target.scrollHeight}px`;
+                          }}
+                          onChange={handleChange}
+                          required
+                          isInvalid={validated && !formData.creativeWritingCaptions}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please provide 4 eye-catching captions.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="recruitmentroleinfo">
+                      <div className="text-center mt-3">
+                        <video
+                          src="URL_TO_YOUR_VIDEO.mp4"
+                          controls
+                          className="img-fluid"
+                          style={{ maxWidth: '50%' }}
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="tedxThemeSuggestions">
+                      <Form.Label>3. Based on the video provided, suggest at least two theme ideas for the next TEDx event along with taglines:</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="tedxThemeSuggestions"
+                        value={formData.tedxThemeSuggestions}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.tedxThemeSuggestions}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your Theme Suggestions.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="movieImpact">
+                      <Form.Label>4. Which movie/book/music/series/poems do you resonate the most with and how did it impact you?</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="movieImpact"
+                        value={formData.movieImpact}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.movieImpact}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide movie/book/music/series/poems you resonate the most with and how did it impact you.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="contentFormats">
+                      <Form.Label>5. How would you develop and implement creative content formats for a TEDx event?</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="contentFormats"
+                        value={formData.contentFormats}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.contentFormats}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide How you would develop and implement creative content formats for a TEDx event.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="philosophicalThought">
+                      <Form.Label>6. Please share with us a philosophical thought or an idea that you find particularly fascinating:</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="philosophicalThought"
+                        value={formData.philosophicalThought}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.philosophicalThought}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide a philosophical thought or an idea that you find particularly fascinating.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="workLinks">
+                      <Form.Label>7. List your work/portfolio links (e.g., Wordpress, Medium, 𝕩, personal website):</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="workLinks"
+                        value={formData.workLinks}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.workLinks}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your work/portfolio links.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </div>
+            )}
+
+            {formData.teamSelection === "Technical Team" && (
+              <div>
+                <Form.Group>
+                  <Row className="mb-3">
+                    <Col md={12}>
+                      <Form.Group controlId="proficiencyWebsiteDesign">
+                        <Form.Label>1. On a scale of 1-10, how proficient are you with website design and development?</Form.Label>
+                        <Form.Control
+                          type="range"
+                          min="1"
+                          max="10"
+                          name="proficiencyWebsiteDesign"
+                          className="form-control"
+                          value={formData.proficiencyWebsiteDesign}
+                          onChange={handleChange}
+                          required
+                        />
+                        <Form.Text className="rangecss">
+                          Are your sure its {formData.proficiencyWebsiteDesign} ?
+                        </Form.Text>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row className="mb-3">
+                    <Col md={12}>
+                      <Form.Group controlId="extremePressureExperience">
+                        <Form.Label>2. Tell us about a time when you were faced with extreme pressure (can be unrelated to tech) What did you do?
+                        </Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows={1}
+                          name="extremePressureExperience"
+                          value={formData.extremePressureExperience}
+                          onInput={(e) => {
+                            const target = e.target as HTMLTextAreaElement;
+                            target.style.height = 'auto';
+                            target.style.height = `${target.scrollHeight}px`;
+                          }}
+                          onChange={handleChange}
+                          required
+                          isInvalid={validated && !formData.extremePressureExperience}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please provide your answer.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="workflow">
+                      <Form.Label>3. Give us a glimpse of your workflow. Do you use (Notion/Obsidian/Google Calendar/Other) to organize your day? If yes, explain how.
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="workflow"
+                        value={formData.workflow}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.workflow}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="platformsUsed">
+                      <Form.Label>4. What platforms/frameworks or tools do you use & have worked on?</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="platformsUsed"
+                        value={formData.platformsUsed}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.platformsUsed}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="avSetupExperience">
+                      <Form.Label>5. What experience do you have with live streaming, AV setups, stage equipment handling or similar technologies?</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="avSetupExperience"
+                        value={formData.avSetupExperience}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.avSetupExperience}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col md={12}>
+                    <Form.Group controlId="proficiencyGoogleApps">
+                      <Form.Label>1. How proficient are you with handling Google Drive & other Google Apps on a scale of 1-10?</Form.Label>
+                      <Form.Control
+                        type="range"
+                        min="1"
+                        max="10"
+                        name="proficiencyGoogleApps"
+                        className="form-control"
+                        value={formData.proficiencyGoogleApps}
+                        onChange={handleChange}
+                        required
+                      />
+                      <Form.Text className="rangecss">
+                        Are your sure its {formData.proficiencyGoogleApps} ?
+                      </Form.Text>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="portfolioLinks">
+                      <Form.Label>6. List your work/portfolio links. (Github/Figma/Personal websites/Web development project links)
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="portfolioLinks"
+                        value={formData.portfolioLinks}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.portfolioLinks}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="problemCommunication">
+                      <Form.Label>7. Can you communicate the problems you face to your teammates clearly? Can you intuitively communicate and fix problems that arise without being explicitly told or wait for the right moment?
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="problemCommunication"
+                        value={formData.problemCommunication}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.problemCommunication}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                      Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="innovativeIdea">
+                      <Form.Label>7. What is one innovative idea you would bring to the TEDx Team on the technical side that is cool or convenient (or both). (Example: Automating event confirmation emails)</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="innovativeIdea"
+                        value={formData.innovativeIdea}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.innovativeIdea}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                      Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </div>
+            )}
+
+            {formData.teamSelection === "Creative Team" && (
+              <div>
+                <Form.Label>1. How proficient are you with the following softwares:</Form.Label>
+                <table className="proficiency-grid">
+                  <thead>
+                    <tr>
+                      <th>Software</th>
+                      <th>1</th>
+                      <th>2</th>
+                      <th>3</th>
+                      <th>4</th>
+                      <th>5</th>
+                      <th>6</th>
+                      <th>7</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {['figma', 'blender', 'illustrator', 'photoshop', 'canva', 'premiere', 'afterEffects', 'davinci'].map(software => (
+                      <tr key={software}>
+                        <td>{software.charAt(0).toUpperCase() + software.slice(1)}</td>
+                        {[1, 2, 3, 4, 5, 6, 7].map(value => (
+                          <td key={value}>
+                            <input
+                              type="checkbox"
+                              name={software}
+                              value={value.toString()}
+                              checked={formData.proficiencySkills[software]?.[0] === value.toString()}
+                              onChange={handleChange}
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <Form.Label>2. How proficient are you with the following sound engineering tools?
+                </Form.Label>
+                <table className="proficiency-grid">
+                  <thead>
+                    <tr>
+                      <th>Sound Engg. Tools</th>
+                      <th>1</th>
+                      <th>2</th>
+                      <th>3</th>
+                      <th>4</th>
+                      <th>5</th>
+                      <th>6</th>
+                      <th>7</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {['ableton', 'flstudio'].map(tool => (
+                      <tr key={tool}>
+                        <td>{tool.charAt(0).toUpperCase() + tool.slice(1)}</td>
+                        {[1, 2, 3, 4, 5, 6, 7].map(value => (
+                          <td key={value}>
+                            <input
+                              type="checkbox"
+                              name={tool}
+                              value={value.toString()}
+                              checked={formData.proficiencySoundTools[tool]?.[0] === value.toString()}
+                              onChange={handleChange}
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="strategies">
+                      <Form.Label>3. What strategies do you use to make an event visually and experientially engaging?</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="strategies"
+                        value={formData.strategies}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.strategies}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                      Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="latestTrends">
+                      <Form.Label>4. What are some of the latest trends in design and technology that excite you?</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="latestTrends"
+                        value={formData.latestTrends}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.latestTrends}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                      Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="inspiration">
+                      <Form.Label>5. What inspires your creative work, and how do you translate that inspiration?</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="inspiration"
+                        value={formData.inspiration}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.inspiration}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                      Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="workLinks">
+                      <Form.Label>6. Can you share some of your past work in graphic design, video production, or any other creative field?</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="workLinks"
+                        value={formData.workLinks}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.workLinks}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                      Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </div>
+            )}
+
+            {formData.teamSelection === "Sponsorship Team" && (
+              <div>
+                <Row className="mb-3">
+                  <Col md={12}>
+                    <Form.Group controlId="exampleMarketing">
+                      <Form.Label>1. Can you provide an example of a successful marketing campaign you managed and its impact?</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="exampleMarketing"
+                        value={formData.exampleMarketing}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.exampleMarketing}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="pitchSponsor">
+                      <Form.Label>2. Imagine you are pitching our TEDx event to a potential sponsor. How would you convince them?
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="pitchSponsor"
+                        value={formData.pitchSponsor}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.pitchSponsor}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="keyElements">
+                      <Form.Label>3. Describe the key elements you would include in a sponsorship proposal:</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="keyElements"
+                        value={formData.keyElements}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.keyElements}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="briefSpeech">
+                      <Form.Label>4. Imagine you are giving a brief speech at a community event. What key points would you include?</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="briefSpeech"
+                        value={formData.briefSpeech}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.briefSpeech}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="socialLinks">
+                      <Form.Label>5. List your social media or Shopify links:
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="socialLinks"
+                        value={formData.socialLinks}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.socialLinks}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </div>
+            )}
+
+            {formData.teamSelection === "Event Management Team" && (
+              <div>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="technologyImplementation">
+                      <Form.Label>1. How do you plan to implement technology tools/apps/AI for Event Management?
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="technologyImplementation"
+                        value={formData.technologyImplementation}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.technologyImplementation}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="supportStageFright">
+                      <Form.Label>2. Imagine one of our keynote speakers is experiencing stage fright. How would you support them?
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="supportStageFright"
+                        value={formData.supportStageFright}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.supportStageFright}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="handleDisagreement">
+                      <Form.Label>3. How do you handle situations when guests disagree with your feedback?
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="handleDisagreement"
+                        value={formData.handleDisagreement}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.handleDisagreement}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="successfulEvent">
+                      <Form.Label>4. What does a successful event look like to you?
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="successfulEvent"
+                        value={formData.successfulEvent}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.successfulEvent}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="eventVolunteerDuties">
+                      <Form.Label>5. What do you think are the duties of an Event Management Volunteer?
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="eventVolunteerDuties"
+                        value={formData.eventVolunteerDuties}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.eventVolunteerDuties}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="standOutFromOthers">
+                      <Form.Label>6. How do you stand out from other candidates for this role?
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="standOutFromOthers"
+                        value={formData.standOutFromOthers}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.standOutFromOthers}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="excitementAboutRole">
+                      <Form.Label>7. What excites you most about being involved in event management?
+                      </Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={1}
+                        name="excitementAboutRole"
+                        value={formData.excitementAboutRole}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = 'auto';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onChange={handleChange}
+                        required
+                        isInvalid={validated && !formData.excitementAboutRole}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide your answer.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </div>
             )}
             <Row className="mb-3 justify-content-center">
               <Button
@@ -558,13 +1542,12 @@ const RecruitmentPage: React.FC = () => {
                 Previous
               </Button>
               <Button type="submit" variant="danger" className="w-25 mx-3 submit-button" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit'}
-            </Button>
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+              </Button>
             </Row>
-            
+
           </>
         )}
-
 
       </Form>
       <Toaster position="bottom-right" richColors />
@@ -582,7 +1565,7 @@ const RecruitmentPage: React.FC = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+    </Container >
   );
 };
 

@@ -385,3 +385,58 @@ body, html {
 #html5qr-code-full-region.ready::before {
   display: none;
 }
+
+.rangecss{
+  color:#E0E0E0;
+}
+
+.proficiency-grid {
+  width: 100%;
+  border-collapse: separate; /* Use separate borders for rounded corners */
+  border-spacing: 0;
+  border-radius: 10px; /* Round the table corners */
+  overflow: hidden; /* Ensure content doesn't overflow rounded corners */
+  margin-bottom: 20px;
+  background-color: #121212; /* Primary Black for background */
+}
+
+/* Header styling */
+.proficiency-grid th, .proficiency-grid td {
+  padding: 12px;
+  text-align: center;
+}
+
+.proficiency-grid th {
+  background-color: #e62b1e; /* TEDx Red */
+  color: #fff; /* White text */
+  font-weight: bold;
+}
+
+.proficiency-grid td {
+  background-color: #1F1F1F; /* Dark Gray for cells */
+}
+
+.proficiency-grid td:first-child {
+  text-align: left;
+  font-weight: bold;
+  background-color: #1F1F1F; /* Dark Gray */
+}
+
+/* Checkbox styling */
+.proficiency-grid input[type="checkbox"] {
+  transform: scale(1.2);
+  margin: 0;
+  accent-color: #e62b1e; /* TEDx Red for checkbox color */
+}
+
+/* Label styling */
+.proficiency-grid label {
+  display: block;
+  margin: 0;
+  font-weight: normal;
+}
+
+/* Table heading styling for skill names */
+.proficiency-grid th.skill-name {
+  text-align: left;
+}
