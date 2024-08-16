@@ -347,7 +347,7 @@ const RecruitmentPage: React.FC = () => {
             <Row className="mb-3">
               <Col md={12}>
                 <Form.Group controlId="ahaMoment">
-                  <Form.Label>Tell us about a triumphant/"aha" moment in your life so far?</Form.Label>
+                  <Form.Label>Tell us about a triumphant/&quot;aha&quot; moment in your life so far?</Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={1}
