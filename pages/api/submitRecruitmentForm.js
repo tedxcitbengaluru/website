@@ -45,7 +45,7 @@ export default async function submitToGoogleSheet(req, res) {
     values = values.concat([technologyImplementation, supportStageFright, handleDisagreement, successfulEvent, eventVolunteerDuties, standOutFromOthers, excitementAboutRole]);
   }
 
-  const spreadsheetId = process.env.GOOGLE_RECRUITMENT_SHEET_ID_1;
+  const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_RECRUITMENT_SHEET_ID_1;
   const range = `${teamSelection}!A1`; // Adjust the range based on your sheet structure
 
   const request = {

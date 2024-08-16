@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
   const authClient = await auth.getClient();
   const sheets = google.sheets({ version: 'v4', auth: authClient });
-  const spreadsheetId = process.env.GOOGLE_RECRUITMENT_SHEET_ID_1 ;
+  const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_RECRUITMENT_SHEET_ID_1 ;
   const range = 'Recruitment Settings!A2'; 
 
   if (req.method === 'GET') {
