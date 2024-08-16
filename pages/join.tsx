@@ -580,10 +580,16 @@ const RecruitmentPage: React.FC = () => {
                   <Form.Label>Which Team Would Suit You the Most?</Form.Label>
                   <div className="text-center mt-3">
                     <Image
-                      src="/recruitment role.jpg"
+                      src="/tedx_jobdescription-images-0.jpg"
                       alt="recruitment roles"
                       className="img-fluid"
-                      style={{ maxWidth: '50%' }}
+                      style={{ maxWidth: '75%' }}
+                    />
+                    <Image
+                      src="/tedx_jobdescription-images-1.jpg"
+                      alt="recruitment roles"
+                      className="img-fluid"
+                      style={{ maxWidth: '75%' }}
                     />
                   </div>
                 </Form.Group>
@@ -643,7 +649,7 @@ const RecruitmentPage: React.FC = () => {
                   <Row className="mb-3">
                     <Col md={12}>
                       <Form.Group controlId="proficiencyCreativeWriting">
-                        <Form.Label>1. On a scale of 1-10, how proficient are you with creative writing skills?</Form.Label>
+                        <Form.Label>1. On a scale of 1-10, how proficient are you with creative writing skills? Describe your creative writing process</Form.Label>
                         <Form.Control
                           type="range"
                           min="1"
@@ -660,21 +666,6 @@ const RecruitmentPage: React.FC = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Row className="mb-5">
-                    <Col md={12}>
-                      <Form.Group controlId="recruitmentroleinfo">
-                        <div className="text-center mt-3">
-                          <Image
-                            src=""
-                            alt="recruitment roles"
-                            className="img-fluid"
-                            style={{ maxWidth: '50%' }}
-                          />
-                        </div>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-
                   <Row className="mb-3">
                     <Col md={12}>
                       <Form.Group controlId="creativeWritingCaptions">
@@ -699,23 +690,23 @@ const RecruitmentPage: React.FC = () => {
                       </Form.Group>
                     </Col>
                   </Row>
+                  <Row className="mb-5">
+                    <Col md={12}>
+                      <Form.Group controlId="proficiencyCreativeWritingimg">
+                        <div className="text-center mt-3">
+                          <Image
+                            src="/Lunch_atop_a_Skyscraper_-_Charles_Clyde_Ebbets.jpg"
+                            alt="Lunch atop a Skyscraper by Charles Clyde Ebbets"
+                            className="img-fluid"
+                            style={{ maxWidth: '75%' }}
+                          />
+                        </div>
+                        <h5 className="text-center">Lunch atop a Skyscraper by Charles Clyde Ebbets</h5>
+
+                      </Form.Group>
+                    </Col>
+                  </Row>
                 </Form.Group>
-                <Row className="mb-5">
-                  <Col md={12}>
-                    <Form.Group controlId="recruitmentroleinfo">
-                      <div className="text-center mt-3">
-                        <video
-                          src="URL_TO_YOUR_VIDEO.mp4"
-                          controls
-                          className="img-fluid"
-                          style={{ maxWidth: '50%' }}
-                        >
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
-                    </Form.Group>
-                  </Col>
-                </Row>
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="tedxThemeSuggestions">
@@ -737,6 +728,24 @@ const RecruitmentPage: React.FC = () => {
                       <Form.Control.Feedback type="invalid">
                         Please provide your Theme Suggestions.
                       </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row className="mb-5">
+                  <Col md={12}>
+                    <Form.Group controlId="recruitmentroleinfo">
+                      <div className="text-center mt-3">
+                        <video
+                          src="/Pixar Short_ Luxo Jr. HD.mp4"
+                          controls
+                          className="img-fluid"
+                          style={{ maxWidth: '100%' }}
+                          autoPlay
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                        <h5 className="text-center">Pixar Short: Luxo Jr. HD</h5>
+                      </div>
                     </Form.Group>
                   </Col>
                 </Row>
@@ -767,7 +776,8 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="contentFormats">
-                      <Form.Label>5. How would you develop and implement creative content formats for a TEDx event?</Form.Label>
+                      <Form.Label>5. How would you develop and implement a variety of creative content formats such as poems, quizzes, infographics, interactive polls, or any other to reveal and promote a TEDx event theme effectively and engagingly?
+                      </Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={1}
@@ -791,7 +801,8 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="philosophicalThought">
-                      <Form.Label>6. Please share with us a philosophical thought or an idea that you find particularly fascinating:</Form.Label>
+                      <Form.Label>6. Please share with us a philosophical thought or an idea that you find particularly fascinating and why it resonates with you? 
+                      </Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={1}
