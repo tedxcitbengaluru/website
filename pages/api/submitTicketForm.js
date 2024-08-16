@@ -2,7 +2,7 @@ const { google } = require('googleapis');
 const { GoogleAuth } = require('google-auth-library');
 const crypto = require('crypto');
 
-export default async function submitToGoogleSheet(req, res) {
+export default async function submitTicketForm(req, res) {
   const auth = new GoogleAuth({
     credentials: {
       type: 'service_account',

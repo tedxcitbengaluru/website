@@ -208,7 +208,7 @@ const TeamTicketPage: React.FC = () => {
     const newCounter = counter + teamMembers.length; 
 
     try {
-      const sheetResponse = await fetch('/api/submitToGoogleSheet', {
+      const sheetResponse = await fetch('/api/submitTicketForm', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
