@@ -23,8 +23,8 @@ export default async function submitTicketForm(req, res) {
   const sheets = google.sheets({ version: 'v4', auth: authClient });
 
   const spreadsheetIds = [
-    process.env.NEXT_PUBLIC_GOOGLE_TICKET_SHEET_ID_1, 
-    process.env.NEXT_PUBLIC_GOOGLE_TICKET_SHEET_ID_2,
+    process.env.GOOGLE_TICKET_SHEET_ID_1, 
+    process.env.GOOGLE_TICKET_SHEET_ID_2,
   ];
 
   const range = 'Ticket Sheet!A1';

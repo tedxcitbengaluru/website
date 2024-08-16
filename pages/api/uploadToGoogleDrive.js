@@ -21,7 +21,7 @@ export default async function uploadToGoogleDrive(req, res) {
 
   const authClient = await auth.getClient();
   const drive = google.drive({ version: 'v3', auth: authClient });
-  const folderid = process.env.NEXT_PUBLIC_GOOGLE_DRIVE_FOLDER_ID;
+  const folderid = process.env.GOOGLE_DRIVE_FOLDER_ID;
   try {
     const { file, fileName, mimeType } = req.body;
 
