@@ -1016,7 +1016,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-3">
                   <Col md={12}>
                     <Form.Group controlId="proficiencyGoogleApps">
-                      <Form.Label>1. How proficient are you with handling Google Drive & other Google Apps on a scale of 1-10?</Form.Label>
+                      <Form.Label>6. How proficient are you with handling Google Drive & other Google Apps on a scale of 1-10?</Form.Label>
                       <Form.Control
                         type="range"
                         min="1"
@@ -1036,7 +1036,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="portfolioLinks">
-                      <Form.Label>6. List your work/portfolio links. (Github/Figma/Personal websites/Web development project links)
+                      <Form.Label>7. List your work/portfolio links. (Github/Figma/Personal websites/Web development project links)
                       </Form.Label>
                       <Form.Control
                         as="textarea"
@@ -1061,7 +1061,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="problemCommunication">
-                      <Form.Label>7. Can you communicate the problems you face to your teammates clearly? Can you intuitively communicate and fix problems that arise without being explicitly told or wait for the right moment?
+                      <Form.Label>8. Can you communicate the problems you face to your teammates clearly? Can you intuitively communicate and fix problems that arise without being explicitly told or wait for the right moment?
                       </Form.Label>
                       <Form.Control
                         as="textarea"
@@ -1086,7 +1086,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="innovativeIdea">
-                      <Form.Label>7. What is one innovative idea you would bring to the TEDx Team on the technical side that is cool or convenient (or both). (Example: Automating event confirmation emails)</Form.Label>
+                      <Form.Label>9. What is one innovative idea you would bring to the TEDx Team on the technical side that is cool or convenient (or both). (Example: Automating event confirmation emails)</Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={1}
@@ -1254,7 +1254,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="workLinks">
-                      <Form.Label>6. Can you share some of your past work in graphic design, video production, or any other creative field?(links:Instagram/Behance/Youtube/Pinterest/Dribble/Figma/Other)   </Form.Label>
+                      <Form.Label>6. Can you share some of your past work in graphic design, video production, or any other creative field? (links: Instagram / Behance / Youtube / Pinterest / Dribble / Figma / Other)</Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={1}
