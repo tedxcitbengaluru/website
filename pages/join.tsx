@@ -25,6 +25,7 @@ interface FormData {
   experience: string;
   teamSelection: string;
   proficiencyCreativeWriting: string;
+  creativeWriting: string;
   creativeWritingCaptions: string;
   tedxThemeSuggestions: string;
   movieImpact: string;
@@ -77,6 +78,7 @@ const RecruitmentPage: React.FC = () => {
     experience: '',
     teamSelection: '',
     proficiencyCreativeWriting: '',
+    creativeWriting: '',
     creativeWritingCaptions: '',
     tedxThemeSuggestions: '',
     movieImpact: '',
@@ -179,6 +181,22 @@ const RecruitmentPage: React.FC = () => {
       }
     });
   };
+
+  const handleNext = () => {
+    const form = document.querySelector('form');
+
+    if (form) {
+        if (form.checkValidity()) {
+            setCurrentSection(currentSection + 1);
+            form.classList.remove('was-validated'); // Reset validation feedback for the next section
+        } else {
+            form.classList.add('was-validated'); // Show validation feedback
+        }
+    }
+
+    // Reset validation state for the next section
+    setValidated(false);
+};
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -421,7 +439,7 @@ const RecruitmentPage: React.FC = () => {
                 </Form.Group>
               </Col>
             </Row>
-            <Button variant="danger" onClick={() => setCurrentSection(2)} className="w-100 submit-button">
+            <Button variant="danger" onClick={handleNext} className="w-100 submit-button">
               Next
             </Button>
           </>
@@ -563,7 +581,7 @@ const RecruitmentPage: React.FC = () => {
               </Button>
               <Button
                 variant="danger"
-                onClick={() => setCurrentSection(3)}
+                onClick={handleNext}
                 className="w-25 mx-3 submit-button"
               >
                 Next
@@ -631,7 +649,7 @@ const RecruitmentPage: React.FC = () => {
               </Button>
               <Button
                 variant="danger"
-                onClick={() => setCurrentSection(4)}
+                onClick={handleNext}
                 className="w-25 mx-3 submit-button"
               >
                 Next
@@ -649,7 +667,7 @@ const RecruitmentPage: React.FC = () => {
                   <Row className="mb-3">
                     <Col md={12}>
                       <Form.Group controlId="proficiencyCreativeWriting">
-                        <Form.Label>1. On a scale of 1-10, how proficient are you with creative writing skills? Describe your creative writing process</Form.Label>
+                        <Form.Label>1. On a scale of 1-10, how proficient are you with creative writing skills?</Form.Label>
                         <Form.Control
                           type="range"
                           min="1"
@@ -668,8 +686,32 @@ const RecruitmentPage: React.FC = () => {
                   </Row>
                   <Row className="mb-3">
                     <Col md={12}>
+                      <Form.Group controlId="creativeWriting">
+                        <Form.Label>2. Describe your creative writing process.</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows={1}
+                          name="creativeWriting"
+                          value={formData.creativeWriting}
+                          onInput={(e) => {
+                            const target = e.target as HTMLTextAreaElement;
+                            target.style.height = 'auto';
+                            target.style.height = `${target.scrollHeight}px`;
+                          }}
+                          onChange={handleChange}
+                          required
+                          isInvalid={validated && !formData.creativeWriting}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please provide 4 eye-catching captions.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row className="mb-3">
+                    <Col md={12}>
                       <Form.Group controlId="creativeWritingCaptions">
-                        <Form.Label>2. Write 4 eye-catching captions related to the image.</Form.Label>
+                        <Form.Label>3. Write 4 eye-catching captions related to the image.</Form.Label>
                         <Form.Control
                           as="textarea"
                           rows={1}
@@ -710,7 +752,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="tedxThemeSuggestions">
-                      <Form.Label>3. Based on the video provided, suggest at least two theme ideas for the next TEDx event along with taglines:</Form.Label>
+                      <Form.Label>4. Based on the video provided, suggest at least two theme ideas for the next TEDx event along with taglines:</Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={1}
@@ -740,7 +782,6 @@ const RecruitmentPage: React.FC = () => {
                           controls
                           className="img-fluid"
                           style={{ maxWidth: '100%' }}
-                          autoPlay
                         >
                           Your browser does not support the video tag.
                         </video>
@@ -752,7 +793,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="movieImpact">
-                      <Form.Label>4. Which movie/book/music/series/poems do you resonate the most with and how did it impact you?</Form.Label>
+                      <Form.Label>5. Which movie/book/music/series/poems do you resonate the most with and how did it impact you?</Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={1}
@@ -776,7 +817,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="contentFormats">
-                      <Form.Label>5. How would you develop and implement a variety of creative content formats such as poems, quizzes, infographics, interactive polls, or any other to reveal and promote a TEDx event theme effectively and engagingly?
+                      <Form.Label>6. How would you develop and implement a variety of creative content formats such as poems, quizzes, infographics, interactive polls, or any other to reveal and promote a TEDx event theme effectively and engagingly?
                       </Form.Label>
                       <Form.Control
                         as="textarea"
@@ -801,7 +842,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="philosophicalThought">
-                      <Form.Label>6. Please share with us a philosophical thought or an idea that you find particularly fascinating and why it resonates with you? 
+                      <Form.Label>7. Please share with us a philosophical thought or an idea that you find particularly fascinating and why it resonates with you? 
                       </Form.Label>
                       <Form.Control
                         as="textarea"
@@ -826,7 +867,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="workLinks">
-                      <Form.Label>7. List your work/portfolio links (e.g., Wordpress, Medium, 𝕩, personal website):</Form.Label>
+                      <Form.Label>8. List your work/portfolio links (Wordpress/Medium/𝕩(formerly twitter)/personal website or blog/Goodreads/LinkedIn Articles/Reddit/Github account):</Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={1}
@@ -1213,7 +1254,7 @@ const RecruitmentPage: React.FC = () => {
                 <Row className="mb-5">
                   <Col md={12}>
                     <Form.Group controlId="workLinks">
-                      <Form.Label>6. Can you share some of your past work in graphic design, video production, or any other creative field?</Form.Label>
+                      <Form.Label>6. Can you share some of your past work in graphic design, video production, or any other creative field?(links:Instagram/Behance/Youtube/Pinterest/Dribble/Figma/Other)   </Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={1}

@@ -23,7 +23,7 @@ export default async function submitToGoogleSheet(req, res) {
 
   const {
     fullname, email, phoneno, dob, course, branch, semester, aboutYourself, ahaMoment, collabQuestion, whyVolunteer, experience, teamSelection,
-    proficiencyCreativeWriting, creativeWritingCaptions, tedxThemeSuggestions, movieImpact, contentFormats, philosophicalThought, workLinks,
+    proficiencyCreativeWriting,creativeWriting, creativeWritingCaptions, tedxThemeSuggestions, movieImpact, contentFormats, philosophicalThought, workLinks,
     proficiencyWebsiteDesign, extremePressureExperience, workflow, platformsUsed, avSetupExperience, proficiencyGoogleApps, portfolioLinks,problemCommunication
     ,innovativeIdea, proficiencySkills, proficiencySoundTools, strategies,latestTrends,inspiration,exampleMarketing,pitchSponsor,keyElements,briefSpeech,socialLinks,technologyImplementation, supportStageFright, handleDisagreement,
     successfulEvent, eventVolunteerDuties, standOutFromOthers, excitementAboutRole,
@@ -34,7 +34,7 @@ export default async function submitToGoogleSheet(req, res) {
   ];
 
   if (teamSelection === 'Curation Team') {
-    values = values.concat([proficiencyCreativeWriting, creativeWritingCaptions, tedxThemeSuggestions, movieImpact, contentFormats, philosophicalThought, workLinks]);
+    values = values.concat([proficiencyCreativeWriting, creativeWriting, creativeWritingCaptions, tedxThemeSuggestions, movieImpact, contentFormats, philosophicalThought, workLinks]);
   } else if (teamSelection === 'Technical Team') {
     values = values.concat([proficiencyWebsiteDesign, extremePressureExperience, workflow, platformsUsed, avSetupExperience, proficiencyGoogleApps, portfolioLinks,problemCommunication,innovativeIdea]);
   } else if (teamSelection === 'Creative Team') {

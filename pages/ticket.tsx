@@ -712,7 +712,7 @@ const TeamTicketPage: React.FC = () => {
             >
               {isSubmitting ? 'Submitting...' : 'Submit'}
             </Button>
-            {!title.includes('Early Bird') && ticketType !== "solo" && (
+            {!title.includes('Early Bird') && ticketType !== "Solo" && (
               <Button onClick={handleExport} className="export-button">
                 Export Form Data
               </Button>
