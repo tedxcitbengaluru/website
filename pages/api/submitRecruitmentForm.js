@@ -45,10 +45,14 @@ export default async function submitToGoogleSheet(req, res) {
     values = values.concat([technologyImplementation, supportStageFright, handleDisagreement, successfulEvent, eventVolunteerDuties, standOutFromOthers, excitementAboutRole]);
   }
 
-  const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_RECRUITMENT_SHEET_ID_1;
+  const spreadsheetIds = [
+    process.env.NEXT_PUBLIC_GOOGLE_RECRUITMENT_SHEET_ID_1,
+    process.env.NEXT_PUBLIC_GOOGLE_RECRUITMENT_SHEET_ID_2,
+  ];
+
   const range = `${teamSelection}!A1`; // Adjust the range based on your sheet structure
 
-  const request = {
+  const requests = spreadsheetIds.map(spreadsheetId => ({
     spreadsheetId,
     range,
     valueInputOption: 'RAW',
@@ -56,13 +60,15 @@ export default async function submitToGoogleSheet(req, res) {
     resource: {
       values: [values],
     },
-  };
+  }));
 
   try {
-    await sheets.spreadsheets.values.append(request);
+    await Promise.all(requests.map(request => {
+      return sheets.spreadsheets.values.append(request);
+    }));
     res.status(200).send('Success');
   } catch (err) {
-    console.error(err);
+    console.error('Error:', err); 
     res.status(500).send('Error submitting form data to Google Sheets');
   }
 }

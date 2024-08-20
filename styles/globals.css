@@ -24,6 +24,7 @@ body, html {
 /* navbar */
 .navbar {
   background-color: #121212; 
+  height: 75px;
 }
 
 .btn-close {
@@ -60,27 +61,13 @@ body, html {
   color: #E62B1E;
 }
 
-/* home page */
-.card {
-  background-color: #1F1F1F; 
-  color: #E0E0E0; 
-}
-
-.card-header, .card-body, .card-footer {
-  background-color: #1F1F1F;
-}
-
-.text-offwhite {
-  color: #F5F5F5; 
-}
-
 /* footer */
 .footer {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #E62B1E;
+  background-color: #ba2318;
   color: #E0E0E0;
   padding: 16px 32px;
   text-align: center;
@@ -91,6 +78,13 @@ body, html {
   .footer {
     font-size: 14px;
   }
+}
+
+.loading-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; 
 }
 
 /* ticket */

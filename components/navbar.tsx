@@ -12,10 +12,10 @@ const TedNavbar: React.FC = () => {
       <Container>
         <Navbar.Brand href="/">
           <Image
-            src="/tedx/logo-white.png"
+            src="/tedx/tedxlogo-white.png"
             alt="TEDxCITBengaluru"
-            width={233} 
-            height={40}  
+            width={282} 
+            height={57}  
           />
         </Navbar.Brand>
 
