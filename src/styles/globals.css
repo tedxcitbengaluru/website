@@ -1,24 +1,15 @@
 /* root */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body, html {
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   background-color: #121212;
   color: #F5F5F5;
   flex-direction: column;
-  margin: 2%; 
-}
-
-.main-content {
-  flex: 1; 
-  padding-bottom: 50px; 
+  overflow-x: hidden;
 }
 
 /* navbar */
@@ -61,31 +52,62 @@ body, html {
   color: #E62B1E;
 }
 
-/* footer */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #ba2318;
-  color: #E0E0E0;
-  padding: 16px 32px;
-  text-align: center;
-  font-size: 12px;
-}
-
-@media (min-width: 768px) {
-  .footer {
-    font-size: 14px;
-  }
-}
-
 .loading-page {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 80vh; 
+} 
+
+#social-media-footer ul li {
+  font-size: 48px;
+  padding: 16px;
+  transition: 0.4s;
 }
+
+ #social-media-footer ul {
+  display: flex;
+  list-style: none;
+  justify-content: Left;
+  padding: 0;
+}
+
+#social-media-footer a .fa-instagram, 
+#social-media-footer a .fa-linkedin,
+#social-media-footer a .fa-envelope{
+color: #4C566A;
+transition: 0.4s;
+font-size: 80px;
+padding: 0 1.2rem;
+}
+
+@media (max-width: 900px) {
+
+  #social-media-footer a .fa-instagram, 
+  #social-media-footer a .fa-linkedin,
+  #social-media-footer a .fa-envelope {
+   font-size: 48px;
+   }
+ }
+ 
+ @media (max-width: 400px) {
+
+  #social-media-footer a .fa-instagram, 
+  #social-media-footer a .fa-linkedin,
+  #social-media-footer a .fa-envelope{
+    font-size: 32px;
+    }
+  }
+ 
+  #social-media-footer ul li:hover a .fa-instagram {
+    color: #f71c63;
+  }
+  #social-media-footer ul li:hover a .fa-linkedin {
+    color: #0072b1;
+  }
+  #social-media-footer ul li:hover a .fa-envelope{
+    color: #ffffff;
+  }
 
 /* ticket */
 .not-available-page,
@@ -96,7 +118,6 @@ body, html {
   flex-direction: column;
   height: 100vh;
 }
-
 
 .settings-form {
   margin-bottom: 16px;
@@ -162,7 +183,7 @@ body, html {
   background-color: #1F1F1F; 
   color: #F5F5F5; 
   border: 1px solid #E62B1E; 
-  margin-bottom: 30%;
+  margin-bottom: 2%;
   padding: 10px 20px;
   font-size: 16px;
   border-radius: 4px;
@@ -188,7 +209,7 @@ body, html {
   background-color: #E62B1E; 
   color: #F5F5F5; 
   border: none;
-  margin-bottom: 30%;
+  margin-bottom: 2%;
   padding: 10px 20px;
   font-size: 16px;
   border-radius: 4px;
@@ -208,7 +229,7 @@ body, html {
 .submit-button:disabled {
   background-color: #aaa; 
   cursor: not-allowed;
-}
+} 
 
 /* admin page */
 .admin-page-container {
@@ -386,9 +407,9 @@ body, html {
 
 .proficiency-grid {
   width: 100%;
-  border-collapse: separate; /* Use separate borders for rounded corners */
+  border-collapse: separate; 
   border-spacing: 0;
-  border-radius: 10px; /* Round the table corners */
+  border-radius: 10px;
   overflow: hidden; /* Ensure content doesn't overflow rounded corners */
   margin-bottom: 20px;
   background-color: #121212; /* Primary Black for background */

@@ -312,7 +312,7 @@ const TeamTicketPage: React.FC = () => {
 
   if (loading) {
     return (
-      <Container className="loading-page">
+      <Container className="flex items-center justify-center h-[100vh]">
         <Spinner animation="border" />
       </Container>
     );
@@ -320,18 +320,20 @@ const TeamTicketPage: React.FC = () => {
 
   if (!ticketing) {
     return (
-      <Container className="not-available-page">
-        <h1>Not Available</h1>
-        <p>Ticketing for this event is not available at the moment.</p>
+      <Container className="flex items-center justify-center flex-col h-screen">
+        <h1 className="text-3xl font-bold mb-4">Not Available</h1>
+        <p className="text-lg text-center max-w-md">
+          Ticketing for this event is not available at the moment.
+        </p>
       </Container>
     );
   }
 
   if (ticketingComplete) {
     return (
-      <Container className="sold-out-page">
-        <h1>Sold Out</h1>
-        <p>All tickets for this event have been sold out.</p>
+      <Container className="flex items-center justify-center flex-col h-screen">
+         <h1 className="text-3xl font-bold mb-4">Sold Out</h1>
+         <p className="text-lg text-center max-w-md">All tickets for this event have been sold out.</p>
       </Container>
     );
   }
@@ -339,8 +341,9 @@ const TeamTicketPage: React.FC = () => {
   const title = isEarlyBird ? 'Early Bird Ticket Registration Form' : `${ticketType === '' ? '' : ticketType === 'Solo' ? 'Solo' : ticketType === 'Group of 3' ? 'Group of 3' : 'Group of 5'} Ticket Registration Form`;
 
   return (
+    <div className=" flex flex-col items-center gap-8 bg-[#121212] py-20">
     <Container className="mt-5 p-4 rounded shadow-sm ">
-      <h1 className="mb-5">{title}</h1>
+      <h1 className="text-5xl font-bold mb-4">{title}</h1>
       {!title.includes('Early Bird') && (
         <Col>
           <Form.Group controlId="formTicketType">
@@ -736,6 +739,7 @@ const TeamTicketPage: React.FC = () => {
         </Modal.Footer>
       </Modal>
     </Container>
+    </div>
   );
 };
 
