@@ -126,6 +126,72 @@ const RecruitmentPage: React.FC = () => {
     excitementAboutRole: '',
   });
 
+  const resetForm = () => {
+    setFormData({
+      fullname: '',
+      email: '',
+      phoneno: '',
+      dob: '',
+      course: '',
+      branch: '',
+      semester: '',
+      aboutYourself: '',
+      ahaMoment: '',
+      collabQuestion: '',
+      whyVolunteer: '',
+      experience: '',
+      teamSelection: '',
+      proficiencyCreativeWriting: '',
+      creativeWriting: '',
+      creativeWritingCaptions: '',
+      tedxThemeSuggestions: '',
+      movieImpact: '',
+      contentFormats: '',
+      philosophicalThought: '',
+      workLinks: '',
+      proficiencyWebsiteDesign: '',
+      extremePressureExperience: '',
+      workflow: '',
+      platformsUsed: '',
+      avSetupExperience: '',
+      proficiencyGoogleApps: '',
+      portfolioLinks: '',
+      problemCommunication: '',
+      problemSolving: '',
+      innovativeIdea: '',
+      proficiencySkills: {
+        figma: [],
+        blender: [],
+        illustrator: [],
+        photoshop: [],
+        canva: [],
+        premiere: [],
+        afterEffects: [],
+        davinci: [],
+      },
+      proficiencySoundTools: {
+        ableton: [],
+        flstudio: [],
+      },
+      strategies: '',
+      latestTrends: '',
+      inspiration: '',
+      exampleMarketing: '',
+      pitchSponsor: '',
+      keyElements: '',
+      briefSpeech: '',
+      socialLinks: '',
+      technologyImplementation: '',
+      supportStageFright: '',
+      handleDisagreement: '',
+      successfulEvent: '',
+      eventVolunteerDuties: '',
+      standOutFromOthers: '',
+      excitementAboutRole: '',
+    });
+    setCurrentSection(1);
+    setValidated(false);
+  };
 
   useEffect(() => {
     const fetchTicketSettings = async () => {
@@ -234,6 +300,7 @@ const RecruitmentPage: React.FC = () => {
       if (sheetResponse.ok) {
         toast.success(responseMessage || 'Form successfully submitted!');
         console.log('Form data successfully submitted to Google Sheets!');
+        resetForm(); 
       } else {
         console.error('Error submitting form data');
         toast.error(responseMessage || 'Error submitting form data');
