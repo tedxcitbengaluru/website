@@ -377,7 +377,9 @@ const TeamTicketPage: React.FC = () => {
               <Row className="mb-3 mt-4">
                 <Col md={12}>
                   <Form.Group controlId={`formEmail${index}`}>
-                    <Form.Label>Email for Member {index + 1}</Form.Label>
+                    <Form.Label>{ticketType === "Solo" || title.includes("Early Bird")
+                      ? "Email"
+                      : `Email for Member ${index + 1}`}</Form.Label>
                     <Form.Control
                       type="email"
                       name="email"
@@ -396,7 +398,9 @@ const TeamTicketPage: React.FC = () => {
               <Row className="mb-3">
                 <Col md={12}>
                   <Form.Group controlId={`formPhoneNo${index}`}>
-                    <Form.Label>Phone Number for Member {index + 1}</Form.Label>
+                    <Form.Label> {ticketType === "Solo" || title.includes("Early Bird")
+                      ? "Phone Number"
+                      : `Phone Number for Member ${index + 1}`}</Form.Label>
                     <Form.Control
                       type="tel"
                       name="phoneNo"
@@ -417,7 +421,9 @@ const TeamTicketPage: React.FC = () => {
               <Row className="mb-3">
                 <Col md={12}>
                   <Form.Group controlId={`formName${index}`}>
-                    <Form.Label>Name of Member {index + 1}</Form.Label>
+                    <Form.Label>{ticketType === "Solo" || title.includes("Early Bird")
+                      ? "Name"
+                      : `Name of Member ${index + 1}`}</Form.Label>
                     <Form.Control
                       type="text"
                       name="name"

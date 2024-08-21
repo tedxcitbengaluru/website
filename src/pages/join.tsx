@@ -3,11 +3,11 @@ import { Form, Button, Container, Image, Row, Col, Modal, Spinner, FormGroup } f
 import { Toaster, toast } from 'sonner';
 
 interface ProficiencySkills {
-  [key: string]: string[]; // Key can be any string, and values are arrays of strings
+  [key: string]: string[]; 
 }
 
 interface ProficiencySoundTools {
-  [key: string]: string[]; // Key can be any string, and values are arrays of strings
+  [key: string]: string[]; 
 }
 
 interface FormData {
@@ -228,13 +228,15 @@ const RecruitmentPage: React.FC = () => {
         },
         body: JSON.stringify(preparedFormData),
       });
-
+    
+      const responseMessage = await sheetResponse.text(); // Get the response message text
+    
       if (sheetResponse.ok) {
-        toast.success('Form successfully submitted!');
+        toast.success(responseMessage || 'Form successfully submitted!');
         console.log('Form data successfully submitted to Google Sheets!');
       } else {
         console.error('Error submitting form data');
-        toast.error('Error submitting form data');
+        toast.error(responseMessage || 'Error submitting form data');
       }
     } catch (error) {
       console.error('Error:', error);

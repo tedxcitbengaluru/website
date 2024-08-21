@@ -50,25 +50,49 @@ export default async function submitToGoogleSheet(req, res) {
     process.env.NEXT_PUBLIC_GOOGLE_RECRUITMENT_SHEET_ID_2,
   ];
 
-  const range = `${teamSelection}!A1`; // Adjust the range based on your sheet structure
-
-  const requests = spreadsheetIds.map(spreadsheetId => ({
-    spreadsheetId,
-    range,
-    valueInputOption: 'RAW',
-    insertDataOption: 'INSERT_ROWS',
-    resource: {
-      values: [values],
-    },
-  }));
+  const range = `${teamSelection}!B:B`; 
 
   try {
+    const existingEmailsPromises = spreadsheetIds.map(spreadsheetId => {
+      return sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range,
+      });
+    });
+
+    const existingEmailsResults = await Promise.all(existingEmailsPromises);
+
+    const existingEmails = existingEmailsResults.reduce((acc, result) => {
+      if (result.data.values) {
+        acc = acc.concat(result.data.values.flat());
+      }
+      return acc;
+    }, []);
+
+    const emailCount = existingEmails.filter(existingEmail => existingEmail === email).length;
+
+    //  Check if the email has already been submitted more than 2 times
+    if (emailCount > 2) {
+      return res.status(400).send('You have already applied more than twice. No more submissions are allowed.');
+    }
+
+    const requests = spreadsheetIds.map(spreadsheetId => ({
+      spreadsheetId,
+      range: `${teamSelection}!A1`, 
+      valueInputOption: 'RAW',
+      insertDataOption: 'INSERT_ROWS',
+      resource: {
+        values: [values],
+      },
+    }));
+
     await Promise.all(requests.map(request => {
       return sheets.spreadsheets.values.append(request);
     }));
-    res.status(200).send('Success');
+
+    res.status(200).send('Form successfully submitted!');
   } catch (err) {
-    console.error('Error:', err); 
-    res.status(500).send('Error submitting form data to Google Sheets');
+    console.error('Error:', err);
+    res.status(500).send('Error submitting form data');
   }
 }
