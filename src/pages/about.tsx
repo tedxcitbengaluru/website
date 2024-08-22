@@ -3,7 +3,6 @@ import { useSheetData } from '../context/SheetDataContext';
 import Team from '@/components/Team';
 export default function about() {
     const { data, error } = useSheetData();
-    console.log(data?.about);
     const heroText = data?.about[1][1]; // "TEDxCITBengaluru is an independently organized TED event..."
     const minutes = data?.about[1][2]; // "300"
     const speakers = data?.about[1][3]; // "30"
@@ -11,11 +10,11 @@ export default function about() {
     const followers = data?.about[1][5]; // "850"
     return (
         <main className='py-24'>
-            <div className="text-center text-3xl font-bold text-ted-red md:text-5xl">
+            <div className="text-center text-3xl font-bold text-ted-off-white md:text-5xl">
                 About Us
             </div>
-            <div className="mx-auto my-6 h-[2px] w-[100px] bg-ted-red"></div>
-            <div className="mb-16 text-center text-3xl font-bold text-ted-red md:text-5xl">
+            <div className="mx-auto my-6 h-[2px] w-[100px] bg-ted-off-white"></div>
+            <div className="mb-16 text-center text-3xl font-bold text-ted-off-white md:text-5xl">
                 Who we are
             </div>
             <div

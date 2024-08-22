@@ -668,13 +668,13 @@ const RecruitmentPage: React.FC = () => {
                     <Form.Label>Which Team Would Suit You the Most?</Form.Label>
                     <div className="text-center mt-3">
                       <Image
-                        src="/tedx_jobdescription-images-0.jpg"
+                        src="/recruitment/tedx_jobdescription-images-0.jpg"
                         alt="recruitment roles"
                         className="img-fluid"
                         style={{ maxWidth: '75%', margin: '0 auto' }}
                       />
                       <Image
-                        src="/tedx_jobdescription-images-1.jpg"
+                        src="/recruitment/tedx_jobdescription-images-1.jpg"
                         alt="recruitment roles"
                         className="img-fluid"
                         style={{ maxWidth: '75%', margin: '0 auto' }}
@@ -807,7 +807,7 @@ const RecruitmentPage: React.FC = () => {
                         <Form.Group controlId="proficiencyCreativeWritingimg">
                           <div className="text-center mt-3">
                             <Image
-                              src="/Lunch_atop_a_Skyscraper_-_Charles_Clyde_Ebbets.jpg"
+                              src="/recruitment/Lunch_atop_a_Skyscraper_-_Charles_Clyde_Ebbets.jpg"
                               alt="Lunch atop a Skyscraper by Charles Clyde Ebbets"
                               className="img-fluid"
                               style={{ maxWidth: '75%', margin: '0 auto' }}
@@ -848,7 +848,7 @@ const RecruitmentPage: React.FC = () => {
                       <Form.Group controlId="recruitmentroleinfo">
                         <div className="text-center mt-3">
                           <video
-                            src="/Pixar Short_ Luxo Jr. HD.mp4"
+                            src="/recruitment/Pixar Short_ Luxo Jr. HD.mp4"
                             controls
                             className="img-fluid"
                             style={{ maxWidth: '100%', margin: '0 auto' }}
