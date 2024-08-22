@@ -114,7 +114,7 @@ export default function about() {
                     </div>
                 </div>
             </div>
-            <div className="flex w-full flex-col items-center gap-8 bg-ted-black py-20">
+            <div className="flex w-full flex-col items-center gap-8 bg-ted-black pt-20">
                     <h1 className="text-4xl mb-4 text-center text-ted-off-white"> Get in touch with us</h1>
                     <div id="social-media-footer">
                         <ul>

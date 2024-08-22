@@ -15,7 +15,7 @@ const transformTeamData = (data: any[]) => {
 
         if (!teamStructure[event].team[category]) {
             teamStructure[event].team[category] = {
-                category_title: category || "Others",
+                category_title: category || "ECP Team",
                 people: []
             };
         }
@@ -81,10 +81,10 @@ const Team: React.FC = () => {
                                 <div className="my-16 text-center text-3xl font-bold text-ted-black-100 md:text-5xl">
                                     {eventTeam[cat].category_title}
                                 </div>
-                                <div className="relative mx-auto flex w-[80vw] flex-row flex-wrap justify-evenly gap-16">
+                                <div className="mb-16 relative mx-auto flex w-[80vw] flex-row flex-wrap justify-evenly gap-16">
                                     {eventTeam[cat].people.map((person: any, i: number) => (
                                         <div key={i} className="relative flex flex-col items-center">
-                                            <div className="relative h-[200px] w-[200px] overflow-clip rounded-[3rem] border-4 border-ted-red-100 md:h-[300px] md:w-[300px]">
+                                            <div className="relative h-[200px] w-[200px] overflow-clip rounded-[3rem] border-4 border-ted-light-gray md:h-[300px] md:w-[300px]">
                                                 <Image
                                                     src={person.photo}
                                                     fill
@@ -92,16 +92,15 @@ const Team: React.FC = () => {
                                                     className=""
                                                 />
                                             </div>
-                                            <div className="mt-4 text-xl font-semibold text-ted-black-100 md:text-3xl">
-                                                {person.name}
+                                            <div className="mt-4 text-xl font-semibold text-ted-off-white md:text-3xl">
+                                                {person.name.includes('ECP')? "": person.name}
                                             </div>
-                                            <div className="text-sm font-semibold text-ted-red-100 md:text-xl">
+                                            <div className="text-sm font-semibold text-ted-red md:text-xl">
                                                 {person.title}
                                             </div>
                                         </div>
                                     ))}
                                 </div>
-                                <div className="mx-auto mt-16 h-[1px] w-[50%] bg-ted-red-200"></div>
                             </div>
                         ))}
                     </>

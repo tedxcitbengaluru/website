@@ -27,6 +27,7 @@ export default function Home() {
   };
 
   return (
+    <main>
     <div className="overflow-x-hidden bg-[#121212] text-[#E0E0E0]">
       <div className="relative w-screen h-screen overflow-hidden m-0 p-0">
         <img
@@ -85,7 +86,7 @@ export default function Home() {
             </div>
 
             {/* What Do You Gain Section */}
-            <div className=" flex flex-col items-center bg-[#1E1E1E] py-24">
+            <div className=" flex flex-col items-center bg-[#1E1E1E] pt-24">
               <div className="mx-[30vw] text-center text-3xl  mb-5 font-bold leading-normal text-[#E62B1E] sm:text-5xl">
                 What do you gain out of TEDxCITBengaluru?
               </div>
@@ -169,8 +170,10 @@ export default function Home() {
             </div>
           </div>
           </div>
+          
         )
       )}
     </div>
+    </main>
   );
 }
