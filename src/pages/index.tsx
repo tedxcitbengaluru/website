@@ -47,7 +47,7 @@ export default function Home() {
                   {homeData[1]}
                 </div>
                 <div className="text-justify text-lg text-[#B0B0B0]">{homeData[3]}</div>
-                <Link href="/join">
+                <Link href="/ticket">
                   <div className="rounded-2xl border-2 border-[#E0E0E0] bg-[#E62B1E] px-8 py-4 text-center text-2xl font-semibold text-[#E0E0E0] hover:bg-[#BF1F1F]">
                     Register Now!
                   </div>
@@ -139,7 +139,7 @@ export default function Home() {
                 <div className="mx-16 text-center text-2xl font-bold leading-loose text-[#E0E0E0] md:text-3xl lg:mx-64">
                   Be a part of the upcoming event at TEDxCITBengaluru
                 </div>
-                <Link href="/join">
+                <Link href="/ticket">
                   <div className="rounded-2xl border-2 border-[#E0E0E0] bg-[#E0E0E0] px-8 py-4 text-center text-2xl font-semibold text-[#121212] hover:bg-[#121212] hover:text-[#E0E0E0]">
                     Register Now!
                   </div>
