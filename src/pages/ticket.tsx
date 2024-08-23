@@ -729,21 +729,37 @@ const TeamTicketPage: React.FC = () => {
             </div>
           </Form>
         )}
-        <Toaster position="bottom-right" richColors />
-        <Modal show={showConfirmModal} onHide={handleCancel} centered>
-          <Modal.Header className='modal-header' closeButton>
-            <Modal.Title>Confirm Submission</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className='modal-body'>Are you sure you want to submit the form?</Modal.Body>
-          <Modal.Footer className='modal-footer'>
-            <Button variant="secondary" onClick={handleCancel}>
-              Cancel
-            </Button>
-            <Button variant="danger" onClick={handleConfirm}>
-              Confirm
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <Toaster
+        position="bottom-right"
+        richColors
+        toastOptions={{
+          style: {
+            background: '#1F1F1F', 
+            color: '#E0E0E0', 
+          },
+        }}
+      />
+      <Modal
+        show={showConfirmModal}
+        onHide={handleCancel}
+        centered
+        className=" text-light" 
+      >
+        <Modal.Header className='bg-dark text-light' closeButton>
+          <Modal.Title>Confirm Submission</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className='bg-dark text-light'>
+          Are you sure you want to submit the form?
+        </Modal.Body>
+        <Modal.Footer className='bg-dark text-light'>
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleConfirm}>
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
       </Container>
     </div>
   );

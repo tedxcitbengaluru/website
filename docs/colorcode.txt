@@ -17,3 +17,4 @@ Usage: Primary text color for good contrast against the dark background.
 Off-White (for additional contrast):
 HEX: #F5F5F5
 Usage: For text or elements that need to stand out more, like headings or important info.
+
