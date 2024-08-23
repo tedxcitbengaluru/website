@@ -57,26 +57,26 @@ const EventInfo: React.FC = () => {
             </div>
 
             <div className="flex flex-row flex-wrap justify-center gap-x-16 gap-y-8 px-16 text-sm font-semibold text-ted-off-white sm:text-lg md:px-32 md:text-3xl">
-                <div className="flex items-center gap-4 rounded-2xl border-2 border-ted-off-whitebg-ted-off-white px-8 py-4 shadow-[2px_10px_60px_#e62b1e33] duration-150 md:px-16">
+                <div className="flex items-center gap-4 rounded-2xl border-2 border-ted-off-white px-8 py-4 shadow-[2px_10px_60px_#e62b1e33] duration-150 md:px-16">
                     <FontAwesomeIcon icon={faCalendarDay} style={{ width: '1em', height: '1em' }} />
                     {`${date.date} ${date.month} ${date.year}`}
                 </div>
-                <div className="flex items-center gap-4 rounded-2xl border-2 border-ted-off-white bg-ted-white-100 px-8 py-4 shadow-[2px_10px_60px_#e62b1e33] duration-150 md:px-16">
+                <div className="flex items-center gap-4 rounded-2xl border-2 border-ted-off-white px-8 py-4 shadow-[2px_10px_60px_#e62b1e33] duration-150 md:px-16">
                     <FontAwesomeIcon icon={faClock} style={{ width: '1em', height: '1em' }} />
                     {`${date.hours % 12 || 12}:${date.minutes < 10 ? '0' : ''}${date.minutes} ${
                         date.hours >= 12 ? 'PM' : 'AM'
                     }`}
                 </div>
-                <div className="flex flex-col items-center gap-4 rounded-2xl border-2 border-ted-off-white bg-ted-white-100 px-8 py-4 text-center shadow-[2px_10px_60px_#e62b1e33] duration-150 sm:flex-row md:px-16">
+                <div className="flex flex-col items-center gap-4 rounded-2xl border-2 border-ted-off-white px-8 py-4 text-center shadow-[2px_10px_60px_#e62b1e33] duration-150 sm:flex-row md:px-16">
                     <FontAwesomeIcon icon={faMapLocation} style={{ width: '1em', height: '1em' }} />
                     Cambridge Institute Of Technology, KR Puram, Bengaluru
                 </div>
             </div>
-            <div className="mt-16 flex w-screen flex-col items-center gap-8 bg-ted-dark-gray py-8 px-8 font-semibold text-ted-white-100 md:gap-16 md:px-24 md:py-16">
+            <div className="mt-16 flex w-screen flex-col items-center gap-8 bg-ted-dark-gray py-8 px-8 font-semibold text-ted-off-white md:gap-16 md:px-24 md:py-16">
                 <div className="text-center text-3xl md:text-5xl">About the Session</div>
                 <div className="text-justify text-sm md:text-lg">{transformedEvent[3]}</div>
             </div>
-            <div className="bg-ted-black flex flex-row py-8 px-16 text-xs text-ted-red-100 sm:text-sm md:text-xl">
+            <div className="bg-ted-black flex flex-row py-8 px-16 text-xs text-ted-off-white sm:text-sm md:text-xl">
                 {parseInt(eventnum as string) - 1 > 0 && (
                     <div className="mr-auto hover:underline">
                         <Link href={`/events/${parseInt(eventnum as string) - 1}`}>

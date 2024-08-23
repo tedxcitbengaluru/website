@@ -24,7 +24,7 @@ const transformTeamData = (data: any[]) => {
             name,
             title,
             about,
-            photo: `/team/${name}.jpg` 
+            photo: `/team/${event}/${name}.jpg` 
         });
     });
 
@@ -40,14 +40,14 @@ const Team: React.FC = () => {
         if (data?.team) {
             const structuredData = transformTeamData(data.team);
             setTransformedData(structuredData);
-            setSelectedKey(Object.keys(structuredData)[0]); // Select the first event by default
+            setSelectedKey(Object.keys(structuredData)[0]); 
         }
     }, [data]);
 
     if (error) return <div>Error loading team data.</div>;
     if (!data || !transformedData) return <div>Loading...</div>;
 
-    const sortedKeys = Object.keys(transformedData).sort();
+    const eventKeys = Object.keys(transformedData);  // Maintain the original order from the data
 
     return (
         <>
@@ -55,7 +55,7 @@ const Team: React.FC = () => {
                 Meet our Core Team
             </div>
             <div className="flex flex-row flex-wrap items-center justify-center gap-8 md:gap-16">
-                {sortedKeys.map((key, i) => (
+                {eventKeys.map((key, i) => (
                     <button
                         key={i}
                         onClick={() => setSelectedKey(key)}
@@ -72,11 +72,11 @@ const Team: React.FC = () => {
             </div>
             {(() => {
                 const eventTeam = transformedData[selectedKey]?.team;
-                const sortedCategoryKeys = Object.keys(eventTeam).sort();
+                const categoryKeys = Object.keys(eventTeam);
 
                 return (
                     <>
-                        {sortedCategoryKeys.map((cat) => (
+                        {categoryKeys.map((cat) => (
                             <div key={cat}>
                                 <div className="my-16 text-center text-3xl font-bold text-ted-black-100 md:text-5xl">
                                     {eventTeam[cat].category_title}
@@ -89,7 +89,6 @@ const Team: React.FC = () => {
                                                     src={person.photo}
                                                     fill
                                                     alt={person.name}
-                                                    className=""
                                                 />
                                             </div>
                                             <div className="mt-4 text-xl font-semibold text-ted-off-white md:text-3xl">
