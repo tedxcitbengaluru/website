@@ -11,12 +11,13 @@ const TedNavbar: React.FC = () => {
     <Navbar className="fixed-top" expand="lg" variant="dark" bg="dark">
       <Container>
         <Navbar.Brand href="/">
-          <Image
-            src="/tedx/tedxlogo-white.png"
-            alt="TEDxCITBengaluru"
-            width={282} 
-            height={57}  
-          />
+        <Image
+                src="/tedx/logo-white.png"
+                alt="TEDxCITBengaluru"
+                width={233} 
+                height={40}  
+                style={{ height: '40px' }} 
+              />
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="offcanvasNavbar">
