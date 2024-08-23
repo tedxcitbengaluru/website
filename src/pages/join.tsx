@@ -3,11 +3,11 @@ import { Form, Button, Container, Image, Row, Col, Modal, Spinner, FormGroup } f
 import { Toaster, toast } from 'sonner';
 
 interface ProficiencySkills {
-  [key: string]: string[]; 
+  [key: string]: string[];
 }
 
 interface ProficiencySoundTools {
-  [key: string]: string[]; 
+  [key: string]: string[];
 }
 
 interface FormData {
@@ -219,6 +219,7 @@ const RecruitmentPage: React.FC = () => {
   const [validated, setValidated] = useState(false);
   const [isRecruitmentEnabled, setIsRecruitmentEnabled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [resumeUrl, setResumeUrl] = useState("/recruitment/recruitment-form.pdf");
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
 
@@ -294,13 +295,13 @@ const RecruitmentPage: React.FC = () => {
         },
         body: JSON.stringify(preparedFormData),
       });
-    
+
       const responseMessage = await sheetResponse.text(); // Get the response message text
-    
+
       if (sheetResponse.ok) {
         toast.success(responseMessage || 'Form successfully submitted!');
         console.log('Form data successfully submitted to Google Sheets!');
-        resetForm(); 
+        resetForm();
       } else {
         console.error('Error submitting form data');
         toast.error(responseMessage || 'Error submitting form data');
@@ -666,23 +667,18 @@ const RecruitmentPage: React.FC = () => {
                 <Col md={12}>
                   <Form.Group controlId="recruitmentroleinfo">
                     <Form.Label>Which Team Would Suit You the Most?</Form.Label>
-                    <div className="text-center mt-3">
-                      <Image
-                        src="/recruitment/tedx_jobdescription-images-0.jpg"
-                        alt="recruitment roles"
-                        className="img-fluid"
-                        style={{ maxWidth: '75%', margin: '0 auto' }}
-                      />
-                      <Image
-                        src="/recruitment/tedx_jobdescription-images-1.jpg"
-                        alt="recruitment roles"
-                        className="img-fluid"
-                        style={{ maxWidth: '75%', margin: '0 auto' }}
-                      />
+                    <div className="flex justify-center items-center mt-3">
+                      <div className="w-full max-w-[400px] h-[60vh] sm:max-w-[600px] sm:h-[70vh] md:max-w-[800px] md:h-[75vh] lg:max-w-[1000px] lg:h-[80vh] xl:max-w-[1200px] xl:h-[85vh] 2xl:max-w-[1400px] 2xl:h-[90vh] border-2 border-red-600 rounded-lg overflow-hidden">
+                        <iframe
+                          src={resumeUrl}
+                          className="w-full h-full border-none"
+                        />
+                      </div>
                     </div>
                   </Form.Group>
                 </Col>
               </Row>
+
               <Row className="mb-3">
                 <Col md={12}>
                   <Form.Group controlId="teamSelection">
