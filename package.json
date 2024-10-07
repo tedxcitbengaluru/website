@@ -9,18 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7",
-    "@emotion/react": "^11.13.0",
-    "@emotion/styled": "^11.13.0",
     "@mui/material": "^5.16.7",
     "axios": "^1.7.4",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.3",
+    "canvas-confetti": "^1.9.3",
     "express": "^4.19.2",
+    "framer-motion": "^11.11.1",
     "googleapis": "^140.0.1",
     "html5-qrcode": "^2.3.8",
     "next": "14.0.3",
@@ -28,7 +28,9 @@
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
-    "sonner": "^1.5.0"
+    "sonner": "^1.5.0",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Form, Button, Container, Image, Row, Col, Modal, Spinner, FormGroup } from 'react-bootstrap';
 import { Toaster, toast } from 'sonner';
+import { useRouter } from 'next/router';
 
 interface ProficiencySkills {
   [key: string]: string[];
@@ -100,10 +101,8 @@ const RecruitmentPage: React.FC = () => {
       blender: [],
       illustrator: [],
       photoshop: [],
-      canva: [],
       premiere: [],
       afterEffects: [],
-      davinci: [],
     },
     proficiencySoundTools: {
       ableton: [],
@@ -164,10 +163,8 @@ const RecruitmentPage: React.FC = () => {
         blender: [],
         illustrator: [],
         photoshop: [],
-        canva: [],
         premiere: [],
         afterEffects: [],
-        davinci: [],
       },
       proficiencySoundTools: {
         ableton: [],
@@ -213,6 +210,7 @@ const RecruitmentPage: React.FC = () => {
     fetchTicketSettings();
   }, []);
 
+  const router = useRouter(); 
   const [currentSection, setCurrentSection] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -299,9 +297,8 @@ const RecruitmentPage: React.FC = () => {
       const responseMessage = await sheetResponse.text(); // Get the response message text
 
       if (sheetResponse.ok) {
-        toast.success(responseMessage || 'Form successfully submitted!');
-        console.log('Form data successfully submitted to Google Sheets!');
         resetForm();
+        router.push('/success');
       } else {
         console.error('Error submitting form data');
         toast.error(responseMessage || 'Error submitting form data');
@@ -1188,15 +1185,13 @@ const RecruitmentPage: React.FC = () => {
                         <th>3</th>
                         <th>4</th>
                         <th>5</th>
-                        <th>6</th>
-                        <th>7</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {['figma', 'blender', 'illustrator', 'photoshop', 'canva', 'premiere', 'afterEffects', 'davinci'].map(software => (
+                      {['figma', 'blender', 'illustrator', 'photoshop', 'premiere', 'afterEffects'].map(software => (
                         <tr key={software}>
                           <td>{software.charAt(0).toUpperCase() + software.slice(1)}</td>
-                          {[1, 2, 3, 4, 5, 6, 7].map(value => (
+                          {[1, 2, 3, 4, 5].map(value => (
                             <td key={value}>
                               <input
                                 type="checkbox"
@@ -1222,15 +1217,13 @@ const RecruitmentPage: React.FC = () => {
                         <th>3</th>
                         <th>4</th>
                         <th>5</th>
-                        <th>6</th>
-                        <th>7</th>
                       </tr>
                     </thead>
                     <tbody>
                       {['ableton', 'flstudio'].map(tool => (
                         <tr key={tool}>
                           <td>{tool.charAt(0).toUpperCase() + tool.slice(1)}</td>
-                          {[1, 2, 3, 4, 5, 6, 7].map(value => (
+                          {[1, 2, 3, 4, 5].map(value => (
                             <td key={value}>
                               <input
                                 type="checkbox"
