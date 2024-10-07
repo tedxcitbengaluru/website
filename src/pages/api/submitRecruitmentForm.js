@@ -22,7 +22,7 @@ export default async function submitToGoogleSheet(req, res) {
   const sheets = google.sheets({ version: 'v4', auth: authClient });
 
   const {
-    fullname, email, phoneno, dob, course, branch, semester, aboutYourself, ahaMoment, collabQuestion, whyVolunteer, experience, teamSelection,
+    fullname, email, phoneno, dob, course, branch, semester, usn, aboutYourself, ahaMoment, collabQuestion, whyVolunteer, experience, teamSelection,
     proficiencyCreativeWriting,creativeWriting, creativeWritingCaptions, tedxThemeSuggestions, movieImpact, contentFormats, philosophicalThought, workLinks,
     proficiencyWebsiteDesign, extremePressureExperience, workflow, platformsUsed, avSetupExperience, proficiencyGoogleApps, portfolioLinks,problemCommunication
     ,innovativeIdea, proficiencySkills, proficiencySoundTools, strategies,latestTrends,inspiration,exampleMarketing,pitchSponsor,keyElements,briefSpeech,socialLinks,technologyImplementation, supportStageFright, handleDisagreement,
@@ -30,7 +30,7 @@ export default async function submitToGoogleSheet(req, res) {
   } = req.body;
 
   let values = [
-    fullname, email, phoneno, dob, course, branch, semester, aboutYourself, ahaMoment, collabQuestion, whyVolunteer, experience
+    fullname, email, phoneno, dob, course, branch, semester, usn, aboutYourself, ahaMoment, collabQuestion, whyVolunteer, experience
   ];
 
   if (teamSelection === 'Curation Team') {

@@ -19,6 +19,7 @@ interface FormData {
   course: string;
   branch: string;
   semester: string;
+  usn: string;
   aboutYourself: string;
   ahaMoment: string;
   collabQuestion: string;
@@ -72,6 +73,7 @@ const RecruitmentPage: React.FC = () => {
     course: '',
     branch: '',
     semester: '',
+    usn: '',
     aboutYourself: '',
     ahaMoment: '',
     collabQuestion: '',
@@ -134,6 +136,7 @@ const RecruitmentPage: React.FC = () => {
       course: '',
       branch: '',
       semester: '',
+      usn:'',
       aboutYourself: '',
       ahaMoment: '',
       collabQuestion: '',
@@ -503,6 +506,28 @@ const RecruitmentPage: React.FC = () => {
                     </Form.Control>
                     <Form.Control.Feedback type="invalid">
                       Please select your semester.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className="mb-3">
+                <Col md={12}>
+                  <Form.Group controlId="usn">
+                  <Form.Label>
+                    Please provide your University Serial Number (USN) if you have one. 
+                    If you do not have a USN, kindly enter your Class and Section.
+                  </Form.Label>
+                    <Form.Control
+                      type="usn"
+                      name="usn"
+                      value={formData.usn}
+                      onChange={handleChange}
+                      required
+                      className="bg-[#F5F5F5] border border-[#E0E0E0] text-[#121212] rounded-md p-2"
+                      isInvalid={validated && !formData.usn}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide a USN.
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Col>
