@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 
 const SuccessPage = () => {
   useEffect(() => {
-    const duration = 5 * 1000; 
+    const duration = 5 * 1000;
     const animationEnd = Date.now() + duration;
     const defaultConfetti = () => {
       confetti({
@@ -20,8 +20,8 @@ const SuccessPage = () => {
         origin: { x: 1 },
       });
     };
-    
-    const interval = setInterval(() => {
+
+    const interval: NodeJS.Timeout = setInterval(() => {
       const timeLeft = animationEnd - Date.now();
       if (timeLeft <= 0) {
         return clearInterval(interval);
@@ -29,16 +29,16 @@ const SuccessPage = () => {
       defaultConfetti();
     }, 200);
 
-    return () => clearInterval(interval); 
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-ted-black text-ted-light-gray p-4">
       <motion.div
         className="bg-ted-dark-gray rounded-lg shadow-lg p-8 max-w-xl w-full"
-        initial={{ opacity: 0, scale: 0.8 }}  
-        animate={{ opacity: 1, scale: 1 }}   
-        transition={{ duration: 0.8, ease: "easeInOut" }}  
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
       >
         <h1 className="text-4xl font-bold text-center text-ted-off-white mb-4">
           Thank You!
@@ -57,7 +57,7 @@ const SuccessPage = () => {
         <p className="text-center">
           Or feel free to send us an email at{' '}
           <a href="mailto:tedxcitbengaluru@cambridge.edu.in" className="text-ted-red underline">
-            tedxcitbengaluru@cambridge.edu.in
+          tedxcitbengaluru@cambridge.edu.in
           </a>
         </p>
       </motion.div>
