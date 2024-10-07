@@ -440,9 +440,9 @@ const RecruitmentPage: React.FC = () => {
                       isInvalid={validated && !formData.course}
                     >
                       <option value="">Select</option>
-                      <option value="Btech">Btech</option>
-                      <option value="Bcom">Bcom</option>
-                      <option value="Mtech">Mtech</option>
+                      <option value="B.E">B.E</option>
+                      <option value="B.Com">B.Com</option>
+                      <option value="BBA">BBA</option>
                     </Form.Control>
                     <Form.Control.Feedback type="invalid">
                       Please select a Course.
@@ -451,7 +451,7 @@ const RecruitmentPage: React.FC = () => {
                 </Col>
               </Row>
 
-              {(formData.course === "Btech" || formData.course === "Mtech") && (
+              {(formData.course === "B.E") && (
                 <Row className="mb-3">
                   <Col md={12}>
                     <Form.Group controlId="branch">
@@ -469,6 +469,8 @@ const RecruitmentPage: React.FC = () => {
                         <option value="CSE">CSE</option>
                         <option value="ISE">ISE</option>
                         <option value="AIML">AIML</option>
+                        <option value="CS-IOT">CS-IOT</option>
+                        <option value="CS-DS">CS-DS</option>
                         <option value="ECE">ECE</option>
                         <option value="EEE">EEE</option>
                         <option value="ME/CV">ME/CV</option>
