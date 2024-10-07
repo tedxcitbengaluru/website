@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useSheetData } from '../context/SheetDataContext';
 import Team from '@/components/Team';
-export default function about() {
+export default function About() {
     const { data, error } = useSheetData();
     const heroText = data?.about[1][1]; // "TEDxCITBengaluru is an independently organized TED event..."
     const minutes = data?.about[1][2]; // "300"
