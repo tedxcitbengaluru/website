@@ -503,6 +503,7 @@ const RecruitmentPage: React.FC = () => {
                       <option value="4">4</option>
                       <option value="5">5</option>
                       <option value="6">6</option>
+                      <option value="7">7</option>
                     </Form.Control>
                     <Form.Control.Feedback type="invalid">
                       Please select your semester.
