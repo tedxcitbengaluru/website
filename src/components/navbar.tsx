@@ -45,7 +45,7 @@ const TedNavbar: React.FC = () => {
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/events">Events</Nav.Link>
               <Nav.Link href="/speakers">Speakers & Performers</Nav.Link>
-              <Nav.Link href="/partners">Partners</Nav.Link>
+              {/*<Nav.Link href="/partners">Partners</Nav.Link>*/}
               <Nav.Link href="/about">About Us</Nav.Link>
             </Nav>
           </Offcanvas.Body>
