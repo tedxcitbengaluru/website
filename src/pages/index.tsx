@@ -15,6 +15,7 @@ export default function Home() {
   const { data, error } = useSheetData();
   const isMobile = useMediaQuery('(max-width:900px)');
   const [scrollY, setScrollY] = useState(0);
+  const [displayText, setDisplayText] = useState('');
 
   // Handle scroll event for parallax effect
   useEffect(() => {
@@ -38,6 +39,26 @@ export default function Home() {
     minutes: ''
   };
 
+  useEffect(() => {
+    if (homeData && homeData[1]) {
+      const originalText = homeData[1];
+      let currentText = '';
+      let index = 0;
+
+      const interval = setInterval(() => {
+        if (index < originalText.length) {
+          currentText += originalText[index];
+          setDisplayText(currentText);
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 100); // Adjust the speed of the unraveling effect here
+
+      return () => clearInterval(interval);
+    }
+  }, [homeData]);
+
   return (
     <main>
      <div className="overflow-x-hidden bg-[#121212] text-[#E0E0E0] py-16">
@@ -50,7 +71,7 @@ export default function Home() {
         <img
           src="/slideshow/front-mountains.png"
           alt="Front Mountain"
-          className="absolute top-0 left-0 object-cover w-full"
+          className="absolute top-0 left-0 w-full object-cover w-full"
           style={{
             transform: `translateY(${scrollY * 0.4}px)`,
             zIndex: 3,
@@ -65,7 +86,7 @@ export default function Home() {
         <img
           src="/slideshow/x.png"
           alt="Front Mountain"
-          className="absolute top-0 left-0 object-cover w-full"
+          className="absolute top-0 left-0 w-full object-cover w-full"
           style={{
             transform: `translateY(${scrollY * 0}px)`,
             zIndex: 4,
@@ -98,7 +119,7 @@ export default function Home() {
         <img
           src="/slideshow/crow.png"
           alt="Crow"
-          className="absolute top-16 left-16 object-cover"
+          className="absolute top-0 left-0 object-cover"
           style={{
             transform: `translateY(${scrollY * 0.6}px)`,
             zIndex: 4,
@@ -115,7 +136,7 @@ export default function Home() {
               <div className="flex w-full flex-col items-center justify-between gap-16 bg-[#1E1E1E] px-16 py-48 lg:flex-row lg:items-start lg:gap-48 xl:px-48">
                 <div className="flex flex-col items-center gap-16 lg:items-start">
                   <div className="text-center text-5xl font-semibold text-[#E0E0E0]">
-                    {homeData[1]}
+                    {displayText}
                   </div>
                   <div className="text-justify text-lg text-[#B0B0B0]">{homeData[3]}</div>
                   <Link href="/ticket">
@@ -145,7 +166,7 @@ export default function Home() {
                     return (
                       <div
                         key={i}
-                        className="flex w-full flex-row items-center justify-start gap-4 rounded-2xl bg-[#2D2D2D] text-[#E0E0E0] py-8 px-8 text-sm font-semibold shadow-[1px_5px_30px_rgba(255,43,30,0.3)] sm:text-xl md:gap-8 md:px-16 md:text-2xl"
+                        className="flex w-full flex-row items-center justify-start gap-4 rounded-2xl bg-[#2D2D2D] text-[#E0E0E0] py-8 px-8 text-sm font-semibold"
                       >
                         <span className="text-xs text-[#E62B1E] md:text-lg">X</span>
                         {point}
@@ -186,7 +207,7 @@ export default function Home() {
                     return (
                       <div
                         key={i}
-                        className="flex flex-col items-center rounded-2xl bg-[#2D2D2D] py-8 px-4 shadow-[2px_10px_40px_rgba(255,43,30,0.3)]"
+                        className="flex flex-col items-center rounded-2xl bg-[#2D2D2D] py-8 px-4"
                       >
                         <div className="flex flex-row items-center justify-center gap-4 text-2xl font-bold text-[#E62B1E] lg:text-3xl">
                           <FontAwesomeIcon

@@ -59,14 +59,14 @@ const Events: React.FC = () => {
                 <button
                     onClick={() => setPageType('events')}
                     style={pageType === 'events' ? { borderColor: '#e62b1e', color: 'gray' } : undefined}
-                    className="rounded-2xl border-2 border-ted-white-100 bg-ted-white-100 px-16 py-4 text-lg font-semibold text-ted-black-200 shadow-[2px_10px_60px_#e62b1e33] duration-150 hover:border-ted-red-100 hover:text-ted-red-100 sm:text-2xl"
+                    className="rounded-2xl border-2 border-ted-white-100 bg-ted-white-100 px-16 py-4 text-lg font-semibold text-ted-black-200  duration-150 hover:border-ted-red-100 hover:text-ted-red-100 sm:text-2xl"
                 >
                     TEDx Events
                 </button>
                 <button
                     onClick={() => setPageType('circles')}
                     style={pageType === 'circles' ? { borderColor: '#e62b1e', color: 'gray' } : undefined}
-                    className="rounded-2xl border-2 border-ted-white-100 bg-ted-white-100 px-16 py-4 text-lg font-semibold text-ted-black-200 shadow-[2px_10px_60px_#e62b1e33] duration-150 hover:border-ted-red-100 hover:text-ted-red-100 sm:text-2xl"
+                    className="rounded-2xl border-2 border-ted-white-100 bg-ted-white-100 px-16 py-4 text-lg font-semibold text-ted-black-200  duration-150 hover:border-ted-red-100 hover:text-ted-red-100 sm:text-2xl"
                 >
                     TEDx Circles
                 </button>
