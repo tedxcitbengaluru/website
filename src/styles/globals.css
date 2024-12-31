@@ -3,6 +3,112 @@
 @tailwind components;
 @tailwind utilities;
 
+body, html {
+  display: flex;
+
+  background-color: #121212;
+  color: #F5F5F5;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* navbar */
+.navbar {
+  background-color: #121212; 
+  height: 66px;
+}
+
+.btn-close {
+  background-color: #fff;
+}
+
+.navbar-brand {
+  color: #E62B1E; 
+  font-weight: bold;
+}
+
+.navbar-toggler {
+  border-color: #E0E0E0; 
+}
+
+.navbar-toggler-icon {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg fill="%23E62B1E" viewBox="0 0 16 16" width="24" height="24"><path d="M0 3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3zm0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1v-1zm1 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1v-1z"/></svg>');
+}
+
+.offcanvas {
+  background-color: #121212; 
+  color: #E0E0E0; 
+}
+
+.offcanvas-title {
+  color: #E62B1E; 
+}
+
+.nav-link {
+  color: #E0E0E0;
+}
+
+.nav-link:hover {
+  color: #E62B1E;
+}
+
+.loading-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; 
+} 
+
+#social-media-footer ul li {
+  font-size: 48px;
+  padding: 16px;
+  transition: 0.4s;
+}
+
+ #social-media-footer ul {
+  display: flex;
+  list-style: none;
+  justify-content: Left;
+  padding: 0;
+}
+
+#social-media-footer a .fa-instagram, 
+#social-media-footer a .fa-linkedin,
+#social-media-footer a .fa-envelope{
+color: #4C566A;
+transition: 0.4s;
+font-size: 80px;
+padding: 0 1.2rem;
+}
+
+@media (max-width: 900px) {
+
+  #social-media-footer a .fa-instagram, 
+  #social-media-footer a .fa-linkedin,
+  #social-media-footer a .fa-envelope {
+   font-size: 48px;
+   }
+ }
+ 
+ @media (max-width: 400px) {
+
+  #social-media-footer a .fa-instagram, 
+  #social-media-footer a .fa-linkedin,
+  #social-media-footer a .fa-envelope{
+    font-size: 32px;
+    }
+  }
+ 
+  #social-media-footer ul li:hover a .fa-instagram {
+    color: #f71c63;
+  }
+  #social-media-footer ul li:hover a .fa-linkedin {
+    color: #0072b1;
+  }
+  #social-media-footer ul li:hover a .fa-envelope{
+    color: #ffffff;
+  }
+
 /* ticket */
 .not-available-page,
 .sold-out-page {
