@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSheetData } from '../context/SheetDataContext';
 import { convertDate } from '@/utils/date';
 
-export default function Home(): JSX.Element {
+export default function Home(){
   const { data, error } = useSheetData();
   const homeData = data?.home as string[] | undefined;
 
