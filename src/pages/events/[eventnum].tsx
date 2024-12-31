@@ -57,11 +57,11 @@ const EventInfo: React.FC = () => {
             </div>
 
             <div className="flex flex-row flex-wrap justify-center gap-x-16 gap-y-8 px-16 text-sm font-semibold text-ted-off-white sm:text-lg md:px-32 md:text-3xl">
-                <div className="flex items-center gap-4 rounded-2xl border-2 border-ted-off-white px-8 py-4 shadow-[2px_10px_60px_#e62b1e33] duration-150 md:px-16">
+                <div className="flex items-center gap-4 rounded-2xl border-2 border-ted-off-white px-8 py-4  duration-150 md:px-16">
                     <FontAwesomeIcon icon={faCalendarDay} style={{ width: '1em', height: '1em' }} />
                     {`${date.date} ${date.month} ${date.year}`}
                 </div>
-                <div className="flex items-center gap-4 rounded-2xl border-2 border-ted-off-white px-8 py-4 shadow-[2px_10px_60px_#e62b1e33] duration-150 md:px-16">
+                <div className="flex items-center gap-4 rounded-2xl border-2 border-ted-off-white px-8 py-4 duration-150 md:px-16">
                     <FontAwesomeIcon icon={faClock} style={{ width: '1em', height: '1em' }} />
                     {`${date.hours % 12 || 12}:${date.minutes < 10 ? '0' : ''}${date.minutes} ${
                         date.hours >= 12 ? 'PM' : 'AM'
