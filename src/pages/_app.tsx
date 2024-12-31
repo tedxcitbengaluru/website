@@ -4,6 +4,7 @@ import TedNavbar from '../components/navbar';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { SheetDataProvider } from '../context/SheetDataContext';
+import Footer from '../components/footer';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -15,9 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </Head>
         <TedNavbar />
         <Component {...pageProps} className="main-content min-h-screen flex flex-col" />
-        <footer className="bottom-0 left-0 w-full bg-[#ba2318] text-[#E0E0E0] py-4 px-8 text-center text-xs sm:text-sm">
-          Copyright 2024 © TEDxCITBengaluru This independent TEDx event is operated under license from TED
-        </footer>
+        <Footer/>
       </>
     </SheetDataProvider>
   );

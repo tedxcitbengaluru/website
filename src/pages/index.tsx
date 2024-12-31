@@ -1,19 +1,11 @@
-import { useMediaQuery } from '@mui/material';
+"use client";
+
+import Image from "next/image";
 import { useSheetData } from '../context/SheetDataContext';
 import { convertDate } from '@/utils/date';
-import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faHeart,
-    faArrowTrendUp,
-    faLightbulb,
-    faCertificate
-} from '@fortawesome/free-solid-svg-icons';
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const { data, error } = useSheetData();
-  const isMobile = useMediaQuery('(max-width:900px)');
-
   const homeData = data?.home as string[] | undefined;
 
   // Initialize date as undefined
@@ -27,153 +19,181 @@ export default function Home() {
   };
 
   return (
-    <main>
-    <div className="overflow-x-hidden bg-[#121212] text-[#E0E0E0]">
-      <div className="relative w-screen h-screen overflow-hidden m-0 p-0">
-        <img
-          src={isMobile ? "/slideshow/Aether_Banner_Mobile.png" : "/slideshow/Aether_Banner.png"}
-          alt="Banner slide"
-          className="absolute top-0 left-0 w-full h-full object-cover"
-        />
-      </div>
-
-      {error ? (
-        <p className="text-[#E62B1E]">Error loading data. Please try again later.</p>
-      ) : (
-        homeData && (
-          <div>
-            <div className="flex w-full flex-col items-center justify-between gap-16 bg-[#1E1E1E] px-16 py-48 lg:flex-row lg:items-start lg:gap-48 xl:px-48">
-              <div className="flex flex-col items-center gap-16 lg:items-start">
-                <div className="text-center text-5xl font-semibold text-[#E0E0E0]">
-                  {homeData[1]}
-                </div>
-                <div className="text-justify text-lg text-[#B0B0B0]">{homeData[3]}</div>
-                <Link href="/ticket">
-                  <div className="rounded-2xl border-2 border-[#E0E0E0] bg-[#E62B1E] px-8 py-4 text-center text-2xl font-semibold text-[#E0E0E0] hover:bg-[#BF1F1F]">
-                    Register Now!
-                  </div>
-                </Link>
-              </div>
-              <div className="text-center text-5xl font-bold text-[#E0E0E0]">
-                <div className="text-[15rem]">{date.date}</div>
-                <div>{date.month}</div>
-                <div>{date.year}</div>
-              </div>
-            </div>
-
-            <div className=" flex flex-col items-center gap-8 bg-[#121212] py-24">
-              <div className="mx-[30vw] text-center text-3xl mb-5 font-bold leading-normal text-[#E62B1E] sm:text-5xl">
-                Why should you attend TEDxCITBengaluru?
-              </div>
-              <div className="flex w-[80%] flex-col gap-8">
-                {[
-                  'We believe a TEDx Talk is a journey, With the Idea being the destination.',
-                  'We find the most unique, thought-provoking and impactful ideas within our local community and provide a platform for it to spread far and wide.',
-                  'Connect with like-minded individuals and build your network.',
-                  'Watch mesmerizing performances by our Entertainers that leave you spell-bound.'
-                ].map((point, i) => {
-                  return (
-                    <div
-                      key={i}
-                      className="flex w-full flex-row items-center justify-start gap-4 rounded-2xl bg-[#2D2D2D] text-[#E0E0E0] py-8 px-8 text-sm font-semibold shadow-[1px_5px_30px_rgba(255,43,30,0.3)] sm:text-xl md:gap-8 md:px-16 md:text-2xl"
-                    >
-                      <span className="text-xs text-[#E62B1E] md:text-lg">X</span>
-                      {point}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* What Do You Gain Section */}
-            <div className=" flex flex-col items-center bg-[#1E1E1E] pt-24">
-              <div className="mx-[30vw] text-center text-3xl  mb-5 font-bold leading-normal text-[#E62B1E] sm:text-5xl">
-                What do you gain out of TEDxCITBengaluru?
-              </div>
-              <div className="grid grid-cols-1 gap-12 py-8 md:grid-cols-2 pb-24">
-                {[
-                  {
-                    title: 'Certificate',
-                    subtitle: 'A Certificate for you to be proud of.',
-                    icon: faCertificate
-                  },
-                  {
-                    title: 'Memorabilia',
-                    subtitle: 'Memorabilia for you to cherish.',
-                    icon: faHeart
-                  },
-                  {
-                    title: 'Experience',
-                    subtitle: 'An Experience for you to learn from.',
-                    icon: faArrowTrendUp
-                  },
-                  {
-                    title: 'Ideas',
-                    subtitle: 'And of course, Ideas for you to reflect on.',
-                    icon: faLightbulb
-                  }
-                ].map((card, i) => {
-                  return (
-                    <div
-                      key={i}
-                      className="flex flex-col items-center rounded-2xl bg-[#2D2D2D] py-8 px-4 shadow-[2px_10px_40px_rgba(255,43,30,0.3)]"
-                    >
-                      <div className="flex flex-row items-center justify-center gap-4 text-2xl font-bold text-[#E62B1E] lg:text-3xl">
-                        <FontAwesomeIcon
-                          style={{ width: '1em', height: '1em' }}
-                          icon={card.icon}
-                        />
-                        {card.title}
-                      </div>
-                      <div className="my-2 h-[1px] w-[15%] bg-[#E62B1E]"></div>
-                      <div className="text-md font-semibold text-[#E0E0E0] lg:text-lg ">
-                        {card.subtitle}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="flex w-full flex-col items-center gap-8 bg-[#E62B1E] py-24">
-                <div className="text-lg font-semibold text-[#E0E0E0] md:text-2xl">
-                  What are you waiting for?
-                </div>
-                <div className="mx-16 text-center text-2xl font-bold leading-loose text-[#E0E0E0] md:text-3xl lg:mx-64">
-                  Be a part of the upcoming event at TEDxCITBengaluru
-                </div>
-                <Link href="/ticket">
-                  <div className="rounded-2xl border-2 border-[#E0E0E0] bg-[#E0E0E0] px-8 py-4 text-center text-2xl font-semibold text-[#121212] hover:bg-[#121212] hover:text-[#E0E0E0]">
-                    Register Now!
-                  </div>
-                </Link>
-              </div>
-              <div  className="flex w-full flex-col items-center gap-8 bg-ted-black py-20">
-                <h1 className="text-4xl mb-4 text-center text-ted-off-white"> Get in touch with us</h1>
-              <div id="social-media-footer">
-          <ul>
-            <li>
-              <a href="https://www.instagram.com/tedxcitbengaluru/">
-                <i className="fab fa-instagram"></i>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/company/tedxcitbengaluru/">
-                <i className="fab fa-linkedin"></i>
-              </a>
-            </li>
-            <li>
-              <a href="mailto:tedxcitbengaluru@cambridge.edu.in/">
-                <i className="fa fa-envelope"></i>
-              </a>
-            </li>
-          </ul>
+    <div className="bg-white text-white">
+      <div className="relative">
+        {/* Image with grayscale class */}
+        <div className="relative">
+          <Image
+            className="grayscale object-cover backdrop-blur-sm"
+            src="/images/mountains.png"
+            alt="Mountains"
+            width={1920}
+            height={1080}
+            priority
+          />
+          <Image
+            className="absolute left-0 top-16 w-1/3 h-auto object-contain"
+            src="/images/birds.png"
+            alt="Birds"
+            width={1920}
+            height={1080}
+          />
         </div>
-            </div>
-          </div>
-          </div>
-          
-        )
-      )}
+        {/* Gradient for blending the bottom of the image */}
+        <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-b from-transparent to-[#1f1f1f] opacity-90"></div>
+      </div>
+      {/* Section below with smooth gradient transition */}
+      <div className="bg-[#1f1f1f]">
+        <div className="container pt-20 pb-20 text-left">
+          <h1 className="text-8xl font-bold leading-tight">
+            <span className="text-[#EB0028]">EMPOWERING</span>
+            <span className="text-[#9D9D9D]"> MINDS TO</span>
+          </h1>
+          <h1 className="text-8xl font-bold leading-tight">
+            <span className="text-[#EB0028]"> SHAPE</span>
+            <span className="text-[#9D9D9D]"> TOMORROW</span>
+          </h1>
+        </div>
+      </div>
+      <div>
+        {/* Check for errors or loading state */}
+        {error ? (
+          <p className="text-[#E62B1E]">Error loading data. Please try again later.</p>
+        ) : (
+          homeData && (
+            <>
+              {/* Intro Section */}
+              <div className="bg-[#1f1f1f] pl-10 intro m-auto text-white grid grid-cols-2 items-center gap-10">
+                <div className="info text-left p-10">
+                  <h1 className="text-7xl font-bold p-2">
+                    <span className="text-[#9D9D9D]">WHO</span>
+                    <span className="text-[#EB0028]"> WE</span>
+                    <span className="text-[#9D9D9D]"> ARE?</span>
+                  </h1>
+                  <div className="bg-red-700 w-2/4 rounded-lg h-1 mb-4"></div>
+                  <p className="text-lg mt-4 text-[#F5F5F5]">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur quidem repellat mollitia necessitatibus, laboriosam nam nostrum ducimus sint libero exercitationem. Consequuntur distinctio a dolore vitae accusantium vel pariatur asperiores illum, fuga, nulla quis, nisi fugiat! Quisquam, quidem. Quisquam, quidem.
+                  </p>
+                  <div className="points flex flex-row mt-4">
+                    <div className="bg-[#EB0028] w-1 rounded-lg h-8"></div>
+                    <p className="mx-2 text-lg">We believe a TEDx Talk is a journey with the idea being the destination.</p>
+                  </div>
+                  <div className="points flex flex-row mt-4">
+                    <div className="bg-[#EB0028] w-2 rounded-lg h-14"></div>
+                    <p className="mx-2 text-lg">
+                      We find the most unique, thought-provoking and impactful ideas within our local community and provide a platform for it to spread far and wide.
+                    </p>
+                  </div>
+                  <div className="points flex flex-row mt-4">
+                    <div className="bg-[#EB0028] w-1 rounded-lg h-8"></div>
+                    <p className="mx-2 text-lg">We connect with like-minded individuals and build your network.</p>
+                  </div>
+                </div>
+
+                <div className="relative flex justify-end">
+                  <Image
+                    className="object-cover"
+                    src="/images/x factor.png"
+                    alt="X"
+                    width={1000}
+                    height={1000}
+                  />
+                </div>
+              </div>
+
+              {/* Next Event Section */}
+              <div className="bg-[#1f1f1f] next-event grid grid-cols-2 items-center gap-10 m-auto">
+                <div className="relative flex justify-center img">
+                  <Image
+                    className="object-cover rounded-lg"
+                    src="/events/Aether.jpg"
+                    alt="Next Event"
+                    width={600}
+                    height={400}
+                  />
+                </div>
+
+                <div className="info text-left p-10">
+                  <h1 className="text-6xl font-extrabold p-2">
+                    <span className="text-[#9D9D9D]">OUR</span>
+                    <span className="text-[#EB0028]"> NEXT</span>
+                    <span className="text-[#9D9D9D]"> EVENT</span>
+                  </h1>
+                  <div className="bg-[#EB0028] w-1/2 rounded-lg h-1 mb-4"></div>
+                  <p className="text-lg mt-4">
+                    {homeData[3]}
+                  </p>
+                  <div className="flex space-x-4 mt-6">
+                    <button className="bg-[#EB0028] text-white rounded-xl px-6 py-3 text-lg hover:bg-[#9D9D9D] transition duration-300">
+                      Join Us
+                    </button>
+                    <button className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-xl text-lg hover:bg-white hover:text-red-700 transition duration-300">
+                      Contact Us
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* What You Get Section */}
+              <div className="bg-[#1f1f1f] text-left p-10">
+                <h1 className="text-6xl font-extrabold p-2">
+                  <span className="text-[#9D9D9D]">WHAT</span>
+                  <span className="text-[#EB0028]"> YOU</span>
+                  <span className="text-[#9D9D9D]"> GET FROM US?</span>
+                </h1>
+                <div className="bg-[#EB0028] w-1/2 rounded-lg h-1 mb-4"></div>
+              </div>
+
+              <div className="bg-[#1f1f1f] grid grid-cols-2 p-10 gap-10 m-auto">
+                <div className="points flex flex-row items-center mt-4">
+                  <div className="bg-[#EB0028] w-1 rounded-lg h-14"></div>
+                  <p className="mx-2 text-lg">Watch mesmerizing performances by our Entertainers that leave you spell bound.</p>
+                </div>
+                <div className="points flex flex-row mt-4">
+                  <div className="bg-[#EB0028] w-1 rounded-lg h-8"></div>
+                  <p className="mx-2 text-lg">An experience for you to learn from.</p>
+                </div>
+                <div className="points flex flex-row mt-4">
+                  <div className="bg-[#EB0028] w-1 rounded-lg h-8"></div>
+                  <p className="mx-2 text-lg">A certificate for you to be proud of.</p>
+                </div>
+                <div className="points flex flex-row mt-4">
+                  <div className="bg-[#EB0028] w-1 rounded-lg h-8"></div>
+                  <p className="mx-2 text-lg">And of course, Ideas for you to reflect on.</p>
+                </div>
+                <div className="points flex flex-row mt-4">
+                  <div className="bg-[#EB0028] w-1 rounded-lg h-8"></div>
+                  <p className="mx-2 text-lg">Memorabilia for you to cherish.</p>
+                </div>
+              </div>
+              <div className="bg-[#1f1f1f] relative w-full h-auto m-auto p-10 ">
+                <div className="relative z-10 mx-8">
+                  <div>
+                    <h2 className="text-[#1f1f1f] text-[64px] font-bold">Be a part of our</h2>
+                    <h2 className="text-[#1f1f1f] text-[64px] font-bold">upcoming event at</h2>
+                    <h2 className="text-[#1f1f1f] text-[64px] font-bold">TEDxCITBengaluru</h2>
+                  </div>
+                  <div className="pt-10">
+                    <button className="bg-[#1f1f1f] text-[#9e9395] rounded-xl px-6 py-3 text-lg hover:bg-white hover:text-black transition duration-300">
+                      Register Now!
+                    </button>
+                  </div>
+                </div>
+                {/* Replace SVG with an image from the public folder */}
+                <div className="absolute bottom-0 left-0 w-full">
+                  <Image
+                    src="/images/footer design.png"  
+                    alt="Event Banner"
+                    layout="responsive" 
+                    width={1440}  
+                    height={320}  
+                  />
+                </div>
+              </div>
+            </>
+          )
+        )}
+      </div>
     </div>
-    </main>
   );
 }
