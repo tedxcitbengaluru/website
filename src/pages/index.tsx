@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSheetData } from '../context/SheetDataContext';
 import { convertDate } from '@/utils/date';
 
-export default function Home(){
+export default function Home() {
   const { data, error } = useSheetData();
   const homeData = data?.home as string[] | undefined;
 
@@ -45,11 +45,11 @@ export default function Home(){
       {/* Section below with smooth gradient transition */}
       <div className="bg-[#1f1f1f]">
         <div className="container pt-20 pb-20 text-left">
-          <h1 className="text-8xl font-bold leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold leading-tight">
             <span className="text-[#EB0028]">EMPOWERING</span>
             <span className="text-[#9D9D9D]"> MINDS TO</span>
           </h1>
-          <h1 className="text-8xl font-bold leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold leading-tight">
             <span className="text-[#EB0028]"> SHAPE</span>
             <span className="text-[#9D9D9D]"> TOMORROW</span>
           </h1>
@@ -63,9 +63,9 @@ export default function Home(){
           homeData && (
             <>
               {/* Intro Section */}
-              <div className="bg-[#1f1f1f] pl-10 intro m-auto text-white grid grid-cols-2 items-center gap-10">
+              <div className="bg-[#1f1f1f] pl-10 intro m-auto text-white grid grid-cols-1 md:grid-cols-2 items-center gap-10">
                 <div className="info text-left p-10">
-                  <h1 className="text-7xl font-bold p-2">
+                  <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold p-2">
                     <span className="text-[#9D9D9D]">WHO</span>
                     <span className="text-[#EB0028]"> WE</span>
                     <span className="text-[#9D9D9D]"> ARE?</span>
@@ -102,7 +102,7 @@ export default function Home(){
               </div>
 
               {/* Next Event Section */}
-              <div className="bg-[#1f1f1f] next-event grid grid-cols-2 items-center gap-10 m-auto">
+              <div className="bg-[#1f1f1f] next-event grid grid-cols-1 md:grid-cols-2 items-center gap-10 m-auto">
                 <div className="relative flex justify-center img">
                   <Image
                     className="object-cover rounded-lg"
@@ -114,7 +114,7 @@ export default function Home(){
                 </div>
 
                 <div className="info text-left p-10">
-                  <h1 className="text-6xl font-extrabold p-2">
+                  <h1 className="text-5xl sm:text-6xl md:text-6xl font-extrabold p-2">
                     <span className="text-[#9D9D9D]">OUR</span>
                     <span className="text-[#EB0028]"> NEXT</span>
                     <span className="text-[#9D9D9D]"> EVENT</span>
@@ -136,7 +136,7 @@ export default function Home(){
 
               {/* What You Get Section */}
               <div className="bg-[#1f1f1f] text-left p-10">
-                <h1 className="text-6xl font-extrabold p-2">
+                <h1 className="text-5xl sm:text-6xl md:text-6xl font-extrabold p-2">
                   <span className="text-[#9D9D9D]">WHAT</span>
                   <span className="text-[#EB0028]"> YOU</span>
                   <span className="text-[#9D9D9D]"> GET FROM US?</span>
@@ -144,7 +144,7 @@ export default function Home(){
                 <div className="bg-[#EB0028] w-1/2 rounded-lg h-1 mb-4"></div>
               </div>
 
-              <div className="bg-[#1f1f1f] grid grid-cols-2 p-10 gap-10 m-auto">
+              <div className="bg-[#1f1f1f] grid grid-cols-1 md:grid-cols-2 p-10 gap-10 m-auto">
                 <div className="points flex flex-row items-center mt-4">
                   <div className="bg-[#EB0028] w-1 rounded-lg h-14"></div>
                   <p className="mx-2 text-lg">Watch mesmerizing performances by our Entertainers that leave you spell bound.</p>
@@ -169,9 +169,9 @@ export default function Home(){
               <div className="bg-[#1f1f1f] relative w-full h-auto m-auto p-10 ">
                 <div className="relative z-10 mx-8">
                   <div>
-                    <h2 className="text-[#1f1f1f] text-[64px] font-bold">Be a part of our</h2>
-                    <h2 className="text-[#1f1f1f] text-[64px] font-bold">upcoming event at</h2>
-                    <h2 className="text-[#1f1f1f] text-[64px] font-bold">TEDxCITBengaluru</h2>
+                    <h2 className="text-[#1f1f1f] text-3xl sm:text-4xl md:text-5xl font-bold">Be a part of our</h2>
+                    <h2 className="text-[#1f1f1f] text-3xl sm:text-4xl md:text-5xl font-bold">upcoming event at</h2>
+                    <h2 className="text-[#1f1f1f] text-3xl sm:text-4xl md:text-5xl font-bold">TEDxCITBengaluru</h2>
                   </div>
                   <div className="pt-10">
                     <button className="bg-[#1f1f1f] text-[#9e9395] rounded-xl px-6 py-3 text-lg hover:bg-white hover:text-black transition duration-300">
