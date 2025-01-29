@@ -77,8 +77,10 @@ export default function Home() {
             zIndex: 3,
           }}
           ref={(el) => {
-            if (el) el.parentElement.style.height = `${el.offsetHeight}px`;
-          }}
+            if (el && el.parentElement) {
+              el.parentElement.style.height = `${el.offsetHeight}px`;
+            }
+          }}          
         />
 
         {/* Background Layers */}
@@ -92,8 +94,10 @@ export default function Home() {
             zIndex: 4,
           }}
           ref={(el) => {
-            if (el) el.parentElement.style.height = `${el.offsetHeight}px`;
-          }}
+            if (el && el.parentElement) {
+              el.parentElement.style.height = `${el.offsetHeight}px`;
+            }
+          }}          
         />
 
         <img
