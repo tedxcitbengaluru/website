@@ -23,7 +23,7 @@ export const Blogs: React.FC = () => {
           marginBottom: "2rem",
         }}
       >
-        "Either Write Something Worth Reading <br /> or Do Something Worth Writing."
+        &quot;Either Write Something Worth Reading <br /> or Do Something Worth Writing.&quot;
       </h1>
       <h2
         style={{

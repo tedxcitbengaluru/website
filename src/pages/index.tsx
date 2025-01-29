@@ -5,10 +5,10 @@ import { convertDate } from '@/utils/date';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faHeart,
-    faArrowTrendUp,
-    faLightbulb,
-    faCertificate
+  faHeart,
+  faArrowTrendUp,
+  faLightbulb,
+  faCertificate
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
@@ -61,71 +61,72 @@ export default function Home() {
 
   return (
     <main>
-     <div className="overflow-x-hidden bg-[#121212] text-[#E0E0E0] py-16">
-      {/* Parallax Section */}
-      <div
-        className="relative w-screen overflow-hidden m-0 p-0"
-        style={{ height: "auto" }}
-      >
-        {/* Tallest Image: Set its height as the basis */}
-        <img
-          src="/slideshow/front-mountains.png"
-          alt="Front Mountain"
-          className="absolute top-0 left-0 w-full object-cover w-full"
-          style={{
-            transform: `translateY(${scrollY * 0.4}px)`,
-            zIndex: 3,
-          }}
-          ref={(el) => {
-            if (el) el.parentElement.style.height = `${el.offsetHeight}px`;
-          }}
-        />
+      <div className="overflow-x-hidden bg-[#121212] text-[#E0E0E0] py-16">
+        {/* Parallax Section */}
+        <div
+          className="relative w-screen overflow-hidden m-0 p-0"
+          style={{ height: "auto" }}
+        >
+          {/* Tallest Image: Set its height as the basis */}
+          <img
+            src="/slideshow/front-mountains.png"
+            alt="Front Mountain"
+            className="absolute top-0 left-0 w-full object-cover w-full"
+            style={{
+              transform: `translateY(${scrollY * 0.4}px)`,
+              zIndex: 3,
+            }}
+            ref={(el) => {
+              if (el && el.parentElement) {
+                el.parentElement.style.height = `${el.offsetHeight}px`;
+              }
+            }}
+          />
+          {/* Background Layers */}
+          <img
+            src="/slideshow/back-mountain.png"
+            alt="Back Mountain"
+            className="absolute top-0 left-0 object-cover w-full"
+            style={{
+              transform: `translateY(${scrollY * 0.3}px)`,
+              zIndex: 2,
+            }}
+            ref={(el) => {
+              if (el && el.parentElement) {
+                el.parentElement.style.height = `${el.offsetHeight}px`;
+              }
+            }}
+          />
+          <img
+            src={isMobile ? "/slideshow/Aether_Banner.png" : "/slideshow/Aether_Banner.png"}
+            alt="Banner slide"
+            className="absolute top-0 left-0 object-cover w-full"
+            style={{
+              transform: `translateY(${scrollY * 0}px)`,
+              zIndex: 1,
+            }}
+          />
 
-        {/* Background Layers */}
+          <img
+            src="/slideshow/back-mountain.png"
+            alt="Back Mountain"
+            className="absolute top-0 left-0 object-cover w-full"
+            style={{
+              transform: `translateY(${scrollY * 0.3}px)`,
+              zIndex: 2,
+            }}
+          />
 
-        <img
-          src="/slideshow/x.png"
-          alt="Front Mountain"
-          className="absolute top-0 left-0 w-full object-cover w-full"
-          style={{
-            transform: `translateY(${scrollY * 0}px)`,
-            zIndex: 4,
-          }}
-          ref={(el) => {
-            if (el) el.parentElement.style.height = `${el.offsetHeight}px`;
-          }}
-        />
-
-        <img
-          src={isMobile ? "/slideshow/Aether_Banner.png" : "/slideshow/Aether_Banner.png"}
-          alt="Banner slide"
-          className="absolute top-0 left-0 object-cover w-full"
-          style={{
-            transform: `translateY(${scrollY * 0}px)`,
-            zIndex: 1,
-          }}
-        />
-
-        <img
-          src="/slideshow/back-mountain.png"
-          alt="Back Mountain"
-          className="absolute top-0 left-0 object-cover w-full"
-          style={{
-            transform: `translateY(${scrollY * 0.3}px)`,
-            zIndex: 2,
-          }}
-        />
-
-        <img
-          src="/slideshow/crow.png"
-          alt="Crow"
-          className="absolute top-0 left-0 object-cover"
-          style={{
-            transform: `translateY(${scrollY * 0.6}px)`,
-            zIndex: 4,
-          }}
-        />
-      </div>
+          <img
+            src="/slideshow/crow.png"
+            alt="Crow"
+            className="absolute top-0 left-0 object-cover"
+            style={{
+              transform: `translateY(${scrollY * 0.6}px)`,
+              zIndex: 4,
+            }}
+          />
+        </div>
 
         {error ? (
           <p className="text-[#E62B1E]">Error loading data. Please try again later.</p>

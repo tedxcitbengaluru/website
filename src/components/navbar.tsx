@@ -58,4 +58,3 @@ const TedNavbar: React.FC = () => {
 };
 
 export default TedNavbar;
-
