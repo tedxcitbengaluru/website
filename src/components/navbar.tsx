@@ -43,10 +43,10 @@ const TedNavbar: React.FC = () => {
           <Offcanvas.Body>
             <Nav className="ms-auto">
               <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/blogs">Blogs</Nav.Link>
+              {/* <Nav.Link href="/blogs">Blogs</Nav.Link> */}
               <Nav.Link href="/events">Events</Nav.Link>
               <Nav.Link href="/speakers">Speakers & Performers</Nav.Link>
-              {/*<Nav.Link href="/partners">Partners</Nav.Link>*/}
+              <Nav.Link href="/partners">Partners</Nav.Link>
               <Nav.Link href="/about">About Us</Nav.Link>
               
             </Nav>
