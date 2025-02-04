@@ -49,7 +49,7 @@ export default function Speakers() {
             </div>
             <div className="mt-8 text-center font-semibold text-ted-black-100 selection:text-lg md:text-2xl">
                 Discover the amazing speakers & performers behind previous{' '}
-                <span className="text-ted-red">TED</span>xCITBengaluru
+                <span className="text-ted-red">TEDx</span>CITBengaluru
             </div>
             {sortedOrder.map((order) => (
                 <div key={order} className="mb-32 text-center text-5xl font-bold">
