@@ -338,7 +338,7 @@ const TeamTicketPage: React.FC = () => {
     );
   }
 
-  const title = isEarlyBird ? 'Early Bird Ticket Registration Form' : `${ticketType === '' ? '' : ticketType === 'Solo' ? 'Solo' : ticketType === 'Group of 3' ? 'Group of 3' : 'Group of 5'} Ticket Registration Form`;
+  const title = isEarlyBird ? 'EPOCH - Early Bird Ticket Registration Form' : `${ticketType === '' ? '' : ticketType === 'Solo' ? 'EPOCH - Solo' : ticketType === 'Group of 3' ? 'EPOCH - Group of 3' : 'EPOCH - Group of 5'} Ticket Registration Form`;
 
   return (
     <div className=" flex flex-col items-center gap-8 bg-[#121212] py-20">
@@ -640,7 +640,7 @@ const TeamTicketPage: React.FC = () => {
                       <Form.Label>UPI ID</Form.Label>
                       <Form.Control
                         type="text"
-                        value="tedxcit@ybl"
+                        value="aaronrohanraj7@okaxis"
                         readOnly
                         className="form-input"
                       />

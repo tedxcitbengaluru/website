@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
     <div style={{
       fontFamily: montserrat.style.fontFamily,
     }} className="bg-[#1f1f1f] w-full text-white text-center h-16 p-4">
-      Copyright 2023 &copy; TEDxCIT Bengaluru. This independent TEDx event is operated under license from TED.
+      Copyright 2025 &copy; TEDxCIT Bengaluru. This independent TEDx event is operated under license from TED.
     </div>
   );
 };
