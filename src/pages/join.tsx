@@ -300,8 +300,7 @@ const RecruitmentPage: React.FC = () => {
       const responseMessage = await sheetResponse.text(); // Get the response message text
 
       if (sheetResponse.ok) {
-        resetForm();
-        router.push('/success');
+        router.push("/success?source=join");
       } else {
         console.error('Error submitting form data');
         toast.error(responseMessage || 'Error submitting form data');
