@@ -31,17 +31,22 @@ export default async function submitTicketForm(req, res) {
 
   const formDataArray = req.body;
 
-  const generateTicketNumber = (ticketType) => {
-    if (ticketType === "Early Bird") {
-      return `EBT-${Math.floor(Math.random() * 9000) + 1000}`;
-    } else if (ticketType === "Group of 3") {
-      return `G3T-${Math.floor(Math.random() * 9000) + 1000}`;
-    } else if (ticketType === "Group of 5") {
-      return `G5T-${Math.floor(Math.random() * 9000) + 1000}`;
-    } else {
-      return `ST-${Math.floor(Math.random() * 9000) + 1000}`;
-    }
-  };
+  const date = new Date()
+  const today = date.getDate()
+  const month = date.getMonth() + 1
+  const milli = date.getMilliseconds() % 100
+
+const generateTicketNumber = (ticketType) => {
+  if (ticketType === "Early Bird") {
+    return `EBT-${today}${month}${milli}`;
+  } else if (ticketType === "Group of 3") {
+    return `G3T-${today}${month}${milli}`;
+  } else if (ticketType === "Group of 5") {
+    return `G5T-${today}${month}${milli}`;
+  } else {
+    return `ST-${today}${month}${milli}`;
+  }
+};
 
   // Generate ticket number for each entry
   const values = formDataArray.map(data => {
@@ -83,6 +88,6 @@ export default async function submitTicketForm(req, res) {
     res.status(200).send('Success');
   } catch (err) {
     console.error('Error:', err); 
-    res.status(500).send('Error submitting form data to Google Sheets');
+    res.status(500).send('Error submitting. Please try again or contact us if the issue persists.');
   }
 }
