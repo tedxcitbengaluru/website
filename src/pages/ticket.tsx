@@ -2,6 +2,7 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Form, Button, Container, Row, Col, Modal, Image, Spinner } from 'react-bootstrap';
 import { Toaster, toast } from 'sonner';
 import { useRouter } from 'next/router';
+import { selectClasses } from '@mui/material';
 
 interface TeamMember {
   email: string;
@@ -40,6 +41,9 @@ const TeamTicketPage: React.FC = () => {
   const [isEarlyBird, setIsEarlyBird] = useState(false);
   const [counter, setCounter] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [ticketPrice, setTicketPrice] = useState(399);
+
+  
 
 
   useEffect(() => {
@@ -81,6 +85,18 @@ const TeamTicketPage: React.FC = () => {
     fetchTicketSettings();
   }, []);
 
+  const handleTicketPrice = (type: string) =>{
+    if (isEarlyBird){
+      setTicketPrice(399);
+    } else if (type == 'Solo'){
+      setTicketPrice(549);
+    } else if (type == 'Group of 3'){
+      setTicketPrice(499)
+    } else if (type == 'Group of 5'){
+      setTicketPrice(449);
+    }
+  }
+
   const handleTicketTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedType = e.target.value;
     setTicketType(selectedType);
@@ -90,12 +106,14 @@ const TeamTicketPage: React.FC = () => {
     } else if (selectedType === 'Group of 5') {
       memberCount = 5;
     }
-
+    
     if (isEarlyBird) {
       setTicketType('Early Bird');
       memberCount = 1;
     }
 
+    handleTicketPrice(selectedType);
+    
     setTeamMembers(Array(memberCount).fill(null).map(() => ({
       email: '',
       phoneNo: '',
@@ -341,7 +359,7 @@ const TeamTicketPage: React.FC = () => {
     );
   }
 
-  const title = isEarlyBird ? 'EPOCH - Early Bird Ticket Registration Form' : `${ticketType === '' ? '' : ticketType === 'Solo' ? 'EPOCH - Solo' : ticketType === 'Group of 3' ? 'EPOCH - Group of 3' : 'EPOCH - Group of 5'} Ticket Registration Form`;
+  const title = isEarlyBird ? 'EPOCH - Early Bird' : `${ticketType === '' ? '' : ticketType === 'Solo' ? 'EPOCH - Solo' : ticketType === 'Group of 3' ? 'EPOCH - Group of 3' : 'EPOCH - Group of 5'} Ticket (₹${ticketPrice})`;
 
   return (
     <div className=" flex flex-col items-center gap-8 bg-[#121212] py-20">
@@ -596,7 +614,8 @@ const TeamTicketPage: React.FC = () => {
             <Row className="mb-3">
               <Col md={12}>
                 <Form.Group controlId="formPaymentType">
-                  <Form.Label>Payment Type</Form.Label>
+                  <div>Buy Ticket - ₹{ticketPrice}</div>
+                  <Form.Label>Please Select Payment Method</Form.Label>
                   <Form.Control
                     as="select"
                     name="paymentType"
@@ -605,8 +624,8 @@ const TeamTicketPage: React.FC = () => {
                     required
                   >
                     <option value="">Select...</option>
-                    <option value="cash">Cash</option>
-                    <option value="upi">UPI</option>
+                    <option value="cash">Cash ₹{ticketPrice}</option>
+                    <option value="upi">UPI ₹{ticketPrice}</option>
                   </Form.Control>
                   <Form.Control.Feedback type="invalid">
                     Please select a payment type.
