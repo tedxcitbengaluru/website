@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Form, Button, Container, Row, Col, Modal, Image, Spinner } from 'react-bootstrap';
 import { Toaster, toast } from 'sonner';
+import { useRouter } from 'next/router';
 
 interface TeamMember {
   email: string;
@@ -27,6 +28,7 @@ const TeamTicketPage: React.FC = () => {
     ticketType: '',
   });
 
+  const router = useRouter(); 
   const [ticketType, setTicketType] = useState('');
   const [showWorkStudyCustomField, setShowWorkStudyCustomField] = useState(false);
   const [showFindUsCustomField, setShowFindUsCustomField] = useState(false);
@@ -254,6 +256,7 @@ const TeamTicketPage: React.FC = () => {
           })));
           setValidated(false);
           toast.success('Form successfully submitted!');
+          router.push("/success?source=ticket");
         } else {
           console.error('Error updating counter');
           toast.error('Error updating counter');
