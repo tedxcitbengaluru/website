@@ -9,7 +9,8 @@ import {
     faArrowTrendUp,
     faLightbulb,
     faCertificate
-} from '@fortawesome/free-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons'
+
 
 export default function Home() {
   const { data, error } = useSheetData();
