@@ -41,7 +41,7 @@ const TeamTicketPage: React.FC = () => {
   const [isEarlyBird, setIsEarlyBird] = useState(false);
   const [counter, setCounter] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [ticketPrice, setTicketPrice] = useState(399);
+  const [ticketPrice, setTicketPrice] = useState(549);
 
   
 
@@ -91,9 +91,9 @@ const TeamTicketPage: React.FC = () => {
     } else if (type == 'Solo'){
       setTicketPrice(549);
     } else if (type == 'Group of 3'){
-      setTicketPrice(499)
+      setTicketPrice(1497)
     } else if (type == 'Group of 5'){
-      setTicketPrice(449);
+      setTicketPrice(2245);
     }
   }
 
