@@ -389,7 +389,7 @@ const TeamTicketPage: React.FC = () => {
                 />
               </Form.Group>
             )} */}
-            <h1 className="p-10 text-2xl font-bold mb-4 text-center inline-block">For <h1 className='text-[#EB0028] inline-block'>offline tickets</h1>, please visit us at TEDxCITBengaluru space, CHOSS 5th Floor. </h1>
+            <h1 className="p-10 text-2xl font-bold mb-4 text-center inline-block">For <h1 className='text-[#EB0028] inline-block'>OFFLINE TICKETS</h1>, please visit us at TEDxCITBengaluru, CHOSS space 5th Floor, Sir MV Block, Cambridge Institute of Technology, Bengaluru. </h1>
           </Col>
         )}
         {ticketType && (
