@@ -77,7 +77,7 @@ const SuccessPage = () => {
           If you have any further questions or need assistance, please reach out to:
         </p>
         <ul className="list-none text-center space-y-2 mb-4">
-          <li><strong>Bharath SBK</strong>: +91 63601 46030</li>
+          <li><strong>Aaron Rohan</strong>: +91 86606 89239</li>
           <li><strong>Prajna</strong>: +91 84316 48642</li>
         </ul>
         <p className="text-center">
