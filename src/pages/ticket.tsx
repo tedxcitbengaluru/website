@@ -379,7 +379,7 @@ const TeamTicketPage: React.FC = () => {
                 Please select a ticket type.
               </Form.Control.Feedback>
             </Form.Group>
-            {ticketType !== "Solo" && (
+            {/* {ticketType !== "Solo" && (
               <Form.Group className="p-5">
                 <Form.Label>Import Form</Form.Label>
                 <Form.Control
@@ -388,7 +388,8 @@ const TeamTicketPage: React.FC = () => {
                   required
                 />
               </Form.Group>
-            )}
+            )} */}
+            <h1 className="p-10 text-2xl font-bold mb-4 text-center inline-block">For <h1 className='text-[#EB0028] inline-block'>OFFLINE TICKETS</h1>, please visit us at TEDxCITBengaluru, CHOSS space 5th Floor, Sir MV Block, Cambridge Institute of Technology, Bengaluru. </h1>
           </Col>
         )}
         {ticketType && (
@@ -624,7 +625,7 @@ const TeamTicketPage: React.FC = () => {
                     required
                   >
                     <option value="">Select...</option>
-                    <option value="cash">Cash ₹{ticketPrice}</option>
+                    {/* <option value="cash">Cash ₹{ticketPrice}</option> */}
                     <option value="upi">UPI ₹{ticketPrice}</option>
                   </Form.Control>
                   <Form.Control.Feedback type="invalid">
@@ -743,11 +744,11 @@ const TeamTicketPage: React.FC = () => {
               >
                 {isSubmitting ? 'Submitting...' : 'Submit'}
               </Button>
-              {!title.includes('Early Bird') && ticketType !== "Solo" && (
+              {/* {!title.includes('Early Bird') && ticketType !== "Solo" && (
                 <Button onClick={handleExport} className="export-button">
                   Export Form Data
                 </Button>
-              )}
+              )} */}
             </div>
           </Form>
         )}
