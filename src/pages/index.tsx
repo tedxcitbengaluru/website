@@ -120,16 +120,6 @@ export default function Home() {
             zIndex: 2,
           }}
         />
-
-        <img
-          src="/slideshow/crow.png"
-          alt="Crow"
-          className="absolute top-0 left-0 object-cover"
-          style={{
-            transform: `translateY(${scrollY * 0.6}px)`,
-            zIndex: 4,
-          }}
-        />
       </div>
 
         {error ? (
